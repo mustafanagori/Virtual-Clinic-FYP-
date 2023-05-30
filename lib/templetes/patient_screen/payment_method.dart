@@ -16,7 +16,6 @@ class PaymentMethodScreen extends StatefulWidget {
   State<PaymentMethodScreen> createState() => _PaymentMethodScreenState();
 }
 
-
 class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
   String paymentStatus = "pending";
   ProductModel productModel = ProductModel("DR Fee ", "200");
@@ -27,18 +26,26 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
       "https://sandbox.jazzcash.com.pk/ApplicationAPI/API/Payment/DoTransaction";
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(
-        title: Text("JazzCash Flutter Example"),
+        title: Text("Payment Jazz Cash"),
         backgroundColor: Colors.red,
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Product Name : ${productModel.productName}"),
-            Text("Product Price : ${productModel.productPrice}"),
+            Text(
+              "Doctor Name : ${productModel.productName}",
+              style: TextStyle(fontSize: 20),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              "Doctor Fee : ${productModel.productPrice}",
+              style: TextStyle(fontSize: 20),
+            ),
             SizedBox(
               height: getProportionateScreenHeight(220),
             ),
@@ -54,8 +61,8 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                     _payViaJazzCash(productModel, context);
                   },
                   child: const Text(
-                    "Purchase Now !",
-                    style: TextStyle(fontSize: 20),
+                    "Pay Dr Fee Now !",
+                    style: TextStyle(fontSize: 18),
                   )),
             )
           ],
