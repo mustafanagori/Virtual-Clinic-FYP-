@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:doctorandpatient/adminsignup.dart';
+import 'package:doctorandpatient/signup.dart';
 import 'package:doctorandpatient/core/utils.dart';
 import 'package:doctorandpatient/models/doctor_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,12 +20,17 @@ class DoctorProfile extends StatefulWidget {
 
 class _DoctorProfileState extends State<DoctorProfile> {
   double _rating(List<dynamic>? rating) {
+    List<double> doubleList = [];
+
+    rating?.forEach((element) {
+      doubleList.add(double.parse(element.toString()));
+    });
+
     double sum = 0;
-    for (int r in rating!) {
+    for (double r in doubleList) {
       sum += r;
     }
-
-    return sum / rating.length;
+    return sum / doubleList.length;
   }
 
   final currentUser = FirebaseAuth.instance.currentUser;

@@ -1,4 +1,4 @@
-import 'package:doctorandpatient/adminsignup.dart';
+import 'package:doctorandpatient/signup.dart';
 import 'package:doctorandpatient/core/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

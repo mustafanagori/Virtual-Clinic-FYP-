@@ -1,7 +1,6 @@
 import 'package:doctorandpatient/controller/patient_controller.dart';
 import 'package:doctorandpatient/core/colors.dart';
 import 'package:doctorandpatient/models/doctor_scheduleModel.dart';
-import 'package:doctorandpatient/templetes/patient_screen/rating.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -31,7 +30,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
   @override
   Widget build(BuildContext context) {
     final dataList = caController.getList.where((element) =>
-        (element.status == "book" || element.status == "Accepted") &&
+        (element.status == "book") &&
         element.doctorID == FirebaseAuth.instance.currentUser!.uid);
 
     return Scaffold(

@@ -10,7 +10,9 @@ import '../../controller/create_appoint.dart';
 import '../../controller/doctor_schedule_controlller.dart';
 import '../../core/size_configuration.dart';
 import '../../Chat/chat_inbox.dart';
-import '../video_Calling/call.dart';
+
+import '../video_Calling/call_by_doctor.dart';
+import 'addperciption.dart';
 
 class PatientHistory extends StatefulWidget {
   const PatientHistory({super.key});
@@ -24,12 +26,9 @@ final dsController = Get.find<DoctorSchedulesController>();
 final patientController = Get.find<PatientController>();
 
 class _PatientHistoryState extends State<PatientHistory> {
-  
   @override
   Widget build(BuildContext context) {
-     // video calling
-  
-
+    // video calling
 
     final dataList = caController.getList.where((element) =>
         element.status == "Accepted" &&
@@ -298,7 +297,8 @@ class AppointtmentAcceptedViewCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final doctorController = Get.find<DoctorController>();
-    final doctor = doctorController.getDoctorById(FirebaseAuth.instance.currentUser!.uid);
+    final doctor =
+        doctorController.getDoctorById(FirebaseAuth.instance.currentUser!.uid);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Center(
@@ -443,7 +443,7 @@ class AppointtmentAcceptedViewCard extends StatelessWidget {
                     width: getProportionateScreenWidth(120),
                     child: ElevatedButton(
                       onPressed: () {
-                        Get.to(ViewPerciption(
+                        Get.to(Perciption(
                             patientID: patientID, doctorID: doctorID));
                       },
                       style: ElevatedButton.styleFrom(
@@ -467,10 +467,10 @@ class AppointtmentAcceptedViewCard extends StatelessWidget {
                     width: getProportionateScreenWidth(100),
                     child: ElevatedButton(
                       onPressed: () {
-                        Get.to(MYcall(
+                        Get.to(callByDoctor(
                           conferenceID: "1",
-                          userid:doctor.userID,
-                          username: doctor.firstName + " " +doctor.lastName,
+                          userid: doctor.userID,
+                          username: doctor.firstName + " " + doctor.lastName,
                         ));
                       },
                       style: ElevatedButton.styleFrom(

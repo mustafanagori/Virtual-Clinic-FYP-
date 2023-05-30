@@ -10,7 +10,7 @@ import '../../controller/create_appoint.dart';
 import '../../controller/doctor_schedule_controlller.dart';
 import '../../controller/doctors_controller.dart';
 import '../../core/size_configuration.dart';
-import '../video_Calling/call.dart';
+import '../video_Calling/call_by_patient.dart';
 
 class AppointmentHistory extends StatefulWidget {
   const AppointmentHistory({super.key});
@@ -28,7 +28,9 @@ class _AppointmentHistoryState extends State<AppointmentHistory> {
   @override
   Widget build(BuildContext context) {
     // video calling
-    final doctor = doctorController.getDoctorById(FirebaseAuth.instance.currentUser!.uid);
+    final patientController = Get.find<PatientController>();
+    final patient = patientController
+        .getPatientById(FirebaseAuth.instance.currentUser!.uid);
 
     final dataList = caController.getList.where((element) =>
         (element.status == "Accepted" || element.status == "book") &&
@@ -74,10 +76,12 @@ class _AppointmentHistoryState extends State<AppointmentHistory> {
                           )
                         : AppointtmentAcceptedViewCard(
                             onCall: () {
-                              Get.to(MYcall(
+                              Get.to(callBypatient(
+                                doctorModel: doctorController
+                                    .getDoctorById(data.doctorID),
                                 conferenceID: "1",
-                                userid: "33",
-                                username: "mustafa",
+                                userid: patient.userID,
+                                username: patient.name,
                               ));
                               // showDialog(
                               //   context: context,
@@ -390,83 +394,121 @@ class AppointtmentAcceptedViewCard extends StatelessWidget {
                   )),
             ),
             SizedBox(
-              height: getProportionateScreenHeight(10),
+              height: getProportionateScreenHeight(8),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                SizedBox(
-                  height: getProportionateScreenHeight(10),
-                ),
-                Container(
-                  height: getProportionateScreenHeight(40),
-                  width: getProportionateScreenWidth(100),
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.green,
-                      // side: BorderSide(
-                      //   width: getProportionateScreenWidth(1).0,
-                      //   color: Colors.blueAccent,
-                      // ),
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(20),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  SizedBox(
+                    height: getProportionateScreenHeight(10),
+                  ),
+                  Container(
+                    height: getProportionateScreenHeight(40),
+                    width: getProportionateScreenWidth(100),
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.green,
+                        // side: BorderSide(
+                        //   width: getProportionateScreenWidth(1).0,
+                        //   color: Colors.blueAccent,
+                        // ),
+                        shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(20),
+                        ),
+                      ),
+                      child: Text(
+                        'Booked',
+                        style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                     ),
-                    child: Text(
-                      'Booked',
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
                   ),
-                ),
-                Container(
-                  height: getProportionateScreenHeight(40),
-                  width: getProportionateScreenWidth(120),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Get.to(ViewPerciption(
-                        doctorID: doctorID,
-                        patientID: patienID,
-                      ));
-                    },
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.red,
-                      // side: BorderSide(
-                      //   width: getProportionateScreenWidth(1).0,
-                      //   color: Colors.blueAccent,
-                      // ),
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(20),
+                  SizedBox(
+                    width: getProportionateScreenWidth(8),
+                  ),
+                  Container(
+                    height: getProportionateScreenHeight(40),
+                    width: getProportionateScreenWidth(120),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Get.to(ViewPerciption(
+                          doctorID: doctorID,
+                          patientID: patienID,
+                        ));
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.red,
+                        // side: BorderSide(
+                        //   width: getProportionateScreenWidth(1).0,
+                        //   color: Colors.blueAccent,
+                        // ),
+                        shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(20),
+                        ),
+                      ),
+                      child: Text(
+                        'Presiption',
+                        style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                     ),
-                    child: Text(
-                      'Presiption',
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
                   ),
-                ),
-                Container(
-                  height: getProportionateScreenHeight(40),
-                  width: getProportionateScreenWidth(100),
-                  child: ElevatedButton(
-                    onPressed: onCall,
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.green,
-                      // side: BorderSide(
-                      //   width: getProportionateScreenWidth(1).0,
-                      //   color: Colors.blueAccent,
-                      // ),
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(20),
+                  SizedBox(
+                    width: getProportionateScreenWidth(8),
+                  ),
+                  Container(
+                    height: getProportionateScreenHeight(40),
+                    width: getProportionateScreenWidth(100),
+                    child: ElevatedButton(
+                      onPressed: onCall,
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.green,
+                        // side: BorderSide(
+                        //   width: getProportionateScreenWidth(1).0,
+                        //   color: Colors.blueAccent,
+                        // ),
+                        shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(20),
+                        ),
+                      ),
+                      child: Text(
+                        'call',
+                        style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                     ),
-                    child: Text(
-                      'call',
-                      style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                  SizedBox(
+                    width: getProportionateScreenWidth(8),
+                  ),
+                  Container(
+                    height: getProportionateScreenHeight(40),
+                    width: getProportionateScreenWidth(100),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => Rating(
+                            doctorID:
+                                docController.getDoctorById(doctorID).userID,
+                            rating: docController.getList[0].rating,
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.green,
+                        shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(20),
+                        ),
+                      ),
+                      child: Text(
+                        'raing',
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             )
           ],
         ),

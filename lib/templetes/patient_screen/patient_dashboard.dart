@@ -26,7 +26,10 @@ class PatientDashboard extends StatelessWidget {
           },
           child: IndexedStack(
             index: barController.selectedIndex.value,
-            children: [PatientHome(), TakeAppointment(), mypProfile()],
+            children: [
+              PatientHome(), 
+              TakeAppointment(),
+               mypProfile()],
           ),
         ),
         bottomNavigationBar: BottomNavigationBar(

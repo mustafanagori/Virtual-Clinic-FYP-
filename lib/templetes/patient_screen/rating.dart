@@ -13,12 +13,17 @@ class Rating extends StatefulWidget {
 }
 
 double _rating(List<dynamic>? rating) {
+  List<double> doubleList = [];
+
+  rating?.forEach((element) {
+    doubleList.add(double.parse(element.toString()));
+  });
+
   double sum = 0;
-  for (int r in rating!) {
+  for (double r in doubleList) {
     sum += r;
   }
-
-  return sum / rating.length;
+  return sum / doubleList.length;
 }
 
 double selectedRating = 0;
@@ -37,7 +42,7 @@ class _RatingState extends State<Rating> {
             children: [
               RatingBar.builder(
                 initialRating: initialRating,
-                minRating: 1,
+                minRating: 0,
                 direction: Axis.horizontal,
                 allowHalfRating: true,
                 itemCount: 5,

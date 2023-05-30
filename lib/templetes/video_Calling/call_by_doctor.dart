@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:zego_uikit_prebuilt_video_conference/zego_uikit_prebuilt_video_conference.dart';
 import 'contants.dart';
 
-class MYcall extends StatelessWidget {
-  const MYcall({
+class callByDoctor extends StatelessWidget {
+  const callByDoctor({
     super.key,
     required this.conferenceID,
     required this.username,
     required this.userid,
   });
-    final String conferenceID;
-    final String username;
-    final String userid;
+  final String conferenceID;
+  final String username;
+  final String userid;
 
   @override
   Widget build(BuildContext context) {

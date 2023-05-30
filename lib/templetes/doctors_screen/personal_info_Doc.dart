@@ -408,6 +408,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                           .collection("doctors")
                           .doc(FirebaseAuth.instance.currentUser!.uid)
                           .set({
+                        "rating": [0],
                         "firstName": firstNameController.text.toString(),
                         "lastName": lastNameController.text.toString(),
                         "contact": contactController.text.toString(),

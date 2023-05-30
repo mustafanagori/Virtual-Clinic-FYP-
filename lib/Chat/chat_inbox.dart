@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 // import '../../providers/chat_provider.dart';
 // import '../../widgets/are_you_sure.dart';
 import '../core/size_configuration.dart';
-import '../core/mytextfield.dart';
+
 
 class Inbox extends StatefulWidget {
   const Inbox({
@@ -21,7 +21,6 @@ class Inbox extends StatefulWidget {
 }
 
 class _InboxState extends State<Inbox> {
-  final TextEditingController _textController = TextEditingController();
 
   final bool isOpposite = true;
 

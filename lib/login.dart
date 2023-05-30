@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:doctorandpatient/adminsignup.dart';
+import 'package:doctorandpatient/signup.dart';
 import 'package:doctorandpatient/splashscreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -320,8 +320,6 @@ class _LoginPageState extends State<LoginPage> {
                     builder: (BuildContext context) => (const SplashScreen()))))
             .onError(
                 (error, stackTrace) => Utils().toastMessage(error.toString()));
-
-        ;
       } on FirebaseAuthException catch (e) {
         if (e.code == 'user-not-found') {
           print('No user found for that email.');

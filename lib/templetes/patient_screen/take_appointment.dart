@@ -1,11 +1,11 @@
 import 'package:doctorandpatient/core/utils.dart';
 import 'package:doctorandpatient/models/doctor_model.dart';
 import 'package:doctorandpatient/models/doctor_scheduleModel.dart';
+import 'package:doctorandpatient/templetes/patient_screen/payment_method.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-
 import '../../controller/create_appoint.dart';
 import '../../controller/doctor_schedule_controlller.dart';
 import '../../controller/doctors_controller.dart';
@@ -24,11 +24,17 @@ final appointmentController = Get.find<CreateAppointmentController>();
 final docController = Get.find<DoctorController>();
 
 double _rating(List<dynamic>? rating) {
+  List<double> doubleList = [];
+
+  rating?.forEach((element) {
+    doubleList.add(double.parse(element.toString()));
+  });
+
   double sum = 0;
-  for (int r in rating!) {
+  for (double r in doubleList) {
     sum += r;
   }
-  return sum / rating.length;
+  return sum / doubleList.length;
 }
 
 class _TakeAppointmentState extends State<TakeAppointment> {
@@ -86,7 +92,7 @@ class _TakeAppointmentState extends State<TakeAppointment> {
                 child: Align(
                     alignment: Alignment.topCenter,
                     child: Text(
-                      'Doctor Appointment ',
+                      'Doctor Appointment +',
                       style:
                           TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                     )),
@@ -276,30 +282,33 @@ class DoctorScheduleCard extends StatelessWidget {
                     SizedBox(
                       height: getProportionateScreenHeight(6),
                     ),
-                    Row(
-                      children: [
-                        Text(
-                          "Spec:",
-                          style: TextStyle(
-                            fontSize: 15,
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          Text(
+                            "Spec:",
+                            style: TextStyle(
+                              fontSize: 15,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          width: getProportionateScreenWidth(20),
-                        ),
-                        Text(
-                          speacialization,
-                          style: TextStyle(
-                            fontSize: 20,
+                          SizedBox(
+                            width: getProportionateScreenWidth(20),
                           ),
-                        ),
-                      ],
+                          Text(
+                            speacialization,
+                            style: TextStyle(
+                              fontSize: 20,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     Row(
                       children: [
                         RatingBar.builder(
                           initialRating: rat,
-                          minRating: 1,
+                          minRating: 0,
                           ignoreGestures: true,
                           direction: Axis.horizontal,
                           allowHalfRating: true,
@@ -327,10 +336,6 @@ class DoctorScheduleCard extends StatelessWidget {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         primary: Colors.green,
-                        // side: BorderSide(
-                        //   width: getProportionateScreenWidth(1).0,
-                        //   color: Colors.blueAccent,
-                        // ),
                         shape: new RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(20),
                         ),
@@ -338,6 +343,30 @@ class DoctorScheduleCard extends StatelessWidget {
                       onPressed: onPressed,
                       child: Text(
                         'Book ',
+                        style: TextStyle(color: Colors.white, fontSize: 15),
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  left: 260,
+                  top: 175,
+                  child: SizedBox(
+                    height: getProportionateScreenHeight(35),
+                    width: getProportionateScreenWidth(70),
+                    //   width: getProportionateScreenWidth(15)0,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.blue,
+                        shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(20),
+                        ),
+                      ),
+                      onPressed: () {
+                        Get.to(PaymentMethodScreen());
+                      },
+                      child: Text(
+                        'Pay ',
                         style: TextStyle(color: Colors.white, fontSize: 15),
                       ),
                     ),

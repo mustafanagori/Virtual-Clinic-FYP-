@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../adminsignup.dart';
+import '../../signup.dart';
 import '../../core/utils.dart';
 
 class DoctorVerification extends StatelessWidget {
