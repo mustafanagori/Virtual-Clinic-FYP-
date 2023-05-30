@@ -16,7 +16,6 @@ class PaymentMethodScreen extends StatefulWidget {
   State<PaymentMethodScreen> createState() => _PaymentMethodScreenState();
 }
 
-final drcontoler = Get.find<DoctorSchedulesController>();
 
 class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
   String paymentStatus = "pending";
@@ -26,9 +25,9 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
   String merchantPassword = "u0w0953419";
   String transactionUrl =
       "https://sandbox.jazzcash.com.pk/ApplicationAPI/API/Payment/DoTransaction";
-
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(
         title: Text("JazzCash Flutter Example"),
