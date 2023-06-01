@@ -25,6 +25,7 @@ final docController = Get.find<DoctorController>();
 
 final patientController = Get.find<PatientController>();
 
+// fun for rating
 double _rating(List<dynamic>? rating) {
   List<double> doubleList = [];
 
@@ -46,18 +47,43 @@ class _TakeAppointmentState extends State<TakeAppointment> {
   }
 
   TextEditingController searchController = TextEditingController();
+  // search funcation
+  // search() {
+
+  //   List<DoctorModel> docList = [];
+  //   List<DoctorScheduleModel> schList = [];
+  //   for (DoctorModel c in docController.getList) {
+  //     if (c.firstName
+  //             .toLowerCase()
+  //             .trim()
+  //             .contains(searchController.text.toLowerCase().trim()) ||
+  //         c.lastName
+  //             .toLowerCase()
+  //             .trim()
+  //             .contains(searchController.text.toLowerCase().trim())) {
+  //       docList.add(c);
+  //     }
+  //   }
+  //   for (DoctorModel doctor in docList) {
+  //     for (DoctorScheduleModel sch
+  //         in scheduleController.getData(appointmentController.getList)) {
+  //       if (sch.doctorID == doctor.userID) {
+  //         schList.add(sch);
+  //       }
+  //     }
+  //   }
+
+  //   return schList;
+  // }
+  // search by speclization
   search() {
     List<DoctorModel> docList = [];
     List<DoctorScheduleModel> schList = [];
     for (DoctorModel c in docController.getList) {
-      if (c.firstName
-              .toLowerCase()
-              .trim()
-              .contains(searchController.text.toLowerCase().trim()) ||
-          c.lastName
-              .toLowerCase()
-              .trim()
-              .contains(searchController.text.toLowerCase().trim())) {
+      if (c.spealization
+          .toLowerCase()
+          .trim()
+          .contains(searchController.text.toLowerCase().trim())) {
         docList.add(c);
       }
     }
