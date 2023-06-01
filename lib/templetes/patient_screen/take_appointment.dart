@@ -1,4 +1,3 @@
-import 'package:doctorandpatient/core/utils.dart';
 import 'package:doctorandpatient/models/doctor_model.dart';
 import 'package:doctorandpatient/models/doctor_scheduleModel.dart';
 import 'package:doctorandpatient/templetes/patient_screen/payment_method.dart';
@@ -9,6 +8,7 @@ import 'package:get/get.dart';
 import '../../controller/create_appoint.dart';
 import '../../controller/doctor_schedule_controlller.dart';
 import '../../controller/doctors_controller.dart';
+import '../../controller/patient_controller.dart';
 import '../../core/size_configuration.dart';
 
 class TakeAppointment extends StatefulWidget {
@@ -22,6 +22,8 @@ TextEditingController search = TextEditingController();
 final scheduleController = Get.find<DoctorSchedulesController>();
 final appointmentController = Get.find<CreateAppointmentController>();
 final docController = Get.find<DoctorController>();
+
+final patientController = Get.find<PatientController>();
 
 double _rating(List<dynamic>? rating) {
   List<double> doubleList = [];
@@ -133,17 +135,24 @@ class _TakeAppointmentState extends State<TakeAppointment> {
                           .getDoctorById(doctorsSchedule[index].doctorID)
                           .spealization,
                       onPressed: () async {
-                        await appointmentController.uploadData(
-                            status: "book",
-                            patientID: FirebaseAuth.instance.currentUser!.uid,
-                            doctorID: docController
-                                .getDoctorById(doctorsSchedule[index].doctorID)
-                                .userID,
-                            sheduleID: doctorsSchedule.elementAt(index).userID);
+                        Get.to(PaymentMethodScreen(
+                          doctorScheduleModel: doctorsSchedule[index],
+                          doctorModel: docController
+                              .getDoctorById(doctorsSchedule[index].doctorID),
+                          patientModel: patientController.getPatientById(
+                              FirebaseAuth.instance.currentUser!.uid),
+                        ));
+                        // await appointmentController.uploadData(
+                        //     status: "book",
+                        //     patientID: FirebaseAuth.instance.currentUser!.uid,
+                        //     doctorID: docController
+                        //         .getDoctorById(doctorsSchedule[index].doctorID)
+                        //         .userID,
+                        //     sheduleID: doctorsSchedule.elementAt(index).userID);
 
-                        await appointmentController.fetchData();
-                        Utils().toastMessage("Request Sent");
-                        setState(() {});
+                        // await appointmentController.fetchData();
+                        // Utils().toastMessage("Request Sent");
+                        // setState(() {});
                       },
                       date: doctorsSchedule[index].date,
                       endTime: doctorsSchedule[index].endTime.toString(),
@@ -343,30 +352,6 @@ class DoctorScheduleCard extends StatelessWidget {
                       onPressed: onPressed,
                       child: Text(
                         'Book ',
-                        style: TextStyle(color: Colors.white, fontSize: 15),
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  left: 260,
-                  top: 175,
-                  child: SizedBox(
-                    height: getProportionateScreenHeight(35),
-                    width: getProportionateScreenWidth(70),
-                    //   width: getProportionateScreenWidth(15)0,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.blue,
-                        shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(20),
-                        ),
-                      ),
-                      onPressed: () {
-                        Get.to(PaymentMethodScreen());
-                      },
-                      child: Text(
-                        'Pay ',
                         style: TextStyle(color: Colors.white, fontSize: 15),
                       ),
                     ),

@@ -52,199 +52,202 @@ class _DoctorProfileState extends State<DoctorProfile> {
         elevation: 0,
       ),
       backgroundColor: Colors.white,
-      body: Stack(
-        children: [
-          SizedBox(
-            height: getProportionateScreenHeight(700),
-            child: Image.asset(
-              "Assets/TELEHEALTH-1.jpeg",
-              fit: BoxFit.cover,
-            ),
-          ),
-          Column(
-            children: [
-              RatingBar.builder(
-                initialRating: rating,
-                minRating: 0,
-                allowHalfRating: true,
-                itemCount: 5,
-                itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                itemBuilder: (context, _) => Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                ),
-                ignoreGestures: true,
-                onRatingUpdate: (rating) {
-                  print(rating);
-                },
-              ),
-              const Padding(
-                padding: EdgeInsets.only(top: 40, left: 6),
-                child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "Name",
-                      style: TextStyle(color: Colors.grey, fontSize: 20),
-                    )),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 10, left: 6),
-                child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      doctorModel.firstName.toString() +
-                          " " +
-                          doctorModel.lastName.toString(),
-                      style: TextStyle(fontSize: 20),
-                    )),
-              ),
-              Divider(),
-              Padding(
-                padding: EdgeInsets.only(top: 10, left: 6),
-                child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Email',
-                      style: TextStyle(color: Colors.grey, fontSize: 20),
-                    )),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 10, left: 6),
-                child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      currentUser!.email.toString(),
-                      style: TextStyle(fontSize: 20),
-                    )),
-              ),
-              Divider(),
-              Padding(
-                padding: EdgeInsets.only(top: 3, left: 6),
-                child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Phone Number',
-                      style: TextStyle(color: Colors.grey, fontSize: 20),
-                    )),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 3, left: 6),
-                child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      doctorModel.contact,
-                      style: TextStyle(fontSize: 20),
-                    )),
-              ),
-              Divider(),
-              Padding(
-                padding: EdgeInsets.only(top: 3, left: 6),
-                child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Gender',
-                      style: TextStyle(color: Colors.grey, fontSize: 20),
-                    )),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 3, left: 6),
-                child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      doctorModel.gender,
-                      style: TextStyle(fontSize: 20),
-                    )),
-              ),
-              const Divider(),
-              Padding(
-                padding: EdgeInsets.only(top: 3, left: 6),
-                child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'PrNo',
-                      style: TextStyle(color: Colors.grey, fontSize: 20),
-                    )),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 3, left: 6),
-                child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      doctorModel.prno,
-                      style: TextStyle(fontSize: 20),
-                    )),
-              ),
-              Row(
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(top: 3, left: 6),
-                    child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Speacialization',
-                          style: TextStyle(color: Colors.grey, fontSize: 20),
-                        )),
+      body: doctorModel == null
+          ? Center(child: CircularProgressIndicator())
+          : Stack(
+              children: [
+                SizedBox(
+                  height: getProportionateScreenHeight(700),
+                  child: Image.asset(
+                    "Assets/TELEHEALTH-1.jpeg",
+                    fit: BoxFit.cover,
                   ),
-                  Spacer(),
-                  addIcon(context, doctorModel)
-                ],
-              ),
-              SizedBox(
-                height: getProportionateScreenHeight(50),
-                child: Padding(
-                  padding: EdgeInsets.only(top: 3, left: 6),
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      Text(
-                        doctorModel.spealization,
-                        style: TextStyle(fontSize: 20),
+                ),
+                Column(
+                  children: [
+                    RatingBar.builder(
+                      initialRating: rating,
+                      minRating: 0,
+                      allowHalfRating: true,
+                      itemCount: 5,
+                      itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                      itemBuilder: (context, _) => Icon(
+                        Icons.star,
+                        color: Colors.amber,
                       ),
-                      Spacer(),
-                    ],
-                  ),
-                ),
-              ),
-              Divider(),
-              SizedBox(
-                height: getProportionateScreenHeight(70),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40),
-                child: SizedBox(
-                  height: getProportionateScreenHeight(50),
-                  width: getProportionateScreenWidth(200),
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.red,
-                        // side: BorderSide(
-                        //   width: getProportionateScreenWidth(1).0,
-                        //   color: Colors.blueAccent,
-                        // ),
-                        shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(20),
+                      ignoreGestures: true,
+                      onRatingUpdate: (rating) {
+                        print(rating);
+                      },
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 40, left: 6),
+                      child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "Name",
+                            style: TextStyle(color: Colors.grey, fontSize: 20),
+                          )),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 10, left: 6),
+                      child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            doctorModel.firstName.toString() +
+                                " " +
+                                doctorModel.lastName.toString(),
+                            style: TextStyle(fontSize: 20),
+                          )),
+                    ),
+                    Divider(),
+                    Padding(
+                      padding: EdgeInsets.only(top: 10, left: 6),
+                      child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Email',
+                            style: TextStyle(color: Colors.grey, fontSize: 20),
+                          )),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 10, left: 6),
+                      child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            currentUser!.email.toString(),
+                            style: TextStyle(fontSize: 20),
+                          )),
+                    ),
+                    Divider(),
+                    Padding(
+                      padding: EdgeInsets.only(top: 3, left: 6),
+                      child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Phone Number',
+                            style: TextStyle(color: Colors.grey, fontSize: 20),
+                          )),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 3, left: 6),
+                      child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            doctorModel.contact,
+                            style: TextStyle(fontSize: 20),
+                          )),
+                    ),
+                    Divider(),
+                    Padding(
+                      padding: EdgeInsets.only(top: 3, left: 6),
+                      child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Gender',
+                            style: TextStyle(color: Colors.grey, fontSize: 20),
+                          )),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 3, left: 6),
+                      child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            doctorModel.gender,
+                            style: TextStyle(fontSize: 20),
+                          )),
+                    ),
+                    const Divider(),
+                    Padding(
+                      padding: EdgeInsets.only(top: 3, left: 6),
+                      child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'PrNo',
+                            style: TextStyle(color: Colors.grey, fontSize: 20),
+                          )),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 3, left: 6),
+                      child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            doctorModel.prno,
+                            style: TextStyle(fontSize: 20),
+                          )),
+                    ),
+                    Row(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(top: 3, left: 6),
+                          child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Speacialization',
+                                style:
+                                    TextStyle(color: Colors.grey, fontSize: 20),
+                              )),
+                        ),
+                        Spacer(),
+                        addIcon(context, doctorModel)
+                      ],
+                    ),
+                    SizedBox(
+                      height: getProportionateScreenHeight(50),
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 3, left: 6),
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            Text(
+                              doctorModel.spealization,
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Spacer(),
+                          ],
                         ),
                       ),
-                      onPressed: () {
-                        FirebaseAuth.instance.signOut().then((value) {
-                          Get.off(Register());
-                        }).onError((error, stackTrace) {
-                          Utils().toastMessage(error.toString());
-                        });
-                      },
-                      child: Text(
-                        "Logout",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20),
-                      )),
-                ),
-              )
-            ],
-          )
-        ],
-      ),
+                    ),
+                    Divider(),
+                    SizedBox(
+                      height: getProportionateScreenHeight(70),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 40),
+                      child: SizedBox(
+                        height: getProportionateScreenHeight(50),
+                        width: getProportionateScreenWidth(200),
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.red,
+                              // side: BorderSide(
+                              //   width: getProportionateScreenWidth(1).0,
+                              //   color: Colors.blueAccent,
+                              // ),
+                              shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(20),
+                              ),
+                            ),
+                            onPressed: () {
+                              FirebaseAuth.instance.signOut().then((value) {
+                                Get.off(Register());
+                              }).onError((error, stackTrace) {
+                                Utils().toastMessage(error.toString());
+                              });
+                            },
+                            child: Text(
+                              "Logout",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20),
+                            )),
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
     );
   }
 

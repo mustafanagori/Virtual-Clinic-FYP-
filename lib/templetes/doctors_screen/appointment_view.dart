@@ -242,7 +242,25 @@ class AppointtmentViewCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height: getProportionateScreenHeight(20),
+                    height: getProportionateScreenHeight(40),
+                    width: getProportionateScreenWidth(120),
+                    //   width: getProportionateScreenWidth(15)0,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.red,
+                        shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(20),
+                        ),
+                      ),
+                      onPressed: onPressedReject,
+                      child: Text(
+                        'Reject',
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: getProportionateScreenWidth(30),
                   ),
                   SizedBox(
                     height: getProportionateScreenHeight(40),
