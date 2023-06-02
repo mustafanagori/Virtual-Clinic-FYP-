@@ -74,7 +74,7 @@ class _AppointmentHistoryState extends State<AppointmentHistory> {
                             fees: data.fees,
                             startTime: data.startTime,
                           )
-                        : AppointtmentAcceptedViewCard(
+                        : AfterAppointtmentAcceptedViewCard(
                             onCall: () {
                               Get.to(callBypatient(
                                 doctorModel: doctorController
@@ -262,8 +262,8 @@ class AppointtmentViewCard extends StatelessWidget {
   }
 }
 
-class AppointtmentAcceptedViewCard extends StatelessWidget {
-  const AppointtmentAcceptedViewCard({
+class DuringAppointtmentAcceptedViewCard extends StatelessWidget {
+  const DuringAppointtmentAcceptedViewCard({
     required this.doctorName,
     required this.startTime,
     required this.endTime,
@@ -506,6 +506,373 @@ class AppointtmentAcceptedViewCard extends StatelessWidget {
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                     ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class BeforeAppointtmentAcceptedViewCard extends StatelessWidget {
+  const BeforeAppointtmentAcceptedViewCard({
+    required this.doctorName,
+    required this.startTime,
+    required this.endTime,
+    required this.date,
+    Key? key,
+    required this.fees,
+    required this.patienID,
+    required this.doctorID,
+    this.onCall,
+  }) : super(key: key);
+
+  final void Function()? onCall;
+  final String doctorName;
+  final String startTime;
+  final String endTime;
+  final DateTime date;
+  final String fees;
+  final String patienID;
+  final String doctorID;
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        padding: const EdgeInsets.all(8.0),
+        height: getProportionateScreenHeight(180),
+        width: getProportionateScreenWidth(350),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(color: AppColors.btnlogingreyGreen, spreadRadius: 2),
+          ],
+        ),
+        child: Column(
+          children: [
+            SizedBox(
+              height: getProportionateScreenHeight(10),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 20),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Row(
+                  children: [
+                    Text(
+                      "Name:",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      width: getProportionateScreenWidth(10),
+                    ),
+                    Text(
+                      doctorName,
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              height: getProportionateScreenHeight(5),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 20),
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    children: [
+                      Text("Start time:"),
+                      SizedBox(
+                        width: getProportionateScreenWidth(10),
+                      ),
+                      Text(startTime),
+                    ],
+                  )),
+            ),
+            SizedBox(
+              height: getProportionateScreenHeight(5),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 20),
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    children: [
+                      Text("End Time:"),
+                      SizedBox(
+                        width: getProportionateScreenWidth(10),
+                      ),
+                      Text(endTime),
+                    ],
+                  )),
+            ),
+            SizedBox(
+              height: getProportionateScreenHeight(5),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 20),
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    children: [
+                      Text("Day:"),
+                      SizedBox(
+                        width: getProportionateScreenWidth(10),
+                      ),
+                      Text(date.toString().split(" ")[0]),
+                    ],
+                  )),
+            ),
+            SizedBox(
+              height: getProportionateScreenHeight(10),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 20),
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    children: [
+                      Text("Fees:"),
+                      SizedBox(
+                        width: getProportionateScreenWidth(10),
+                      ),
+                      Text(fees),
+                    ],
+                  )),
+            ),
+            SizedBox(
+              height: getProportionateScreenHeight(20),
+            ),
+            Container(
+              height: getProportionateScreenHeight(40),
+              width: getProportionateScreenWidth(200),
+              child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red,
+                  // side: BorderSide(
+                  //   width: getProportionateScreenWidth(1).0,
+                  //   color: Colors.blueAccent,
+                  // ),
+                  shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(10),
+                  ),
+                ),
+                child: Text(
+                  'Appointment Pending',
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class AfterAppointtmentAcceptedViewCard extends StatelessWidget {
+  const AfterAppointtmentAcceptedViewCard({
+    required this.doctorName,
+    required this.startTime,
+    required this.endTime,
+    required this.date,
+    Key? key,
+    required this.fees,
+    required this.patienID,
+    required this.doctorID,
+    this.onCall,
+  }) : super(key: key);
+
+  final void Function()? onCall;
+  final String doctorName;
+  final String startTime;
+  final String endTime;
+  final DateTime date;
+  final String fees;
+  final String patienID;
+  final String doctorID;
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        padding: const EdgeInsets.all(8.0),
+        height: getProportionateScreenHeight(170),
+        width: getProportionateScreenWidth(350),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(color: AppColors.btnlogingreyGreen, spreadRadius: 2),
+          ],
+        ),
+        child: Column(
+          children: [
+            SizedBox(
+              height: getProportionateScreenHeight(10),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 20),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Row(
+                  children: [
+                    Text(
+                      "Name:",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      width: getProportionateScreenWidth(10),
+                    ),
+                    Text(
+                      doctorName,
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              height: getProportionateScreenHeight(5),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 20),
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    children: [
+                      Text("Start time:"),
+                      SizedBox(
+                        width: getProportionateScreenWidth(10),
+                      ),
+                      Text(startTime),
+                    ],
+                  )),
+            ),
+            SizedBox(
+              height: getProportionateScreenHeight(5),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 20),
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    children: [
+                      Text("End Time:"),
+                      SizedBox(
+                        width: getProportionateScreenWidth(10),
+                      ),
+                      Text(endTime),
+                    ],
+                  )),
+            ),
+            SizedBox(
+              height: getProportionateScreenHeight(5),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 20),
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    children: [
+                      Text("Day:"),
+                      SizedBox(
+                        width: getProportionateScreenWidth(10),
+                      ),
+                      Text(date.toString().split(" ")[0]),
+                    ],
+                  )),
+            ),
+            SizedBox(
+              height: getProportionateScreenHeight(10),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 20),
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    children: [
+                      Text("Fees:"),
+                      SizedBox(
+                        width: getProportionateScreenWidth(10),
+                      ),
+                      Text(fees),
+                    ],
+                  )),
+            ),
+            SizedBox(
+              height: getProportionateScreenHeight(8),
+            ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    height: getProportionateScreenHeight(10),
+                  ),
+                  Container(
+                    height: getProportionateScreenHeight(40),
+                    width: getProportionateScreenWidth(120),
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.green,
+                        // side: BorderSide(
+                        //   width: getProportionateScreenWidth(1).0,
+                        //   color: Colors.blueAccent,
+                        // ),
+                        shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(20),
+                        ),
+                      ),
+                      child: Text(
+                        'Completed',
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: getProportionateScreenWidth(25),
+                  ),
+                  Container(
+                    height: getProportionateScreenHeight(40),
+                    width: getProportionateScreenWidth(120),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Get.to(ViewPerciption(
+                          doctorID: doctorID,
+                          patientID: patienID,
+                        ));
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.red,
+                        // side: BorderSide(
+                        //   width: getProportionateScreenWidth(1).0,
+                        //   color: Colors.blueAccent,
+                        // ),
+                        shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(20),
+                        ),
+                      ),
+                      child: Text(
+                        'Perception',
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: getProportionateScreenWidth(8),
                   ),
                 ],
               ),

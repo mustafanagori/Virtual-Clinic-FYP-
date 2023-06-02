@@ -66,7 +66,7 @@ class _PatientHistoryState extends State<PatientHistory> {
                             .name,
                         startTime: data.startTime,
                       )
-                    : AppointtmentAcceptedViewCard(
+                    : DuringAppointtmentAcceptedViewCard(
                         patientID: dataList.elementAt(index).patientID,
                         doctorID: data.doctorID,
                         fees: data.fees,
@@ -94,7 +94,6 @@ class AppointtmentViewCard extends StatelessWidget {
     Key? key,
   }) : super(key: key);
   final void Function()? onPressedAccept;
-
   final void Function()? onPressedReject;
   final String patientName;
   final String fees;
@@ -275,8 +274,8 @@ class AppointtmentViewCard extends StatelessWidget {
   }
 }
 
-class AppointtmentAcceptedViewCard extends StatelessWidget {
-  const AppointtmentAcceptedViewCard({
+class DuringAppointtmentAcceptedViewCard extends StatelessWidget {
+  const DuringAppointtmentAcceptedViewCard({
     required this.patientName,
     required this.startTime,
     required this.endTime,
@@ -457,7 +456,7 @@ class AppointtmentAcceptedViewCard extends StatelessWidget {
                         ),
                       ),
                       child: Text(
-                        'Presiption',
+                        'Perception',
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                     ),
@@ -490,6 +489,336 @@ class AppointtmentAcceptedViewCard extends StatelessWidget {
                     ),
                   ),
                 ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class AfterAppointmentViewCard extends StatelessWidget {
+  const AfterAppointmentViewCard({
+    required this.patientName,
+    required this.startTime,
+    required this.endTime,
+    required this.date,
+    required this.patientID,
+    required this.doctorID,
+    Key? key,
+    required this.fees,
+  }) : super(key: key);
+  final String patientName;
+  final String startTime;
+  final String patientID;
+  final String doctorID;
+
+  final String fees;
+  final String endTime;
+  final DateTime date;
+  @override
+  Widget build(BuildContext context) {
+    final doctorController = Get.find<DoctorController>();
+
+    doctorController.getDoctorById(FirebaseAuth.instance.currentUser!.uid);
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Center(
+        child: Container(
+          height: getProportionateScreenHeight(160),
+          width: getProportionateScreenWidth(350),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(color: AppColors.btnlogingreyGreen, spreadRadius: 2),
+            ],
+          ),
+          child: Column(
+            children: [
+              SizedBox(
+                height: getProportionateScreenHeight(10),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 20),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    children: [
+                      Text(
+                        "Name:",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        width: getProportionateScreenWidth(10),
+                      ),
+                      Text(
+                        patientName,
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: getProportionateScreenHeight(5),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 20),
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      children: [
+                        Text("Start time:"),
+                        SizedBox(
+                          width: getProportionateScreenWidth(10),
+                        ),
+                        Text(startTime),
+                      ],
+                    )),
+              ),
+              SizedBox(
+                height: getProportionateScreenHeight(5),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 20),
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      children: [
+                        Text("End Time:"),
+                        SizedBox(
+                          width: getProportionateScreenWidth(10),
+                        ),
+                        Text(endTime),
+                      ],
+                    )),
+              ),
+              SizedBox(
+                height: getProportionateScreenHeight(5),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 20),
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      children: [
+                        Text("Day:"),
+                        SizedBox(
+                          width: getProportionateScreenWidth(10),
+                        ),
+                        Text(date.toString().split(" ")[0]),
+                      ],
+                    )),
+              ),
+              SizedBox(
+                height: getProportionateScreenHeight(10),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 20),
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      children: [
+                        Text("Fees:"),
+                        SizedBox(
+                          width: getProportionateScreenWidth(20),
+                        ),
+                        Text(fees),
+                      ],
+                    )),
+              ),
+              SizedBox(
+                height: getProportionateScreenHeight(10),
+              ),
+              Container(
+                height: getProportionateScreenHeight(40),
+                width: getProportionateScreenWidth(200),
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.green,
+                    // side: BorderSide(
+                    //   width: getProportionateScreenWidth(1).0,
+                    //   color: Colors.blueAccent,
+                    // ),
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: Text(
+                    'Appointment Completed',
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class BeforeAppointmentViewCard extends StatelessWidget {
+  const BeforeAppointmentViewCard({
+    required this.patientName,
+    required this.startTime,
+    required this.endTime,
+    required this.date,
+    required this.patientID,
+    required this.doctorID,
+    Key? key,
+    required this.fees,
+  }) : super(key: key);
+  final String patientName;
+  final String startTime;
+  final String patientID;
+  final String doctorID;
+
+  final String fees;
+  final String endTime;
+  final DateTime date;
+  @override
+  Widget build(BuildContext context) {
+    final doctorController = Get.find<DoctorController>();
+
+    doctorController.getDoctorById(FirebaseAuth.instance.currentUser!.uid);
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Center(
+        child: Container(
+          height: getProportionateScreenHeight(160),
+          width: getProportionateScreenWidth(350),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(color: AppColors.btnlogingreyGreen, spreadRadius: 2),
+            ],
+          ),
+          child: Column(
+            children: [
+              SizedBox(
+                height: getProportionateScreenHeight(10),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 20),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    children: [
+                      Text(
+                        "Name:",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        width: getProportionateScreenWidth(10),
+                      ),
+                      Text(
+                        patientName,
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: getProportionateScreenHeight(5),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 20),
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      children: [
+                        Text("Start time:"),
+                        SizedBox(
+                          width: getProportionateScreenWidth(10),
+                        ),
+                        Text(startTime),
+                      ],
+                    )),
+              ),
+              SizedBox(
+                height: getProportionateScreenHeight(5),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 20),
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      children: [
+                        Text("End Time:"),
+                        SizedBox(
+                          width: getProportionateScreenWidth(10),
+                        ),
+                        Text(endTime),
+                      ],
+                    )),
+              ),
+              SizedBox(
+                height: getProportionateScreenHeight(5),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 20),
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      children: [
+                        Text("Day:"),
+                        SizedBox(
+                          width: getProportionateScreenWidth(10),
+                        ),
+                        Text(date.toString().split(" ")[0]),
+                      ],
+                    )),
+              ),
+              SizedBox(
+                height: getProportionateScreenHeight(10),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 20),
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      children: [
+                        Text("Fees:"),
+                        SizedBox(
+                          width: getProportionateScreenWidth(20),
+                        ),
+                        Text(fees),
+                      ],
+                    )),
+              ),
+              SizedBox(
+                height: getProportionateScreenHeight(10),
+              ),
+              Container(
+                height: getProportionateScreenHeight(40),
+                width: getProportionateScreenWidth(200),
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.red,
+                    // side: BorderSide(
+                    //   width: getProportionateScreenWidth(1).0,
+                    //   color: Colors.blueAccent,
+                    // ),
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: Text(
+                    'Appointment Pending',
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ),
               )
             ],
           ),
