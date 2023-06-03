@@ -1,6 +1,6 @@
 class DoctorScheduleModel {
   final String userID;
-  final DateTime date;
+  final String day;
   final String endTime;
   final String fees;
   final String startTime;
@@ -8,7 +8,7 @@ class DoctorScheduleModel {
   DoctorScheduleModel({
     required this.userID,
     required this.endTime,
-    required this.date,
+    required this.day,
     required this.fees,
     required this.startTime,
     required this.doctorID,
@@ -19,7 +19,7 @@ class DoctorScheduleModel {
     return DoctorScheduleModel(
       userID: userID,
       doctorID: map['doctorID'],
-      date: map['date'].toDate(),
+      day: map['day'],
       endTime: map["endTime"],
       startTime: map["startTime"],
       fees: map["fees"],
@@ -32,7 +32,7 @@ class DoctorScheduleModel {
       "endTime": endTime,
       "startTime": startTime,
       "fees": fees,
-      "date": date,
+      "day": day,
       "doctorID": doctorID,
     };
   }

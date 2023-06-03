@@ -180,7 +180,7 @@ class _TakeAppointmentState extends State<TakeAppointment> {
                         // Utils().toastMessage("Request Sent");
                         // setState(() {});
                       },
-                      date: doctorsSchedule[index].date,
+                      day: doctorsSchedule[index].day,
                       endTime: doctorsSchedule[index].endTime.toString(),
                       fees: doctorsSchedule[index].fees,
                       name: docController
@@ -210,7 +210,7 @@ class DoctorScheduleCard extends StatelessWidget {
     required this.startTime,
     required this.endTime,
     required this.fees,
-    required this.date,
+    required this.day,
     required this.rat,
     Key? key,
     required this.onPressed,
@@ -221,7 +221,7 @@ class DoctorScheduleCard extends StatelessWidget {
   final String startTime;
   final String endTime;
   final String fees;
-  final DateTime date;
+  final String day;
   final double rat;
   @override
   Widget build(BuildContext context) {
@@ -275,7 +275,7 @@ class DoctorScheduleCard extends StatelessWidget {
                         SizedBox(
                           width: getProportionateScreenWidth(20),
                         ),
-                        Text(date.toString().split(" ")[0]),
+                        Text(day.toString().split(" ")[0]),
                       ],
                     ),
                     Row(

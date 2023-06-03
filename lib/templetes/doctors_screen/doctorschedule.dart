@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import '../../controller/doctor_schedule_controlller.dart';
 import '../../core/size_configuration.dart';
+import '../../core/utils.dart';
 
 class DoctorScheduleHistory extends StatefulWidget {
   const DoctorScheduleHistory({super.key});
@@ -21,6 +22,7 @@ class _DoctorScheduleHistoryState extends State<DoctorScheduleHistory> {
     scheduleController.fetchData();
     final doctorsSchedule = scheduleController.getList.where((element) =>
         element.doctorID == FirebaseAuth.instance.currentUser!.uid);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
@@ -53,11 +55,12 @@ class _DoctorScheduleHistoryState extends State<DoctorScheduleHistory> {
               return ListView.builder(
                 itemCount: doctorsSchedule.length,
                 itemBuilder: (context, index) => DoctorCategoryCard(
-                  onPressedDelete: () {
-                    scheduleController.deleteData(
+                  onPressedDelete: () async {
+                    await scheduleController.deleteData(
                         userID: doctorsSchedule.elementAt(index).userID);
+                    Utils().toastMessage("Schedule Deleted");
                   },
-                  date: doctorsSchedule.elementAt(index).date,
+                  day: doctorsSchedule.elementAt(index).day,
                   endTime: doctorsSchedule.elementAt(index).endTime.toString(),
                   fees: doctorsSchedule.elementAt(index).fees,
                   startTime:
@@ -78,14 +81,14 @@ class DoctorCategoryCard extends StatelessWidget {
     required this.startTime,
     required this.endTime,
     required this.fees,
-    required this.date,
+    required this.day,
     Key? key,
   }) : super(key: key);
   final void Function()? onPressedDelete;
   final String startTime;
   final String endTime;
   final String fees;
-  final DateTime date;
+  final String day;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -148,14 +151,13 @@ class DoctorCategoryCard extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 20),
                   child: Row(
                     children: [
-                      Text("Date ", style: TextStyle(fontSize: 20)),
+                      Text("Day ", style: TextStyle(fontSize: 20)),
                       SizedBox(
                         width: getProportionateScreenWidth(
                           2,
                         ),
                       ),
-                      Text(date.toString().split(" ")[0],
-                          style: TextStyle(fontSize: 20)),
+                      Text(day.toString(), style: TextStyle(fontSize: 20)),
                     ],
                   ),
                 ),
@@ -181,7 +183,7 @@ class DoctorCategoryCard extends StatelessWidget {
         Row(children: [
           Spacer(),
           Padding(
-            padding: const EdgeInsets.all(60),
+            padding: const EdgeInsets.all(20),
             child: IconButton(
                 onPressed: onPressedDelete,
                 icon: Icon(

@@ -60,7 +60,7 @@ class _AppointmentHistoryState extends State<AppointmentHistory> {
 
                     return dataList.elementAt(index).status == "book"
                         ? AppointtmentViewCard(
-                            date: data.date,
+                            day: data.day,
                             endTime: data.endTime,
                             doctorName: docController
                                     .getDoctorById(
@@ -97,7 +97,7 @@ class _AppointmentHistoryState extends State<AppointmentHistory> {
                             doctorID: data.doctorID,
                             patienID: dataList.elementAt(index).patientID,
                             fees: data.fees,
-                            date: data.date,
+                            day: data.day,
                             endTime: data.endTime,
                             doctorName: docController
                                     .getDoctorById(
@@ -122,7 +122,7 @@ class AppointtmentViewCard extends StatelessWidget {
     required this.doctorName,
     required this.startTime,
     required this.endTime,
-    required this.date,
+    required this.day,
     Key? key,
     required this.fees,
   }) : super(key: key);
@@ -131,7 +131,7 @@ class AppointtmentViewCard extends StatelessWidget {
   final String doctorName;
   final String startTime;
   final String endTime;
-  final DateTime date;
+  final String day;
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -221,7 +221,7 @@ class AppointtmentViewCard extends StatelessWidget {
                       SizedBox(
                         width: getProportionateScreenWidth(5),
                       ),
-                      Text(date.toString().split(" ")[0]),
+                      Text(day.toString().split(" ")[0]),
                     ],
                   )),
             ),
@@ -267,7 +267,7 @@ class DuringAppointtmentAcceptedViewCard extends StatelessWidget {
     required this.doctorName,
     required this.startTime,
     required this.endTime,
-    required this.date,
+    required this.day,
     Key? key,
     required this.fees,
     required this.patienID,
@@ -279,7 +279,7 @@ class DuringAppointtmentAcceptedViewCard extends StatelessWidget {
   final String doctorName;
   final String startTime;
   final String endTime;
-  final DateTime date;
+  final String day;
   final String fees;
   final String patienID;
   final String doctorID;
@@ -372,7 +372,7 @@ class DuringAppointtmentAcceptedViewCard extends StatelessWidget {
                       SizedBox(
                         width: getProportionateScreenWidth(10),
                       ),
-                      Text(date.toString().split(" ")[0]),
+                      Text(day.toString()),
                     ],
                   )),
             ),
@@ -522,7 +522,7 @@ class BeforeAppointtmentAcceptedViewCard extends StatelessWidget {
     required this.doctorName,
     required this.startTime,
     required this.endTime,
-    required this.date,
+    required this.day,
     Key? key,
     required this.fees,
     required this.patienID,
@@ -534,7 +534,7 @@ class BeforeAppointtmentAcceptedViewCard extends StatelessWidget {
   final String doctorName;
   final String startTime;
   final String endTime;
-  final DateTime date;
+  final String day;
   final String fees;
   final String patienID;
   final String doctorID;
@@ -627,7 +627,7 @@ class BeforeAppointtmentAcceptedViewCard extends StatelessWidget {
                       SizedBox(
                         width: getProportionateScreenWidth(10),
                       ),
-                      Text(date.toString().split(" ")[0]),
+                      Text(day.toString()),
                     ],
                   )),
             ),
@@ -684,7 +684,7 @@ class AfterAppointtmentAcceptedViewCard extends StatelessWidget {
     required this.doctorName,
     required this.startTime,
     required this.endTime,
-    required this.date,
+    required this.day,
     Key? key,
     required this.fees,
     required this.patienID,
@@ -696,7 +696,7 @@ class AfterAppointtmentAcceptedViewCard extends StatelessWidget {
   final String doctorName;
   final String startTime;
   final String endTime;
-  final DateTime date;
+  final String day;
   final String fees;
   final String patienID;
   final String doctorID;
@@ -789,7 +789,7 @@ class AfterAppointtmentAcceptedViewCard extends StatelessWidget {
                       SizedBox(
                         width: getProportionateScreenWidth(10),
                       ),
-                      Text(date.toString().split(" ")[0]),
+                      Text(day.toString()),
                     ],
                   )),
             ),

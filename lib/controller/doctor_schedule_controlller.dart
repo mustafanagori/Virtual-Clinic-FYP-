@@ -59,7 +59,7 @@ class DoctorSchedulesController extends GetxController {
   uploadData(
       {required String startTime,
       required String endTime,
-      required DateTime date,
+      required String day,
       required String docID,
       required String fees}) async {
     final doc =
@@ -67,7 +67,7 @@ class DoctorSchedulesController extends GetxController {
       "startTime": startTime,
       "endTime": endTime,
       "doctorID": docID,
-      "date": date,
+      "day": day,
       "fees": fees,
     });
     _list.insert(
@@ -77,7 +77,7 @@ class DoctorSchedulesController extends GetxController {
           startTime: startTime,
           endTime: endTime,
           doctorID: docID,
-          date: date,
+          day: day,
           fees: fees,
         ));
     update();

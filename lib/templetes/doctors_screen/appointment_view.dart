@@ -63,6 +63,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                         //  dataList.elementAt(index).status == "book"
                         //     ?
                         AppointtmentViewCard(
+
                       fees: data.fees,
                       onPressedReject: () async {
                         await caController.deleteData(
@@ -75,7 +76,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
 
                         Utils().toastMessage("Accepted");
                       },
-                      date: data.date,
+                      day : data.day,
                       endTime: data.endTime,
                       patientName: patientController
                           .getPatientById(dataList.elementAt(index).patientID)
@@ -109,7 +110,7 @@ class AppointtmentViewCard extends StatelessWidget {
     required this.patientName,
     required this.startTime,
     required this.endTime,
-    required this.date,
+    required this.day,
     required this.onPressedAccept,
     required this.onPressedReject,
     Key? key,
@@ -121,7 +122,7 @@ class AppointtmentViewCard extends StatelessWidget {
   final String patientName;
   final String startTime;
   final String endTime;
-  final DateTime date;
+  final String day;
   final String fees;
 
   @override
@@ -214,7 +215,7 @@ class AppointtmentViewCard extends StatelessWidget {
                         SizedBox(
                           width: getProportionateScreenWidth(20),
                         ),
-                        Text(date.toString().split(" ")[0]),
+                        Text(day.toString().split(" ")[0]),
                       ],
                     )),
               ),
