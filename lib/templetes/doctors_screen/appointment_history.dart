@@ -55,6 +55,7 @@ class _PatientHistoryState extends State<PatientHistory> {
                           await caController.updateStatus(
                               dataList.elementAt(index).sheduleID, "Rejected");
                         },
+                        //slots
                         onPressedAccept: () async {
                           await caController.updateStatus(
                               dataList.elementAt(index).sheduleID, "Accepted");
