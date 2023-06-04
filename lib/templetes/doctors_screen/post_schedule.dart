@@ -65,7 +65,8 @@ class _PostScheduleState extends State<PostSchedule> {
                 width: getProportionateScreenWidth(300),
                 child: Center(
                   child: DropdownButton<String>(
-                    focusColor: Colors.red,
+                    iconSize: 10,
+                    borderRadius: BorderRadius.circular(30),
                     value: selectedDay,
                     hint: Text('Select a day'),
                     onChanged: (value) {
@@ -226,11 +227,11 @@ class _PostScheduleState extends State<PostSchedule> {
                     keyboardType: TextInputType.number,
                     controller: feeController,
                     decoration: InputDecoration(
-                      hintText: "Fees Structure",
+                      hintText: "Appointment Fee",
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                             width: getProportionateScreenWidth(3),
-                            color: AppColors.btnlogingreyGreen),
+                            color: Color.fromARGB(255, 212, 106, 106)),
                       ),
                     ),
                   ),
@@ -260,7 +261,7 @@ class _PostScheduleState extends State<PostSchedule> {
                     });
                     // TimeOfDay startTime = TimeOfDay(hour: 8, minute: 0);
                     // TimeOfDay endTime = TimeOfDay(hour: 17, minute: 0);
-                    int intervalMinutes = 15;
+                    int intervalMinutes = 10;
 
                     List<TimeOfDay> slots =
                         generateTimeSlots(startTime, endTime, intervalMinutes);
@@ -268,12 +269,12 @@ class _PostScheduleState extends State<PostSchedule> {
                     for (TimeOfDay slot in slots) {
                       scheduleController.uploadData(
                           startTime: slot.toString().split("y")[1],
-                          endTime: slot.minute + 15 == 60
+                          endTime: slot.minute + 10 == 60
                               ? TimeOfDay(hour: slot.hour + 1, minute: 0)
                                   .toString()
                                   .split("y")[1]
                               : TimeOfDay(
-                                      hour: slot.hour, minute: slot.minute + 15)
+                                      hour: slot.hour, minute: slot.minute + 10)
                                   .toString()
                                   .split("y")[1],
                           day: selectedDay,

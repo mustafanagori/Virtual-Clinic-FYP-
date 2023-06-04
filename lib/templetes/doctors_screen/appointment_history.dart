@@ -489,10 +489,6 @@ class DuringAppointtmentAcceptedViewCard extends StatelessWidget {
                       },
                       style: ElevatedButton.styleFrom(
                         primary: Colors.green,
-                        // side: BorderSide(
-                        //   width: getProportionateScreenWidth(1).0,
-                        //   color: Colors.blueAccent,
-                        // ),
                         shape: new RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(20),
                         ),
@@ -881,11 +877,14 @@ String checkTime(
         temp = "during";
       }
     }
-    if (now.hour >= endHour && now.minute >= endMinute) {
+    // if (now.hour >= endHour && now.minute >= endMinute) {
+    //   temp = "after";
+    //   print("after");
+    // }
+    if (now.hour == endHour && now.minute >= endMinute || now.hour > endHour) {
       temp = "after";
       print("after");
     }
   }
-
   return temp;
 }

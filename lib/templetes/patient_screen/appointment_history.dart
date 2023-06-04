@@ -3,6 +3,8 @@ import 'package:doctorandpatient/core/colors.dart';
 import 'package:doctorandpatient/templetes/patient_screen/rating.dart';
 import 'package:doctorandpatient/templetes/patient_screen/take_appointment.dart';
 import 'package:doctorandpatient/templetes/patient_screen/viewpresiption.dart';
+import 'package:doctorandpatient/templetes/video_Calling/call_by_doctor.dart';
+import 'package:doctorandpatient/templetes/video_Calling/call_by_patient.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,10 +20,13 @@ class AppointmentHistory extends StatefulWidget {
   State<AppointmentHistory> createState() => _AppointmentHistoryState();
 }
 
+final currentUser = FirebaseAuth.instance.currentUser;
 final caController = Get.put(CreateAppointmentController());
 final dsController = Get.put(DoctorSchedulesController());
 final patientController = Get.put(PatientController());
 final doctorController = Get.put(DoctorController());
+
+final patient = patientController.getPatientById(currentUser!.uid);
 
 class _AppointmentHistoryState extends State<AppointmentHistory> {
   @override
@@ -29,7 +34,7 @@ class _AppointmentHistoryState extends State<AppointmentHistory> {
     // video calling
     final patientController = Get.put(PatientController());
     final patient = patientController
-        .getPatientById(FirebaseAuth.instance.currentUser!.uid);
+      ..getPatientById(FirebaseAuth.instance.currentUser!.uid);
 
     final dataList = caController.getList.where((element) =>
         (element.status == "Accepted" || element.status == "book") &&
@@ -44,7 +49,7 @@ class _AppointmentHistoryState extends State<AppointmentHistory> {
             title: Text('Appointment History')),
         body: Column(children: [
           SizedBox(
-            height: getProportionateScreenHeight(719),
+            height: getProportionateScreenHeight(740),
             width: getProportionateScreenWidth(400),
             child:
                 GetBuilder<CreateAppointmentController>(builder: (controller) {
@@ -284,10 +289,10 @@ class DuringAppointtmentAcceptedViewCard extends StatelessWidget {
     required this.fees,
     required this.patienID,
     required this.doctorID,
-    this.onCall,
+    // this.onCall,
   }) : super(key: key);
 
-  final void Function()? onCall;
+  // final void Function()? onCall;
   final String doctorName;
   final String startTime;
   final String endTime;
@@ -461,7 +466,7 @@ class DuringAppointtmentAcceptedViewCard extends StatelessWidget {
                         ),
                       ),
                       child: Text(
-                        'Presiption',
+                        'Perception',
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                     ),
@@ -473,19 +478,22 @@ class DuringAppointtmentAcceptedViewCard extends StatelessWidget {
                     height: getProportionateScreenHeight(40),
                     width: getProportionateScreenWidth(100),
                     child: ElevatedButton(
-                      onPressed: onCall,
+                      onPressed:
+                          //onCall
+                          () {
+                        Get.to(callByDoctor(
+                            conferenceID: "1",
+                            username: patient.name,
+                            userid: patient.userID));
+                      },
                       style: ElevatedButton.styleFrom(
                         primary: Colors.green,
-                        // side: BorderSide(
-                        //   width: getProportionateScreenWidth(1).0,
-                        //   color: Colors.blueAccent,
-                        // ),
                         shape: new RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(20),
                         ),
                       ),
                       child: Text(
-                        'call',
+                        'Call',
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                     ),
@@ -514,7 +522,7 @@ class DuringAppointtmentAcceptedViewCard extends StatelessWidget {
                         ),
                       ),
                       child: Text(
-                        'raing',
+                        'Raing',
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                     ),
@@ -934,6 +942,10 @@ String checkTime(
         temp = "during";
       }
     }
+    // if (now.hour == endHour && now.minute >= endMinute || now.hour > endHour) {
+    //   temp = "after";
+    //   print("after");
+    // }
     if (now.hour == endHour && now.minute >= endMinute || now.hour > endHour) {
       temp = "after";
       print("after");
