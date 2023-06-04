@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-class BottomNavBarController extends GetxController {
+class BottomBarPatientController extends GetxController {
   @override
   void onInit() {
     //  changeTabIndex(0);

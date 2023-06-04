@@ -53,13 +53,13 @@ class _PatientInfoState extends State<PatientInfo> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
-                height: getProportionateScreenHeight(10),
+                height: getProportionateScreenHeight(30),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Container(
-                    width: getProportionateScreenWidth(200),
+                    width: getProportionateScreenWidth(250),
                     child: TextFormField(
                       controller: firstNameController,
                       decoration: InputDecoration(
@@ -70,19 +70,25 @@ class _PatientInfoState extends State<PatientInfo> {
                               borderRadius: BorderRadius.circular(20)),
                           labelText: "Name"),
                     ),
+                    //              validator: (value) {
+                    //   if (value.isEmpty) {
+                    //     return 'Name is required';
+                    //   }
+                    //   return null; // Return null if validation succeeds
+                    // },
                   ),
                 ],
               ),
               SizedBox(
-                height: getProportionateScreenHeight(10),
+                height: getProportionateScreenHeight(30),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Container(
-                    width: getProportionateScreenWidth(200),
+                    width: getProportionateScreenWidth(250),
                     child: TextFormField(
-                      keyboardType: TextInputType.phone,
+                      keyboardType: TextInputType.number,
                       maxLength: 11,
                       controller: contactController,
                       decoration: InputDecoration(
@@ -103,7 +109,7 @@ class _PatientInfoState extends State<PatientInfo> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Container(
-                    width: getProportionateScreenWidth(200),
+                    width: getProportionateScreenWidth(250),
                     child: TextFormField(
                       keyboardType: TextInputType.number,
                       maxLength: 13,
@@ -131,6 +137,9 @@ class _PatientInfoState extends State<PatientInfo> {
                       });
                     },
                   ),
+                  SizedBox(
+                    height: getProportionateScreenHeight(30),
+                  ),
                   RadioListTile(
                     title: Text("Female"),
                     value: "female",
@@ -154,7 +163,7 @@ class _PatientInfoState extends State<PatientInfo> {
                 ],
               ),
               SizedBox(
-                height: getProportionateScreenHeight(10),
+                height: getProportionateScreenHeight(270),
               ),
               Container(
                 height: getProportionateScreenHeight(50),
