@@ -934,7 +934,7 @@ String checkTime(
         temp = "during";
       }
     }
-    if (now.hour >= endHour && now.minute >= endMinute) {
+    if (now.hour == endHour && now.minute >= endMinute || now.hour > endHour) {
       temp = "after";
       print("after");
     }
