@@ -20,11 +20,11 @@ class TakeAppointment extends StatefulWidget {
 }
 
 TextEditingController search = TextEditingController();
-final scheduleController = Get.find<DoctorSchedulesController>();
-final appointmentController = Get.find<CreateAppointmentController>();
-final docController = Get.find<DoctorController>();
+final scheduleController = Get.put(DoctorSchedulesController());
+final appointmentController = Get.put(CreateAppointmentController());
+final docController = Get.put(DoctorController());
 
-final patientController = Get.find<PatientController>();
+final patientController = Get.put(PatientController());
 
 // fun for rating
 double _rating(List<dynamic>? rating) {

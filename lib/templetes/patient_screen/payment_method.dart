@@ -26,9 +26,9 @@ class PaymentMethodScreen extends StatefulWidget {
 }
 
 class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
-  final appointmentController = Get.find<CreateAppointmentController>();
-  final doctorController = Get.find<DoctorController>();
-  final doctorscheduleController = Get.find<DoctorSchedulesController>();
+  final appointmentController = Get.put(CreateAppointmentController());
+  final doctorController = Get.put(DoctorController());
+  final doctorscheduleController = Get.put(DoctorSchedulesController());
   String paymentStatus = "pending";
   // ProductModel productModel =
   String integritySalt = "17vt285ytb";

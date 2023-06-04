@@ -10,7 +10,6 @@ import '../../controller/create_appoint.dart';
 import '../../controller/doctor_schedule_controlller.dart';
 import '../../controller/doctors_controller.dart';
 import '../../core/size_configuration.dart';
-import '../video_Calling/call_by_patient.dart';
 
 class AppointmentHistory extends StatefulWidget {
   const AppointmentHistory({super.key});
@@ -19,16 +18,16 @@ class AppointmentHistory extends StatefulWidget {
   State<AppointmentHistory> createState() => _AppointmentHistoryState();
 }
 
-final caController = Get.find<CreateAppointmentController>();
-final dsController = Get.find<DoctorSchedulesController>();
-final patientController = Get.find<PatientController>();
-final doctorController = Get.find<DoctorController>();
+final caController = Get.put(CreateAppointmentController());
+final dsController = Get.put(DoctorSchedulesController());
+final patientController = Get.put(PatientController());
+final doctorController = Get.put(DoctorController());
 
 class _AppointmentHistoryState extends State<AppointmentHistory> {
   @override
   Widget build(BuildContext context) {
     // video calling
-    final patientController = Get.find<PatientController>();
+    final patientController = Get.put(PatientController());
     final patient = patientController
         .getPatientById(FirebaseAuth.instance.currentUser!.uid);
 
@@ -57,7 +56,16 @@ class _AppointmentHistoryState extends State<AppointmentHistory> {
                   itemBuilder: (context, index) {
                     final data = dsController
                         .getById(dataList.elementAt(index).sheduleID);
-
+                    String checkTimetemp = checkTime(
+                        day: data.day,
+                        startHour: int.parse(
+                            data.startTime.split("(")[1].split(":")[0]),
+                        endHour:
+                            int.parse(data.endTime.split("(")[1].split(":")[0]),
+                        startMinute: int.parse(
+                            data.startTime.split(":")[1].split(")")[0]),
+                        endMinute: int.parse(
+                            data.endTime.split(":")[1].split(")")[0]));
                     return dataList.elementAt(index).status == "book"
                         ? AppointtmentViewCard(
                             day: data.day,
@@ -74,42 +82,46 @@ class _AppointmentHistoryState extends State<AppointmentHistory> {
                             fees: data.fees,
                             startTime: data.startTime,
                           )
-                        : AfterAppointtmentAcceptedViewCard(
-                            onCall: () {
-                              Get.to(callBypatient(
-                                doctorModel: doctorController
-                                    .getDoctorById(data.doctorID),
-                                conferenceID: "1",
-                                userid: patient.userID,
-                                username: patient.name,
-                              ));
-                              // showDialog(
-                              //   context: context,
-                              //   builder: (context) => Rating(
-                              //       doctorID:
-                              //           dataList.elementAt(index).doctorID,
-                              //       rating: docController
-                              //           .getDoctorById(
-                              //               dataList.elementAt(index).doctorID)
-                              //           .rating),
-                              // );
-                            },
-                            doctorID: data.doctorID,
-                            patienID: dataList.elementAt(index).patientID,
-                            fees: data.fees,
-                            day: data.day,
-                            endTime: data.endTime,
-                            doctorName: docController
+                        : checkTimetemp == "during"
+                            ? DuringAppointtmentAcceptedViewCard(
+                                doctorName: docController
                                     .getDoctorById(
                                         dataList.elementAt(index).doctorID)
-                                    .firstName +
-                                " " +
-                                docController
-                                    .getDoctorById(
-                                        dataList.elementAt(index).doctorID)
-                                    .lastName,
-                            startTime: data.startTime,
-                          );
+                                    .firstName,
+                                patienID: dataList.elementAt(index).patientID,
+                                doctorID: data.doctorID,
+                                fees: data.fees,
+                                day: data.day,
+                                endTime: data.endTime,
+                                startTime: data.startTime,
+                              )
+                            : checkTimetemp == "after"
+                                ? AfterAppointtmentAcceptedViewCard(
+                                    doctorName: docController
+                                        .getDoctorById(
+                                            dataList.elementAt(index).doctorID)
+                                        .firstName,
+                                    patienID:
+                                        dataList.elementAt(index).patientID,
+                                    doctorID: data.doctorID,
+                                    fees: data.fees,
+                                    day: data.day,
+                                    endTime: data.endTime,
+                                    startTime: data.startTime,
+                                  )
+                                : BeforeAppointtmentAcceptedViewCard(
+                                    doctorName: docController
+                                        .getDoctorById(
+                                            dataList.elementAt(index).doctorID)
+                                        .firstName,
+                                    patienID:
+                                        dataList.elementAt(index).patientID,
+                                    doctorID: data.doctorID,
+                                    fees: data.fees,
+                                    day: data.day,
+                                    endTime: data.endTime,
+                                    startTime: data.startTime,
+                                  );
                   });
             }),
           )
@@ -543,7 +555,7 @@ class BeforeAppointtmentAcceptedViewCard extends StatelessWidget {
     return Center(
       child: Container(
         padding: const EdgeInsets.all(8.0),
-        height: getProportionateScreenHeight(180),
+        height: getProportionateScreenHeight(200),
         width: getProportionateScreenWidth(350),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
@@ -653,7 +665,7 @@ class BeforeAppointtmentAcceptedViewCard extends StatelessWidget {
             ),
             Container(
               height: getProportionateScreenHeight(40),
-              width: getProportionateScreenWidth(200),
+              width: getProportionateScreenWidth(250),
               child: ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
@@ -705,7 +717,7 @@ class AfterAppointtmentAcceptedViewCard extends StatelessWidget {
     return Center(
       child: Container(
         padding: const EdgeInsets.all(8.0),
-        height: getProportionateScreenHeight(170),
+        height: getProportionateScreenHeight(190),
         width: getProportionateScreenWidth(350),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
@@ -882,4 +894,51 @@ class AfterAppointtmentAcceptedViewCard extends StatelessWidget {
       ),
     );
   }
+}
+
+String checkTime(
+    {required String day,
+    required int startHour,
+    required int endHour,
+    required int startMinute,
+    required int endMinute}) {
+  DateTime now = DateTime.now();
+  String temp = "before";
+  final List<String> daysOfWeek = [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday',
+  ];
+  print(startHour);
+  print(endHour);
+  print(startMinute);
+  print(endMinute);
+  print(day);
+  print(daysOfWeek[now.weekday - 1]);
+  print(now.hour);
+  print(now.minute);
+  // if (endMinute == 0) {
+  //   endMinute = 59;
+  //   endHour -= 1;
+  // }
+  if (daysOfWeek[now.weekday - 1] == day) {
+    if (now.hour >= startHour && now.hour <= endHour) {
+      if (now.hour >= startHour &&
+          now.minute >= startMinute &&
+          now.hour <= endHour &&
+          now.minute <= endMinute) {
+        temp = "during";
+      }
+    }
+    if (now.hour >= endHour && now.minute >= endMinute) {
+      temp = "after";
+      print("after");
+    }
+  }
+
+  return temp;
 }

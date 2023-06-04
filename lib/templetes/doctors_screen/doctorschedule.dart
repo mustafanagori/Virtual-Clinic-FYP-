@@ -14,7 +14,7 @@ class DoctorScheduleHistory extends StatefulWidget {
   State<DoctorScheduleHistory> createState() => _DoctorScheduleHistoryState();
 }
 
-final scheduleController = Get.find<DoctorSchedulesController>();
+final scheduleController = Get.put(DoctorSchedulesController());
 
 class _DoctorScheduleHistoryState extends State<DoctorScheduleHistory> {
   @override

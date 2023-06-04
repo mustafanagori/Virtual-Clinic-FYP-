@@ -11,7 +11,7 @@ class ViewPerciption extends StatelessWidget {
   final String patientID;
   final String doctorID;
   TextEditingController text = TextEditingController();
-  final presiptionController = Get.find<PresiptionController>();
+  final presiptionController = Get.put(PresiptionController());
 
   @override
   Widget build(BuildContext context) {

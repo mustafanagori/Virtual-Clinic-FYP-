@@ -21,10 +21,10 @@ class AppointmentScreen extends StatefulWidget {
 final caController = Get.put(CreateAppointmentController());
 final dsController = Get.put(DoctorSchedulesController());
 final patientController = Get.put(PatientController());
-// final caController = Get.find<CreateAppointmentController>();
+// final caController = Get.put(CreateAppointmentController());
 
-// final dsController = Get.find<DoctorSchedulesController>();
-// final patientController = Get.find<PatientController>();
+// final dsController = Get.put(DoctorSchedulesController());
+// final patientController = Get.put(PatientController());
 
 class _AppointmentScreenState extends State<AppointmentScreen> {
   @override
@@ -63,7 +63,6 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                         //  dataList.elementAt(index).status == "book"
                         //     ?
                         AppointtmentViewCard(
-
                       fees: data.fees,
                       onPressedReject: () async {
                         await caController.deleteData(
@@ -76,7 +75,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
 
                         Utils().toastMessage("Accepted");
                       },
-                      day : data.day,
+                      day: data.day,
                       endTime: data.endTime,
                       patientName: patientController
                           .getPatientById(dataList.elementAt(index).patientID)

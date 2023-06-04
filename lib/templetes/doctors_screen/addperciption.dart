@@ -21,7 +21,7 @@ class Perciption extends StatefulWidget {
 class _PerciptionState extends State<Perciption> {
   TextEditingController text = TextEditingController();
 
-  final presiptionController = Get.find<PresiptionController>();
+  final presiptionController = Get.put(PresiptionController());
 
   @override
   Widget build(BuildContext context) {
