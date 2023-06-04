@@ -10,6 +10,7 @@ import '../../controller/doctor_schedule_controlller.dart';
 import '../../controller/doctors_controller.dart';
 import '../../controller/patient_controller.dart';
 import '../../core/size_configuration.dart';
+import '../../core/utils.dart';
 
 class TakeAppointment extends StatefulWidget {
   const TakeAppointment({Key? key}) : super(key: key);
@@ -161,24 +162,24 @@ class _TakeAppointmentState extends State<TakeAppointment> {
                           .getDoctorById(doctorsSchedule[index].doctorID)
                           .spealization,
                       onPressed: () async {
-                        Get.to(PaymentMethodScreen(
-                          doctorScheduleModel: doctorsSchedule[index],
-                          doctorModel: docController
-                              .getDoctorById(doctorsSchedule[index].doctorID),
-                          patientModel: patientController.getPatientById(
-                              FirebaseAuth.instance.currentUser!.uid),
-                        ));
-                        // await appointmentController.uploadData(
-                        //     status: "book",
-                        //     patientID: FirebaseAuth.instance.currentUser!.uid,
-                        //     doctorID: docController
-                        //         .getDoctorById(doctorsSchedule[index].doctorID)
-                        //         .userID,
-                        //     sheduleID: doctorsSchedule.elementAt(index).userID);
+                        // Get.to(PaymentMethodScreen(
+                        //   doctorScheduleModel: doctorsSchedule[index],
+                        //   doctorModel: docController
+                        //       .getDoctorById(doctorsSchedule[index].doctorID),
+                        //   patientModel: patientController.getPatientById(
+                        //       FirebaseAuth.instance.currentUser!.uid),
+                        // ));
+                        await appointmentController.uploadData(
+                            status: "book",
+                            patientID: FirebaseAuth.instance.currentUser!.uid,
+                            doctorID: docController
+                                .getDoctorById(doctorsSchedule[index].doctorID)
+                                .userID,
+                            sheduleID: doctorsSchedule.elementAt(index).userID);
 
-                        // await appointmentController.fetchData();
-                        // Utils().toastMessage("Request Sent");
-                        // setState(() {});
+                        await appointmentController.fetchData();
+                        Utils().toastMessage("Request Sent");
+                        setState(() {});
                       },
                       day: doctorsSchedule[index].day,
                       endTime: doctorsSchedule[index].endTime.toString(),

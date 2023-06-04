@@ -1,15 +1,12 @@
 import 'package:doctorandpatient/controller/doctors_controller.dart';
 import 'package:doctorandpatient/controller/patient_controller.dart';
 import 'package:doctorandpatient/core/colors.dart';
-import 'package:doctorandpatient/templetes/patient_screen/rating.dart';
-import 'package:doctorandpatient/templetes/patient_screen/viewpresiption.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controller/create_appoint.dart';
 import '../../controller/doctor_schedule_controlller.dart';
 import '../../core/size_configuration.dart';
-import '../../Chat/chat_inbox.dart';
 
 import '../video_Calling/call_by_doctor.dart';
 import 'addperciption.dart';
@@ -48,18 +45,21 @@ class _PatientHistoryState extends State<PatientHistory> {
                 final data =
                     dsController.getById(dataList.elementAt(index).sheduleID);
 
-                return dataList.elementAt(index).status == "book"
-                    ? AppointtmentViewCard(
+                return checkTime(
+                            day: data.day,
+                            startHour: int.parse(
+                                data.startTime.split("(")[1].split(":")[0]),
+                            endHour: int.parse(
+                                data.endTime.split("(")[1].split(":")[0]),
+                            startMinute: int.parse(
+                                data.startTime.split(":")[1].split(")")[0]),
+                            endMinute: int.parse(
+                                data.endTime.split(":")[1].split(")")[0])) ==
+                        true
+                    ? DuringAppointtmentAcceptedViewCard(
+                        patientID: dataList.elementAt(index).patientID,
+                        doctorID: data.doctorID,
                         fees: data.fees,
-                        onPressedReject: () async {
-                          await caController.updateStatus(
-                              dataList.elementAt(index).sheduleID, "Rejected");
-                        },
-                        //slots
-                        onPressedAccept: () async {
-                          await caController.updateStatus(
-                              dataList.elementAt(index).sheduleID, "Accepted");
-                        },
                         day: data.day,
                         endTime: data.endTime,
                         patientName: patientController
@@ -67,7 +67,7 @@ class _PatientHistoryState extends State<PatientHistory> {
                             .name,
                         startTime: data.startTime,
                       )
-                    : DuringAppointtmentAcceptedViewCard(
+                    : BeforeAppointmentViewCard(
                         patientID: dataList.elementAt(index).patientID,
                         doctorID: data.doctorID,
                         fees: data.fees,
@@ -692,7 +692,7 @@ class BeforeAppointmentViewCard extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Center(
         child: Container(
-          height: getProportionateScreenHeight(160),
+          height: getProportionateScreenHeight(190),
           width: getProportionateScreenWidth(350),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
@@ -802,7 +802,7 @@ class BeforeAppointmentViewCard extends StatelessWidget {
               ),
               Container(
                 height: getProportionateScreenHeight(40),
-                width: getProportionateScreenWidth(200),
+                width: getProportionateScreenWidth(250),
                 child: ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
@@ -827,4 +827,43 @@ class BeforeAppointmentViewCard extends StatelessWidget {
       ),
     );
   }
+}
+
+bool checkTime(
+    {required String day,
+    required int startHour,
+    required int endHour,
+    required int startMinute,
+    required int endMinute}) {
+  DateTime now = DateTime.now();
+  bool temp = false;
+  final List<String> daysOfWeek = [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday',
+  ];
+  print(startHour);
+  print(endHour);
+  print(startMinute);
+  print(endMinute);
+  print(day);
+  print(daysOfWeek[now.weekday - 1]);
+  print(now.hour);
+  print(now.minute);
+  if (daysOfWeek[now.weekday - 1] == day) {
+    if (now.hour >= startHour && now.hour <= endHour) {
+      if (now.hour >= startHour &&
+          now.minute >= startMinute &&
+          now.hour <= endHour &&
+          now.minute <= endMinute) {
+        temp = true;
+      }
+    }
+  }
+
+  return temp;
 }
