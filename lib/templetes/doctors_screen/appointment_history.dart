@@ -310,7 +310,7 @@ class DuringAppointtmentAcceptedViewCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final doctorController = Get.put(DoctorController());
-    ;
+    
     final doctor =
         doctorController.getDoctorById(FirebaseAuth.instance.currentUser!.uid);
     return Padding(
@@ -881,7 +881,11 @@ String checkTime(
         temp = "during";
       }
     }
-    if (now.hour >= endHour && now.minute >= endMinute) {
+    // if (now.hour >= endHour && now.minute >= endMinute) {
+    //   temp = "after";
+    //   print("after");
+    // }
+    if (now.hour == endHour && now.minute >= endMinute || now.hour > endHour) {
       temp = "after";
       print("after");
     }

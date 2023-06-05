@@ -10,6 +10,7 @@ import '../../controller/create_appoint.dart';
 import '../../controller/doctor_schedule_controlller.dart';
 import '../../controller/doctors_controller.dart';
 import '../../core/size_configuration.dart';
+import '../video_Calling/call_by_doctor.dart';
 
 class AppointmentHistory extends StatefulWidget {
   const AppointmentHistory({super.key});
@@ -28,8 +29,6 @@ class _AppointmentHistoryState extends State<AppointmentHistory> {
   Widget build(BuildContext context) {
     // video calling
     final patientController = Get.put(PatientController());
-    final patient = patientController
-        .getPatientById(FirebaseAuth.instance.currentUser!.uid);
 
     final dataList = caController.getList.where((element) =>
         (element.status == "Accepted" || element.status == "book") &&
@@ -284,10 +283,10 @@ class DuringAppointtmentAcceptedViewCard extends StatelessWidget {
     required this.fees,
     required this.patienID,
     required this.doctorID,
-    this.onCall,
+    // this.onCall,
   }) : super(key: key);
 
-  final void Function()? onCall;
+  //final void Function()? onCall;
   final String doctorName;
   final String startTime;
   final String endTime;
@@ -297,6 +296,8 @@ class DuringAppointtmentAcceptedViewCard extends StatelessWidget {
   final String doctorID;
   @override
   Widget build(BuildContext context) {
+    final patient = patientController
+        .getPatientById(FirebaseAuth.instance.currentUser!.uid);
     return Center(
       child: Container(
         padding: const EdgeInsets.all(8.0),
@@ -473,7 +474,13 @@ class DuringAppointtmentAcceptedViewCard extends StatelessWidget {
                     height: getProportionateScreenHeight(40),
                     width: getProportionateScreenWidth(100),
                     child: ElevatedButton(
-                      onPressed: onCall,
+                      onPressed: () {
+                        Get.to(callByDoctor(
+                          conferenceID: "1",
+                          userid: patient.userID,
+                          username: patient.name,
+                        ));
+                      },
                       style: ElevatedButton.styleFrom(
                         primary: Colors.green,
                         // side: BorderSide(
@@ -934,6 +941,10 @@ String checkTime(
         temp = "during";
       }
     }
+    // if (now.hour == endHour && now.minute >= endMinute || now.hour > endHour) {
+    //   temp = "after";
+    //   print("after");
+    // }
     if (now.hour == endHour && now.minute >= endMinute || now.hour > endHour) {
       temp = "after";
       print("after");
