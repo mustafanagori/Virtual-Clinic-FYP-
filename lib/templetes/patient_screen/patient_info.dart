@@ -36,6 +36,7 @@ class _PatientInfoState extends State<PatientInfo> {
     super.initState();
   }
 
+  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,184 +50,219 @@ class _PatientInfoState extends State<PatientInfo> {
                   colorFilter: new ColorFilter.mode(
                       Colors.black.withOpacity(0.4), BlendMode.dstATop),
                   image: AssetImage("Assets/pexels-pixabay-40568.jpeg"))),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: getProportionateScreenHeight(30),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Container(
-                    width: getProportionateScreenWidth(250),
-                    child: TextFormField(
-                      controller: firstNameController,
-                      decoration: InputDecoration(
+          child: Form(
+            key: formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: getProportionateScreenHeight(30),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      width: getProportionateScreenWidth(250),
+                      child: TextFormField(
+                        controller: firstNameController,
+                        decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderSide: BorderSide(
                                   width: getProportionateScreenWidth(3),
                                   color: Colors.red),
                               borderRadius: BorderRadius.circular(20)),
-                          labelText: "Name"),
+                          labelText: "Name",
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Name is required';
+                          }
+                          return null; // Return null if validation succeeds
+                        },
+                      ),
+                      //              validator: (value) {
+                      //   if (value.isEmpty) {
+                      //     return 'Name is required';
+                      //   }
+                      //   return null; // Return null if validation succeeds
+                      // },
                     ),
-                    //              validator: (value) {
-                    //   if (value.isEmpty) {
-                    //     return 'Name is required';
-                    //   }
-                    //   return null; // Return null if validation succeeds
-                    // },
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: getProportionateScreenHeight(30),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Container(
-                    width: getProportionateScreenWidth(250),
-                    child: TextFormField(
-                      keyboardType: TextInputType.number,
-                      maxLength: 11,
-                      controller: contactController,
-                      decoration: InputDecoration(
+                  ],
+                ),
+                SizedBox(
+                  height: getProportionateScreenHeight(30),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      width: getProportionateScreenWidth(250),
+                      child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        maxLength: 11,
+                        controller: contactController,
+                        decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderSide: BorderSide(
                                   width: getProportionateScreenWidth(3),
                                   color: Colors.red),
                               borderRadius: BorderRadius.circular(20)),
-                          labelText: "Contact No"),
+                          labelText: "Contact No",
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Contact No is required';
+                          }
+                          return null; // Return null if validation succeeds
+                        },
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: getProportionateScreenHeight(10),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Container(
-                    width: getProportionateScreenWidth(250),
-                    child: TextFormField(
-                      keyboardType: TextInputType.number,
-                      maxLength: 13,
-                      controller: cnicController,
-                      decoration: InputDecoration(
+                  ],
+                ),
+                SizedBox(
+                  height: getProportionateScreenHeight(10),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      width: getProportionateScreenWidth(250),
+                      child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        maxLength: 13,
+                        controller: cnicController,
+                        decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderSide: BorderSide(
                                   width: getProportionateScreenWidth(3),
                                   color: Colors.red),
                               borderRadius: BorderRadius.circular(20)),
-                          labelText: "CNIC NO"),
+                          labelText: "CNIC NO",
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'CNIC NO is required';
+                          }
+                          return null; // Return null if validation succeeds
+                        },
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              Column(
-                children: [
-                  RadioListTile(
-                    title: Text("Male"),
-                    value: "male",
-                    groupValue: gender,
-                    onChanged: (value) {
-                      setState(() {
-                        gender = value.toString();
-                      });
-                    },
-                  ),
-                  SizedBox(
-                    height: getProportionateScreenHeight(30),
-                  ),
-                  RadioListTile(
-                    title: Text("Female"),
-                    value: "female",
-                    groupValue: gender,
-                    onChanged: (value) {
-                      setState(() {
-                        gender = value.toString();
-                      });
-                    },
-                  ),
-                  // RadioListTile(
-                  //   title: Text("Other"),
-                  //   value: "other",
-                  //   groupValue: gender,
-                  //   onChanged: (value) {
-                  //     setState(() {
-                  //       gender = value.toString();
-                  //     });
-                  //   },
-                  // ),
-                ],
-              ),
-              SizedBox(
-                height: getProportionateScreenHeight(270),
-              ),
-              Container(
-                height: getProportionateScreenHeight(50),
-                width: getProportionateScreenWidth(300),
-                //   width: getProportionateScreenWidth(15)0,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.red,
-                    // side: BorderSide(
-                    //   width: getProportionateScreenWidth(1).0,
-                    //   color: Colors.blueAccent,
+                  ],
+                ),
+                Column(
+                  children: [
+                    RadioListTile(
+                      title: Text("Male"),
+                      value: "male",
+                      groupValue: gender,
+                      onChanged: (value) {
+                        setState(() {
+                          gender = value.toString();
+                        });
+                      },
+                    ),
+                    SizedBox(
+                      height: getProportionateScreenHeight(30),
+                    ),
+                    RadioListTile(
+                      title: Text("Female"),
+                      value: "female",
+                      groupValue: gender,
+                      onChanged: (value) {
+                        setState(() {
+                          gender = value.toString();
+                        });
+                      },
+                    ),
+                    // RadioListTile(
+                    //   title: Text("Other"),
+                    //   value: "other",
+                    //   groupValue: gender,
+                    //   onChanged: (value) {
+                    //     setState(() {
+                    //       gender = value.toString();
+                    //     });
+                    //   },
                     // ),
-                    shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(20),
+                  ],
+                ),
+                SizedBox(
+                  height: getProportionateScreenHeight(270),
+                ),
+                Container(
+                  height: getProportionateScreenHeight(50),
+                  width: getProportionateScreenWidth(300),
+                  //   width: getProportionateScreenWidth(15)0,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.red,
+                      // side: BorderSide(
+                      //   width: getProportionateScreenWidth(1).0,
+                      //   color: Colors.blueAccent,
+                      // ),
+                      shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(20),
+                      ),
                     ),
-                  ),
-                  onPressed: () async {
-                    setState(() {
-                      loading = true;
-                    });
-                    await FirebaseFirestore.instance
-                        .collection("patients")
-                        .doc(FirebaseAuth.instance.currentUser!.uid)
-                        .set({
-                      "name": firstNameController.text.toString(),
-                      "contact": contactController.text.toString(),
-                      "cnic": cnicController.text.toString(),
-                      "gender": gender.toString(),
-                    }).then((value) async {
-                      Utils().toastMessage("Data Added");
-                      Get.put(PatientController());
-
+                    onPressed: () async {
+                      setState(() {
+                        loading = true;
+                      });
                       await FirebaseFirestore.instance
-                          .collection("users")
+                          .collection("patients")
                           .doc(FirebaseAuth.instance.currentUser!.uid)
-                          .update({
-                        "isVerified": "verified",
-                      });
+                          .set({
+                        "name": firstNameController.text.toString(),
+                        "contact": contactController.text.toString(),
+                        "cnic": cnicController.text.toString(),
+                        "gender": gender.toString(),
+                      }).then((value) async {
+                        Utils().toastMessage("Data Added");
+                        Get.put(PatientController());
 
-                      Get.off(SplashScreen());
-                      setState(() {
-                        loading = false;
+                        await FirebaseFirestore.instance
+                            .collection("users")
+                            .doc(FirebaseAuth.instance.currentUser!.uid)
+                            .update({
+                          "isVerified": "verified",
+                        });
+
+                        Get.off(SplashScreen());
+                        setState(() {
+                          loading = false;
+                        });
+                      }).onError((error, stackTrace) {
+                        Utils().toastMessage(error.toString());
+                        setState(() {
+                          loading = false;
+                        });
                       });
-                    }).onError((error, stackTrace) {
-                      Utils().toastMessage(error.toString());
-                      setState(() {
-                        loading = false;
-                      });
-                    });
-                  },
-                  child: Text(
-                    'Submit',
-                    style: TextStyle(color: Colors.white, fontSize: 20),
+                    },
+                    child: Text(
+                      'Submit',
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: getProportionateScreenHeight(15),
-              )
-            ],
+                SizedBox(
+                  height: getProportionateScreenHeight(15),
+                )
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 }
+// void submitForm() async {
+//   setState(() {
+//     loading = true;
+//   });
+
+//   // Rest of your form submission logic...
+
+//   setState(() {
+//     loading = false;
+//   });
+// }

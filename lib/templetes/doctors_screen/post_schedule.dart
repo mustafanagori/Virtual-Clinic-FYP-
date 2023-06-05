@@ -261,7 +261,7 @@ class _PostScheduleState extends State<PostSchedule> {
                     });
                     // TimeOfDay startTime = TimeOfDay(hour: 8, minute: 0);
                     // TimeOfDay endTime = TimeOfDay(hour: 17, minute: 0);
-                    int intervalMinutes = 10;
+                    int intervalMinutes = 15;
 
                     List<TimeOfDay> slots =
                         generateTimeSlots(startTime, endTime, intervalMinutes);
@@ -269,12 +269,12 @@ class _PostScheduleState extends State<PostSchedule> {
                     for (TimeOfDay slot in slots) {
                       scheduleController.uploadData(
                           startTime: slot.toString().split("y")[1],
-                          endTime: slot.minute + 10 == 60
+                          endTime: slot.minute + 15 == 60
                               ? TimeOfDay(hour: slot.hour + 1, minute: 0)
                                   .toString()
                                   .split("y")[1]
                               : TimeOfDay(
-                                      hour: slot.hour, minute: slot.minute + 10)
+                                      hour: slot.hour, minute: slot.minute + 15)
                                   .toString()
                                   .split("y")[1],
                           day: selectedDay,

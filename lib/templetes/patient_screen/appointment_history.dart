@@ -946,11 +946,10 @@ String checkTime(
     //   temp = "after";
     //   print("after");
     // }
-    if (now.hour == endHour && now.minute >= endMinute || now.hour > endHour) {
+        if (now.hour == endHour && now.minute >= endMinute || now.hour > endHour) {
       temp = "after";
       print("after");
     }
   }
-
   return temp;
 }
