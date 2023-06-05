@@ -53,13 +53,13 @@ class _PatientInfoState extends State<PatientInfo> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
-                height: getProportionateScreenHeight(10),
+                height: getProportionateScreenHeight(50),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Container(
-                    width: getProportionateScreenWidth(200),
+                    width: getProportionateScreenWidth(250),
                     child: TextFormField(
                       controller: firstNameController,
                       decoration: InputDecoration(
@@ -74,13 +74,13 @@ class _PatientInfoState extends State<PatientInfo> {
                 ],
               ),
               SizedBox(
-                height: getProportionateScreenHeight(10),
+                height: getProportionateScreenHeight(30),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Container(
-                    width: getProportionateScreenWidth(200),
+                    width: getProportionateScreenWidth(250),
                     child: TextFormField(
                       keyboardType: TextInputType.phone,
                       maxLength: 11,
@@ -97,13 +97,13 @@ class _PatientInfoState extends State<PatientInfo> {
                 ],
               ),
               SizedBox(
-                height: getProportionateScreenHeight(10),
+                height: getProportionateScreenHeight(30),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Container(
-                    width: getProportionateScreenWidth(200),
+                    width: getProportionateScreenWidth(250),
                     child: TextFormField(
                       keyboardType: TextInputType.number,
                       maxLength: 13,
@@ -154,7 +154,7 @@ class _PatientInfoState extends State<PatientInfo> {
                 ],
               ),
               SizedBox(
-                height: getProportionateScreenHeight(10),
+                height: getProportionateScreenHeight(250),
               ),
               Container(
                 height: getProportionateScreenHeight(50),
