@@ -860,11 +860,6 @@ String checkTime(
     'Saturday',
     'Sunday',
   ];
-  print(startHour);
-  print(endHour);
-  print(startMinute);
-  print(endMinute);
-  print(day);
   print(daysOfWeek[now.weekday - 1]);
   print(now.hour);
   print(now.minute);

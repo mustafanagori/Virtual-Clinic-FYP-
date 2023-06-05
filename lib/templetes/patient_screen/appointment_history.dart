@@ -920,18 +920,14 @@ String checkTime(
     'Saturday',
     'Sunday',
   ];
-  print(startHour);
-  print(endHour);
-  print(startMinute);
-  print(endMinute);
-  print(day);
+
   print(daysOfWeek[now.weekday - 1]);
   print(now.hour);
   print(now.minute);
-  // if (endMinute == 0) {
-  //   endMinute = 59;
-  //   endHour -= 1;
-  // }
+  if (endMinute == 0) {
+    endMinute = 59;
+    endHour -= 1;
+  }
   if (daysOfWeek[now.weekday - 1] == day) {
     if (now.hour >= startHour && now.hour <= endHour) {
       if (now.hour >= startHour &&
@@ -941,10 +937,6 @@ String checkTime(
         temp = "during";
       }
     }
-    // if (now.hour == endHour && now.minute >= endMinute || now.hour > endHour) {
-    //   temp = "after";
-    //   print("after");
-    // }
     if (now.hour == endHour && now.minute >= endMinute || now.hour > endHour) {
       temp = "after";
       print("after");
