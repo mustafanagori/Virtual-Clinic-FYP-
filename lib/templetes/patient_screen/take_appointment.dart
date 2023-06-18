@@ -162,20 +162,21 @@ class _TakeAppointmentState extends State<TakeAppointment> {
                           .getDoctorById(doctorsSchedule[index].doctorID)
                           .spealization,
                       onPressed: () async {
-                        // Get.to(PaymentMethodScreen(
-                        //   doctorScheduleModel: doctorsSchedule[index],
-                        //   doctorModel: docController
-                        //       .getDoctorById(doctorsSchedule[index].doctorID),
-                        //   patientModel: patientController.getPatientById(
-                        //       FirebaseAuth.instance.currentUser!.uid),
-                        // ));
-                        await appointmentController.uploadData(
-                            status: "book",
-                            patientID: FirebaseAuth.instance.currentUser!.uid,
-                            doctorID: docController
-                                .getDoctorById(doctorsSchedule[index].doctorID)
-                                .userID,
-                            sheduleID: doctorsSchedule.elementAt(index).userID);
+                        Get.to(PaymentMethodScreen(
+                          doctorScheduleModel: doctorsSchedule[index],
+                          doctorModel: docController
+                              .getDoctorById(doctorsSchedule[index].doctorID),
+                          patientModel: patientController.getPatientById(
+                              FirebaseAuth.instance.currentUser!.uid),
+                        ));
+                        //------------------
+                        // await appointmentController.uploadData(
+                        //     status: "book",
+                        //     patientID: FirebaseAuth.instance.currentUser!.uid,
+                        //     doctorID: docController
+                        //         .getDoctorById(doctorsSchedule[index].doctorID)
+                        //         .userID,
+                        //     sheduleID: doctorsSchedule.elementAt(index).userID);
 
                         await appointmentController.fetchData();
                         Utils().toastMessage("Request Sent");

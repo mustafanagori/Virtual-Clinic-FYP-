@@ -46,30 +46,34 @@ class _DoctorScheduleHistoryState extends State<DoctorScheduleHistory> {
           )
         ],
       ),
-      body: Column(
-        children: [
-          SizedBox(
-            height: getProportionateScreenHeight(670),
-            width: getProportionateScreenWidth(400),
-            child: GetBuilder<DoctorSchedulesController>(builder: (controller) {
-              return ListView.builder(
-                itemCount: doctorsSchedule.length,
-                itemBuilder: (context, index) => DoctorCategoryCard(
-                  onPressedDelete: () async {
-                    await scheduleController.deleteData(
-                        userID: doctorsSchedule.elementAt(index).userID);
-                    Utils().toastMessage("Schedule Deleted");
-                  },
-                  day: doctorsSchedule.elementAt(index).day,
-                  endTime: doctorsSchedule.elementAt(index).endTime.toString(),
-                  fees: doctorsSchedule.elementAt(index).fees,
-                  startTime:
-                      doctorsSchedule.elementAt(index).startTime.toString(),
-                ),
-              );
-            }),
-          ),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: getProportionateScreenHeight(670),
+              width: getProportionateScreenWidth(400),
+              child:
+                  GetBuilder<DoctorSchedulesController>(builder: (controller) {
+                return ListView.builder(
+                  itemCount: doctorsSchedule.length,
+                  itemBuilder: (context, index) => DoctorCategoryCard(
+                    onPressedDelete: () async {
+                      await scheduleController.deleteData(
+                          userID: doctorsSchedule.elementAt(index).userID);
+                      Utils().toastMessage("Schedule Deleted");
+                    },
+                    day: doctorsSchedule.elementAt(index).day,
+                    endTime:
+                        doctorsSchedule.elementAt(index).endTime.toString(),
+                    fees: doctorsSchedule.elementAt(index).fees,
+                    startTime:
+                        doctorsSchedule.elementAt(index).startTime.toString(),
+                  ),
+                );
+              }),
+            ),
+          ],
+        ),
       ),
     );
   }

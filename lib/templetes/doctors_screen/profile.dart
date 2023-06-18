@@ -210,7 +210,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                     ),
                     Divider(),
                     SizedBox(
-                      height: getProportionateScreenHeight(70),
+                      height: getProportionateScreenHeight(40),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 40),

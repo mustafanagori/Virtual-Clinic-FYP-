@@ -28,7 +28,7 @@ class _AppointmentHistoryState extends State<AppointmentHistory> {
   @override
   Widget build(BuildContext context) {
     // video calling
-    final patientController = Get.put(PatientController());
+    // final patientController = Get.put(PatientController());
 
     final dataList = caController.getList.where((element) =>
         (element.status == "Accepted" || element.status == "book") &&
@@ -41,90 +41,94 @@ class _AppointmentHistoryState extends State<AppointmentHistory> {
             // ),
             backgroundColor: Colors.red,
             title: Text('Appointment History')),
-        body: Column(children: [
-          SizedBox(
-            height: getProportionateScreenHeight(719),
-            width: getProportionateScreenWidth(400),
-            child:
-                GetBuilder<CreateAppointmentController>(builder: (controller) {
-              return ListView.separated(
-                  itemCount: dataList.length,
-                  separatorBuilder: (context, index) => SizedBox(
-                        height: getProportionateScreenHeight(20),
-                      ),
-                  itemBuilder: (context, index) {
-                    final data = dsController
-                        .getById(dataList.elementAt(index).sheduleID);
-                    String checkTimetemp = checkTime(
-                        day: data.day,
-                        startHour: int.parse(
-                            data.startTime.split("(")[1].split(":")[0]),
-                        endHour:
-                            int.parse(data.endTime.split("(")[1].split(":")[0]),
-                        startMinute: int.parse(
-                            data.startTime.split(":")[1].split(")")[0]),
-                        endMinute: int.parse(
-                            data.endTime.split(":")[1].split(")")[0]));
-                    return dataList.elementAt(index).status == "book"
-                        ? AppointtmentViewCard(
-                            day: data.day,
-                            endTime: data.endTime,
-                            doctorName: docController
-                                    .getDoctorById(
-                                        dataList.elementAt(index).doctorID)
-                                    .firstName +
-                                " " +
-                                docController
-                                    .getDoctorById(
-                                        dataList.elementAt(index).doctorID)
-                                    .lastName,
-                            fees: data.fees,
-                            startTime: data.startTime,
-                          )
-                        : checkTimetemp == "during"
-                            ? DuringAppointtmentAcceptedViewCard(
-                                doctorName: docController
-                                    .getDoctorById(
-                                        dataList.elementAt(index).doctorID)
-                                    .firstName,
-                                patienID: dataList.elementAt(index).patientID,
-                                doctorID: data.doctorID,
-                                fees: data.fees,
-                                day: data.day,
-                                endTime: data.endTime,
-                                startTime: data.startTime,
-                              )
-                            : checkTimetemp == "after"
-                                ? AfterAppointtmentAcceptedViewCard(
-                                    doctorName: docController
-                                        .getDoctorById(
-                                            dataList.elementAt(index).doctorID)
-                                        .firstName,
-                                    patienID:
-                                        dataList.elementAt(index).patientID,
-                                    doctorID: data.doctorID,
-                                    fees: data.fees,
-                                    day: data.day,
-                                    endTime: data.endTime,
-                                    startTime: data.startTime,
-                                  )
-                                : BeforeAppointtmentAcceptedViewCard(
-                                    doctorName: docController
-                                        .getDoctorById(
-                                            dataList.elementAt(index).doctorID)
-                                        .firstName,
-                                    patienID:
-                                        dataList.elementAt(index).patientID,
-                                    doctorID: data.doctorID,
-                                    fees: data.fees,
-                                    day: data.day,
-                                    endTime: data.endTime,
-                                    startTime: data.startTime,
-                                  );
-                  });
-            }),
-          )
-        ]));
+        body: SingleChildScrollView(
+          child: Column(children: [
+            SizedBox(
+              height: getProportionateScreenHeight(719),
+              width: getProportionateScreenWidth(400),
+              child: GetBuilder<CreateAppointmentController>(
+                  builder: (controller) {
+                return ListView.separated(
+                    itemCount: dataList.length,
+                    separatorBuilder: (context, index) => SizedBox(
+                          height: getProportionateScreenHeight(20),
+                        ),
+                    itemBuilder: (context, index) {
+                      final data = dsController
+                          .getById(dataList.elementAt(index).sheduleID);
+                      String checkTimetemp = checkTime(
+                          day: data.day,
+                          startHour: int.parse(
+                              data.startTime.split("(")[1].split(":")[0]),
+                          endHour: int.parse(
+                              data.endTime.split("(")[1].split(":")[0]),
+                          startMinute: int.parse(
+                              data.startTime.split(":")[1].split(")")[0]),
+                          endMinute: int.parse(
+                              data.endTime.split(":")[1].split(")")[0]));
+                      return dataList.elementAt(index).status == "book"
+                          ? AppointtmentViewCard(
+                              day: data.day,
+                              endTime: data.endTime,
+                              doctorName: docController
+                                      .getDoctorById(
+                                          dataList.elementAt(index).doctorID)
+                                      .firstName +
+                                  " " +
+                                  docController
+                                      .getDoctorById(
+                                          dataList.elementAt(index).doctorID)
+                                      .lastName,
+                              fees: data.fees,
+                              startTime: data.startTime,
+                            )
+                          : checkTimetemp == "during"
+                              ? DuringAppointtmentAcceptedViewCard(
+                                  doctorName: docController
+                                      .getDoctorById(
+                                          dataList.elementAt(index).doctorID)
+                                      .firstName,
+                                  patienID: dataList.elementAt(index).patientID,
+                                  doctorID: data.doctorID,
+                                  fees: data.fees,
+                                  day: data.day,
+                                  endTime: data.endTime,
+                                  startTime: data.startTime,
+                                )
+                              : checkTimetemp == "after"
+                                  ? AfterAppointtmentAcceptedViewCard(
+                                      doctorName: docController
+                                          .getDoctorById(dataList
+                                              .elementAt(index)
+                                              .doctorID)
+                                          .firstName,
+                                      patienID:
+                                          dataList.elementAt(index).patientID,
+                                      doctorID: data.doctorID,
+                                      fees: data.fees,
+                                      day: data.day,
+                                      endTime: data.endTime,
+                                      startTime: data.startTime,
+                                    )
+                                  : BeforeAppointtmentAcceptedViewCard(
+                                      doctorName: docController
+                                          .getDoctorById(dataList
+                                              .elementAt(index)
+                                              .doctorID)
+                                          .firstName,
+                                      patienID:
+                                          dataList.elementAt(index).patientID,
+                                      doctorID: data.doctorID,
+                                      fees: data.fees,
+                                      day: data.day,
+                                      endTime: data.endTime,
+                                      startTime: data.startTime,
+                                    );
+                    });
+              }),
+            )
+          ]),
+        ));
   }
 }
 
@@ -462,7 +466,7 @@ class DuringAppointtmentAcceptedViewCard extends StatelessWidget {
                         ),
                       ),
                       child: Text(
-                        'Presiption',
+                        'Perception',
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                     ),

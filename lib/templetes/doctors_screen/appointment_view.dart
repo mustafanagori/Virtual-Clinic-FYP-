@@ -44,63 +44,65 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
           //   },
           // ),
         ),
-        body: Column(children: [
-          SizedBox(
-            height: getProportionateScreenHeight(670),
-            width: getProportionateScreenWidth(400),
-            child:
-                GetBuilder<CreateAppointmentController>(builder: (controller) {
-              return ListView.separated(
-                  itemCount: dataList.length,
-                  separatorBuilder: (context, index) => SizedBox(
-                        height: getProportionateScreenHeight(5),
-                      ),
-                  itemBuilder: (context, index) {
-                    final DoctorScheduleModel data = dsController
-                        .getById(dataList.elementAt(index).sheduleID);
+        body: SingleChildScrollView(
+          child: Column(children: [
+            SizedBox(
+              height: getProportionateScreenHeight(670),
+              width: getProportionateScreenWidth(400),
+              child: GetBuilder<CreateAppointmentController>(
+                  builder: (controller) {
+                return ListView.separated(
+                    itemCount: dataList.length,
+                    separatorBuilder: (context, index) => SizedBox(
+                          height: getProportionateScreenHeight(5),
+                        ),
+                    itemBuilder: (context, index) {
+                      final DoctorScheduleModel data = dsController
+                          .getById(dataList.elementAt(index).sheduleID);
 
-                    return
-                        //  dataList.elementAt(index).status == "book"
-                        //     ?
-                        AppointtmentViewCard(
-                      fees: data.fees,
-                      onPressedReject: () async {
-                        await caController.deleteData(
-                            userID: dataList.elementAt(index).userID);
-                        Utils().toastMessage("Rejected");
-                      },
-                      onPressedAccept: () async {
-                        await caController.updateStatus(
-                            dataList.elementAt(index).userID, "Accepted");
+                      return
+                          //  dataList.elementAt(index).status == "book"
+                          //     ?
+                          AppointtmentViewCard(
+                        fees: data.fees,
+                        onPressedReject: () async {
+                          await caController.deleteData(
+                              userID: dataList.elementAt(index).userID);
+                          Utils().toastMessage("Rejected");
+                        },
+                        onPressedAccept: () async {
+                          await caController.updateStatus(
+                              dataList.elementAt(index).userID, "Accepted");
 
-                        Utils().toastMessage("Accepted");
-                      },
-                      day: data.day,
-                      endTime: data.endTime,
-                      patientName: patientController
-                          .getPatientById(dataList.elementAt(index).patientID)
-                          .name,
-                      startTime: data.startTime,
-                    );
-                    // : AppointtmentAcceptedViewCard(
-                    //     fees: data.fees,
-                    //     date: data.date,
-                    //     endTime: data.endTime,
-                    //     patientName: patientController
-                    //         .getPatientById(
-                    //             dataList.elementAt(index).patientID)
-                    //         .name,
-                    //     startTime: data.startTime,
-                    //     doctorID: data.doctorID,
-                    //     patientID: patientController
-                    //         .getPatientById(
-                    //             dataList.elementAt(index).patientID)
-                    //         .userID,
-                    //   );
-                  });
-            }),
-          )
-        ]));
+                          Utils().toastMessage("Accepted");
+                        },
+                        day: data.day,
+                        endTime: data.endTime,
+                        patientName: patientController
+                            .getPatientById(dataList.elementAt(index).patientID)
+                            .name,
+                        startTime: data.startTime,
+                      );
+                      // : AppointtmentAcceptedViewCard(
+                      //     fees: data.fees,
+                      //     date: data.date,
+                      //     endTime: data.endTime,
+                      //     patientName: patientController
+                      //         .getPatientById(
+                      //             dataList.elementAt(index).patientID)
+                      //         .name,
+                      //     startTime: data.startTime,
+                      //     doctorID: data.doctorID,
+                      //     patientID: patientController
+                      //         .getPatientById(
+                      //             dataList.elementAt(index).patientID)
+                      //         .userID,
+                      //   );
+                    });
+              }),
+            )
+          ]),
+        ));
   }
 }
 
