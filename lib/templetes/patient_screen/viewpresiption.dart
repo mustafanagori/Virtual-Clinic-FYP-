@@ -20,7 +20,7 @@ class ViewPerciption extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
-        title: Text(
+        title: const Text(
           "View Presiption",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),

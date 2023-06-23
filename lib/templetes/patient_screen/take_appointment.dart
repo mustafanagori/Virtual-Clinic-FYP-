@@ -179,7 +179,7 @@ class _TakeAppointmentState extends State<TakeAppointment> {
                         //     sheduleID: doctorsSchedule.elementAt(index).userID);
 
                         await appointmentController.fetchData();
-                        Utils().toastMessage("Request Sent");
+                        Utils().toastMessage("wait for reponse");
                         setState(() {});
                       },
                       day: doctorsSchedule[index].day,

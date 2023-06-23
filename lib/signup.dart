@@ -49,6 +49,7 @@ class _RegisterState extends State<Register> {
               "Registeration",
               style: TextStyle(fontSize: 30),
             ),
+            centerTitle: true,
             backgroundColor: Colors.red,
           ),
           // backgroundColor: Colors.red,
@@ -63,7 +64,8 @@ class _RegisterState extends State<Register> {
                             colorFilter: ColorFilter.mode(
                                 Colors.black.withOpacity(0.8),
                                 BlendMode.dstATop),
-                            image: const AssetImage("Assets/TELEHEALTH-1.jpeg"))),
+                            image:
+                                const AssetImage("Assets/TELEHEALTH-1.jpeg"))),
                     //    color: Colors.orangeAccent[700],
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height,

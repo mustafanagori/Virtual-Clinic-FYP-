@@ -16,7 +16,7 @@ class Suggestions extends StatelessWidget {
         // ),
         backgroundColor: Colors.red,
         centerTitle: true,
-        title: Text("Health Suggestions"),
+        title: const Text("Health Suggestions"),
       ),
       body: ListView(
         children: [
