@@ -35,8 +35,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
 
   final currentUser = FirebaseAuth.instance.currentUser;
   TextEditingController speacialization = TextEditingController();
-  final doctorController = Get.put(DoctorController());
-
+  DoctorController doctorController = Get.put(DoctorController());
   @override
   Widget build(BuildContext context) {
     final doctorModel = doctorController.getDoctorById(currentUser!.uid);

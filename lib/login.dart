@@ -28,11 +28,14 @@ class _LoginPageState extends State<LoginPage> {
       child: SafeArea(
         child: Scaffold(
           appBar: AppBar(
-              backgroundColor: Colors.red,
-              title: Text(
-                "Login",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-              )),
+            automaticallyImplyLeading: false,
+            backgroundColor: Colors.red,
+            title: const Text(
+              "Login",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+            ),
+            centerTitle: true,
+          ),
           body: SingleChildScrollView(
             child: Column(
               children: <Widget>[

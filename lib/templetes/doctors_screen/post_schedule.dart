@@ -289,7 +289,7 @@ class _PostScheduleState extends State<PostSchedule> {
 
                     //  Get.off(DoctorScheduleHistory());
                   },
-                  child: Text(
+                  child: const Text(
                     'submit',
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
@@ -313,7 +313,7 @@ Future<TimeOfDay?> showQuarterTimePicker({
       TimeOfDay? selectedTime = initialTime;
 
       return AlertDialog(
-        title: Text('Select Time'),
+        title: const Text('Select Time'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -327,7 +327,7 @@ Future<TimeOfDay?> showQuarterTimePicker({
         ),
         actions: [
           ElevatedButton(
-            child: Text('OK'),
+            child: const Text('OK'),
             onPressed: () {
               Navigator.of(context).pop(selectedTime);
             },
@@ -383,7 +383,7 @@ class _QuarterTimePickerState extends State<QuarterTimePicker> {
             ),
             Text(
               _getTimeOfDay().format(context),
-              style: TextStyle(fontSize: 20),
+              style: const TextStyle(fontSize: 20),
             ),
             IconButton(
               icon: Icon(Icons.add),
@@ -409,46 +409,7 @@ class _QuarterTimePickerState extends State<QuarterTimePicker> {
     return TimeOfDay(hour: hour, minute: minute);
   }
 }
-// Padding(
-//                 padding: const EdgeInsets.all(15.0),
-//                 child: ListView(
-//                     shrinkWrap: true,
-//                     physics: NeverScrollableScrollPhysics(),
-//                     children: [
-//                       InputDecorator(
-//                         decoration: InputDecoration(
-//                             border: OutlineInputBorder(
-//                                 borderRadius: BorderRadius.circular(15)),
-//                             contentPadding: EdgeInsets.all(10)),
-//                         child: DropdownButtonHideUnderline(
-//                           child: DropdownButton(
-//                             isDense: true,
-//                             isExpanded: true,
-//                             value: defaultValue,
-//                             items: [
-//                               DropdownMenuItem(
-//                                 child: Text('Select Categry'),
-//                                 value: "",
-//                               ),
-//                               ...DropDownListData.map<DropdownMenuItem<String>>(
-//                                   (data) {
-//                                 return DropdownMenuItem(
-//                                     child: Text(data['title']),
-//                                     value: data['value']);
-//                               }).toList(),
-//                             ],
-//                             onChanged: (value) {
-//                               print("selected Value $value");
 
-//                               setState(() {
-//                                 defaultValue = value!;
-//                               });
-//                             },
-//                           ),
-//                         ),
-//                       )
-//                     ]),
-//               ),
 List<TimeOfDay> generateTimeSlots(
     TimeOfDay startTime, TimeOfDay endTime, int intervalMinutes) {
   List<TimeOfDay> slots = [];
