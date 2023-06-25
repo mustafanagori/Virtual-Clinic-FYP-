@@ -168,14 +168,14 @@ class _PostScheduleState extends State<PostSchedule> {
                     if (newTime == null) return;
                     setState(() {
                       startTime = newTime;
-                      print(startTime);
+                      //print(startTime);
                     });
                   }),
                   child: Text("Select Time")),
               SizedBox(
                 height: getProportionateScreenHeight(20),
               ),
-              Text(
+              const Text(
                 "End Time",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
@@ -212,7 +212,7 @@ class _PostScheduleState extends State<PostSchedule> {
               SizedBox(
                 height: getProportionateScreenHeight(20),
               ),
-              Text(
+              const Text(
                 "Fees",
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ),
@@ -220,7 +220,7 @@ class _PostScheduleState extends State<PostSchedule> {
                 height: getProportionateScreenHeight(10),
               ),
               Center(
-                child: Container(
+                child: SizedBox(
                   width: getProportionateScreenWidth(200),
                   child: TextField(
                     keyboardType: TextInputType.number,
@@ -250,7 +250,7 @@ class _PostScheduleState extends State<PostSchedule> {
                     //   width: getProportionateScreenWidth(1).0,
                     //   color: Colors.blueAccent,
                     // ),
-                    shape: new RoundedRectangleBorder(
+                    shape: RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(20),
                     ),
                   ),
@@ -258,9 +258,9 @@ class _PostScheduleState extends State<PostSchedule> {
                     setState(() {
                       loading = true;
                     });
-                    // TimeOfDay startTime = TimeOfDay(hour: 8, minute: 0);
-                    // TimeOfDay endTime = TimeOfDay(hour: 17, minute: 0);
-                    int intervalMinutes = 10;
+
+                    // change time
+                    int intervalMinutes = 30;
 
                     List<TimeOfDay> slots =
                         generateTimeSlots(startTime, endTime, intervalMinutes);
@@ -268,12 +268,15 @@ class _PostScheduleState extends State<PostSchedule> {
                     for (TimeOfDay slot in slots) {
                       scheduleController.uploadData(
                           startTime: slot.toString().split("y")[1],
-                          endTime: slot.minute + 10 == 60
+                          // change time slot
+                          endTime: slot.minute + 30 == 60
                               ? TimeOfDay(hour: slot.hour + 1, minute: 0)
                                   .toString()
                                   .split("y")[1]
                               : TimeOfDay(
-                                      hour: slot.hour, minute: slot.minute + 10)
+                                      // chamge the time
+                                      hour: slot.hour,
+                                      minute: slot.minute + 30)
                                   .toString()
                                   .split("y")[1],
                           day: selectedDay,

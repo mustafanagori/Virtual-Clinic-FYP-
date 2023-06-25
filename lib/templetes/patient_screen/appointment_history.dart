@@ -465,9 +465,9 @@ class DuringAppointtmentAcceptedViewCard extends StatelessWidget {
                           borderRadius: new BorderRadius.circular(20),
                         ),
                       ),
-                      child: Text(
+                      child: const Text(
                         'Perception',
-                        style: TextStyle(color: Colors.white, fontSize: 20),
+                        style: TextStyle(color: Colors.white, fontSize: 17),
                       ),
                     ),
                   ),
@@ -479,7 +479,7 @@ class DuringAppointtmentAcceptedViewCard extends StatelessWidget {
                     width: getProportionateScreenWidth(100),
                     child: ElevatedButton(
                       onPressed: () {
-                        Get.to(callByDoctor(
+                        Get.to(CallByDoctor(
                           conferenceID: "1",
                           userid: patient.userID,
                           username: patient.name,
@@ -890,7 +890,7 @@ class AfterAppointtmentAcceptedViewCard extends StatelessWidget {
                       ),
                       child: Text(
                         'Perception',
-                        style: TextStyle(color: Colors.white, fontSize: 20),
+                        style: TextStyle(color: Colors.white, fontSize: 17),
                       ),
                     ),
                   ),

@@ -7,7 +7,8 @@ class Conference extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Conference RoOM"),
+        backgroundColor: Colors.red,
+        title: const Text("Conference Room"),
       ),
     );
   }

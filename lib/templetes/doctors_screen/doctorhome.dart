@@ -1,3 +1,4 @@
+import 'package:doctorandpatient/templetes/doctors_screen/conference.dart';
 import 'package:doctorandpatient/login.dart';
 import 'package:doctorandpatient/templetes/doctors_screen/doctorschedule.dart';
 import 'package:doctorandpatient/templetes/doctors_screen/appointment_history.dart';
@@ -31,7 +32,7 @@ class home_doctor extends StatelessWidget {
         decoration: BoxDecoration(
             image: DecorationImage(
                 fit: BoxFit.cover,
-                colorFilter: new ColorFilter.mode(
+                colorFilter:  ColorFilter.mode(
                     Colors.black.withOpacity(0.8), BlendMode.dstATop),
                 image: AssetImage("Assets/TELEHEALTH-1.jpeg"))),
         child: Column(
@@ -42,8 +43,11 @@ class home_doctor extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 GestureDetector(
-                  child: doctor_homeCard(
-                    text: 'Appointment',
+                  onTap: () {
+                    Get.to(Conference());
+                  },
+                  child: const doctor_homeCard(
+                    text: 'Conference',
                     image: "Assets/AdmissHis_card.png",
                   ),
                 ),

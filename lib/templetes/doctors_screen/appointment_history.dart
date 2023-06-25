@@ -310,7 +310,7 @@ class DuringAppointtmentAcceptedViewCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final doctorController = Get.put(DoctorController());
-    
+
     final doctor =
         doctorController.getDoctorById(FirebaseAuth.instance.currentUser!.uid);
     return Padding(
@@ -481,7 +481,7 @@ class DuringAppointtmentAcceptedViewCard extends StatelessWidget {
                     width: getProportionateScreenWidth(100),
                     child: ElevatedButton(
                       onPressed: () {
-                        Get.to(callByDoctor(
+                        Get.to(CallByDoctor(
                           conferenceID: "1",
                           userid: doctor.userID,
                           username: doctor.firstName + " " + doctor.lastName,
