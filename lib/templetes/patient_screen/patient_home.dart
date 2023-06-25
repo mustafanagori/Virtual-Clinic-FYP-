@@ -1,3 +1,4 @@
+import 'package:doctorandpatient/login.dart';
 import 'package:doctorandpatient/templetes/patient_screen/appointment_history.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,6 +13,11 @@ class PatientHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {
+              Get.to(LoginPage());
+            },
+            icon: Icon(Icons.logout)),
         backgroundColor: Colors.red,
         title: Text('Patient Panel'),
       ),

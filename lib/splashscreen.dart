@@ -17,6 +17,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'controller/invite_controller.dart';
+
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
@@ -29,6 +31,7 @@ class SplashScreen extends StatelessWidget {
     Get.put(CreateAppointmentController());
     Get.put(DoctorSchedulesController());
     Get.put(PresiptionController());
+    Get.put(InviteController());
     if (user != null) {
       User? user = FirebaseAuth.instance.currentUser;
 

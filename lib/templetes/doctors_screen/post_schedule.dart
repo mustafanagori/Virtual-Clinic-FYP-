@@ -254,7 +254,7 @@ class _PostScheduleState extends State<PostSchedule> {
                       borderRadius: new BorderRadius.circular(20),
                     ),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     setState(() {
                       loading = true;
                     });
@@ -266,7 +266,7 @@ class _PostScheduleState extends State<PostSchedule> {
                         generateTimeSlots(startTime, endTime, intervalMinutes);
 
                     for (TimeOfDay slot in slots) {
-                      scheduleController.uploadData(
+                      await scheduleController.uploadData(
                           startTime: slot.toString().split("y")[1],
                           // change time slot
                           endTime: slot.minute + 30 == 60
@@ -282,7 +282,7 @@ class _PostScheduleState extends State<PostSchedule> {
                           day: selectedDay,
                           docID: FirebaseAuth.instance.currentUser!.uid,
                           fees: feeController.text);
-                      scheduleController.fetchData();
+                      await scheduleController.fetchData();
 
                       print(slot.format(context));
                     }

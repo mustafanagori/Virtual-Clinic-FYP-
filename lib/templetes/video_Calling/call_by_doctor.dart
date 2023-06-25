@@ -1,12 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:doctorandpatient/controller/create_appoint.dart';
+import 'package:doctorandpatient/core/utils.dart';
+import 'package:doctorandpatient/templetes/patient_screen/take_appointment.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:zego_uikit_prebuilt_video_conference/zego_uikit_prebuilt_video_conference.dart';
 import '../../controller/doctors_controller.dart';
 import 'contants.dart';
 
 class CallByDoctor extends StatelessWidget {
-  DoctorController doctorController = Get.put(DoctorController());
+  final DoctorController doctorController = Get.put(DoctorController());
 
   CallByDoctor({
     Key? key,
@@ -45,14 +49,27 @@ class CallByDoctor extends StatelessWidget {
                   showModalBottomSheet(
                     context: context,
                     builder: (BuildContext context) {
-                      return ListView.builder(
+                      return ListView.separated(
+                        separatorBuilder: (context, index) => const Divider(
+                          thickness: 2,
+                        ),
                         itemCount: drlist.length,
                         itemBuilder: (context, index) => ListTile(
                           trailing: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.red,
                               ),
-                              onPressed: () {},
+                              onPressed: () async {
+                                await FirebaseFirestore.instance
+                                    .collection("invites")
+                                    .add({
+                                  "invitedBy": FirebaseAuth
+                                      .instance.currentUser!.uid
+                                      .toString(),
+                                  "invitedTo": drlist[index].userID,
+                                }).then((value) => Utils().toastMessage(
+                                        "Dr.${drlist[index].firstName} Invited"));
+                              },
                               child: const Text("Invite ")),
                           title: Text(
                             "${drlist[index].firstName} ${drlist[index].lastName}",
