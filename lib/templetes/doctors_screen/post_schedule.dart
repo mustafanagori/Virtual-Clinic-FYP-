@@ -266,7 +266,7 @@ class _PostScheduleState extends State<PostSchedule> {
                         generateTimeSlots(startTime, endTime, intervalMinutes);
 
                     for (TimeOfDay slot in slots) {
-                      await scheduleController.uploadData(
+                       scheduleController.uploadData(
                           startTime: slot.toString().split("y")[1],
                           // change time slot
                           endTime: slot.minute + 30 == 60
@@ -282,7 +282,8 @@ class _PostScheduleState extends State<PostSchedule> {
                           day: selectedDay,
                           docID: FirebaseAuth.instance.currentUser!.uid,
                           fees: feeController.text);
-                      await scheduleController.fetchData();
+                          
+                       scheduleController.fetchData();
 
                       print(slot.format(context));
                     }

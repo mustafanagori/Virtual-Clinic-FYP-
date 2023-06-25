@@ -14,68 +14,70 @@ class DoctorScheduleHistory extends StatefulWidget {
   State<DoctorScheduleHistory> createState() => _DoctorScheduleHistoryState();
 }
 
-final scheduleController = Get.put(DoctorSchedulesController());
+final scheduleController = Get.find<DoctorSchedulesController>();
 
 class _DoctorScheduleHistoryState extends State<DoctorScheduleHistory> {
+  Future<void> _refresh() async {
+    // Simulate a delay for fetching new data
+
+    await scheduleController.fetchData();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
-    scheduleController.fetchData();
     final doctorsSchedule = scheduleController.getList.where((element) =>
         element.doctorID == FirebaseAuth.instance.currentUser!.uid);
 
+    scheduleController.fetchData();
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.red,
-        title: Text(
-          "Doctor Schedule History",
-          // style: TextStyle(: .red),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: GestureDetector(
-              onTap: () {
-                Get.to(PostSchedule());
-              },
-              child: Row(
-                children: [
-                  Icon(Icons.add),
-                ],
+        appBar: AppBar(
+          backgroundColor: Colors.red,
+          title: Text(
+            "Doctor Schedule History",
+            // style: TextStyle(: .red),
+          ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: GestureDetector(
+                onTap: () {
+                  Get.to(PostSchedule());
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.add),
+                  ],
+                ),
               ),
-            ),
-          )
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: getProportionateScreenHeight(670),
-              width: getProportionateScreenWidth(400),
-              child:
-                  GetBuilder<DoctorSchedulesController>(builder: (controller) {
-                return ListView.builder(
-                  itemCount: doctorsSchedule.length,
-                  itemBuilder: (context, index) => DoctorCategoryCard(
-                    onPressedDelete: () async {
-                      await scheduleController.deleteData(
-                          userID: doctorsSchedule.elementAt(index).userID);
-                      Utils().toastMessage("Schedule Deleted");
-                    },
-                    day: doctorsSchedule.elementAt(index).day,
-                    endTime:
-                        doctorsSchedule.elementAt(index).endTime.toString(),
-                    fees: doctorsSchedule.elementAt(index).fees,
-                    startTime:
-                        doctorsSchedule.elementAt(index).startTime.toString(),
-                  ),
-                );
-              }),
-            ),
+            )
           ],
         ),
-      ),
-    );
+        body: RefreshIndicator(
+          onRefresh: _refresh,
+          child: SizedBox(
+            height: getProportionateScreenHeight(670),
+            width: getProportionateScreenWidth(400),
+            child: GetBuilder<DoctorSchedulesController>(builder: (controller) {
+              return ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                itemCount: doctorsSchedule.length,
+                itemBuilder: (context, index) => DoctorCategoryCard(
+                  onPressedDelete: () async {
+                    await scheduleController.deleteData(
+                        userID: doctorsSchedule.elementAt(index).userID);
+                    Utils().toastMessage("Schedule Deleted");
+                  },
+                  day: doctorsSchedule.elementAt(index).day,
+                  endTime: doctorsSchedule.elementAt(index).endTime.toString(),
+                  fees: doctorsSchedule.elementAt(index).fees,
+                  startTime:
+                      doctorsSchedule.elementAt(index).startTime.toString(),
+                ),
+              );
+            }),
+          ),
+        ));
   }
 }
 

@@ -20,16 +20,33 @@ class _ConferenceState extends State<Conference> {
   bool loading = false;
   DoctorController doctorController = Get.put(DoctorController());
   InviteController invController = Get.put(InviteController());
+  // search(){
 
+  //   for(var element in doctorController.getList){
+  //     if(element.userID == invController.getList
+  //             .contains(element.userID)
+  //             ){
+
+  //     }
+  //   }
+
+  // }
   @override
   Widget build(BuildContext context) {
+    // Iterable<DoctorModel> invitesList = doctorController.getList.where(
+    //   (element) => invController.getList.any(
+    //     (invElement) =>
+    //         element.userID == invElement.drInvitedBy &&
+    //         element.userID == invElement.drInvitedTo,
+    //   ),
+    // );
     Iterable<DoctorModel> invitesList = doctorController.getList.where(
-      (element) => invController.getList.any(
-        (invElement) =>
-            element.userID == invElement.drInvitedBy &&
-            element.userID == invElement.drInvitedTo,
-      ),
-    );
+        (element) =>
+            invController.getList.any((invelement) =>
+                invelement.drInvitedTo ==
+                FirebaseAuth.instance.currentUser!.uid) &&
+            invController.getList
+                .any((invelement) => invelement.drInvitedBy == element.userID));
 
     return Scaffold(
       appBar: AppBar(
