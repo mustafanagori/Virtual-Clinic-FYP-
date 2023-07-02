@@ -1,7 +1,6 @@
-import 'package:doctorandpatient/controller/bottom_bar_controller.dart';
 import 'package:doctorandpatient/core/colors.dart';
 // ignore: unused_import
-import 'package:doctorandpatient/templetes/patient_screen/pateint_myprofile.dart';
+import 'package:doctorandpatient/templetes/patient_screen/pateint_profile.dart';
 import 'package:doctorandpatient/templetes/patient_screen/patient_home.dart';
 import 'package:doctorandpatient/templetes/patient_screen/take_appointment.dart';
 import 'package:flutter/material.dart';

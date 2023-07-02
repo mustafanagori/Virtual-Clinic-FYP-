@@ -6,7 +6,6 @@ class PatientController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchCustomerData();
   }
 
   List<PatientModel> _list = [];
@@ -27,6 +26,8 @@ class PatientController extends GetxController {
   }
 
   PatientModel getPatientById(String userID) {
+    fetchCustomerData();
+
     return _list
         .firstWhere((element) => element.userID.trim() == userID.trim());
   }

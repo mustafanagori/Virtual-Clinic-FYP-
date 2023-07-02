@@ -41,7 +41,7 @@ class _PatientInfoState extends State<PatientInfo> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
-        title: Text('Patient Information'),
+        title: const Text('Patient Information'),
         centerTitle: true,
         leading: IconButton(
             onPressed: () {
@@ -78,7 +78,7 @@ class _PatientInfoState extends State<PatientInfo> {
                                     width: getProportionateScreenWidth(3),
                                     color: Colors.red),
                                 borderRadius: BorderRadius.circular(20)),
-                            labelText: "Name"),
+                            labelText: "Patient Name"),
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "cannot be empty";
@@ -89,8 +89,8 @@ class _PatientInfoState extends State<PatientInfo> {
                           if (value.contains(RegExp(r'[0-9]'))) {
                             return "cannot contain numbers";
                           }
-                          if (!RegExp(r'^[a-zA-Z]+$').hasMatch(value)) {
-                            return "contain alphabetic";
+                          if (!RegExp(r'^[a-zA-Z ]+$').hasMatch(value)) {
+                            return "must contain only alphabetic characters and spaces";
                           }
                           return null;
                         },
