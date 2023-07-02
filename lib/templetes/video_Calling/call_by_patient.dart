@@ -18,7 +18,7 @@ class CallBypatient extends StatelessWidget {
   final String userid;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {                 
     return WillPopScope(
       onWillPop: () async {
         return await showDialog(
@@ -30,9 +30,9 @@ class CallBypatient extends StatelessWidget {
       child: SafeArea(
         child: ZegoUIKitPrebuiltVideoConference(
           appID: MyConst
-              .appId, // Fill in the appID that you get from ZEGOCLOUD Admin Console.
+              .appId,               // Fill in the appID that you get from ZEGOCLOUD Admin Console.
           appSign: MyConst
-              .appSign, // Fill in the appSign that you get from ZEGOCLOUD Admin Console.
+              .appSign,             // Fill in the appSign that you get from ZEGOCLOUD Admin Console.
           userID: userid,
           userName: username,
           conferenceID: conferenceID,

@@ -493,11 +493,11 @@ class DuringAppointtmentAcceptedViewCard extends StatelessWidget {
                         //   width: getProportionateScreenWidth(1).0,
                         //   color: Colors.blueAccent,
                         // ),
-                        shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(20),
+                        shape:  RoundedRectangleBorder(
+                          borderRadius:  BorderRadius.circular(20),
                         ),
                       ),
-                      child: Text(
+                      child: const Text(
                         'Call',
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),

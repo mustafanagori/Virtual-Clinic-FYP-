@@ -10,7 +10,9 @@ import '../../controller/create_appoint.dart';
 import '../../controller/doctor_schedule_controlller.dart';
 import '../../controller/doctors_controller.dart';
 import '../../core/size_configuration.dart';
+import '../../models/doctor_model.dart';
 import '../video_Calling/call_by_doctor.dart';
+import '../video_Calling/call_by_patient.dart';
 
 class AppointmentHistory extends StatefulWidget {
   const AppointmentHistory({super.key});
@@ -84,6 +86,8 @@ class _AppointmentHistoryState extends State<AppointmentHistory> {
                             )
                           : checkTimetemp == "during"
                               ? DuringAppointtmentAcceptedViewCard(
+                                  doctorModel: docController.getDoctorById(
+                                      dataList.elementAt(index).doctorID),
                                   doctorName: docController
                                       .getDoctorById(
                                           dataList.elementAt(index).doctorID)
@@ -280,6 +284,7 @@ class AppointtmentViewCard extends StatelessWidget {
 class DuringAppointtmentAcceptedViewCard extends StatelessWidget {
   const DuringAppointtmentAcceptedViewCard({
     required this.doctorName,
+    required this.doctorModel,
     required this.startTime,
     required this.endTime,
     required this.day,
@@ -291,6 +296,7 @@ class DuringAppointtmentAcceptedViewCard extends StatelessWidget {
   }) : super(key: key);
 
   //final void Function()? onCall;
+  final DoctorModel doctorModel;
   final String doctorName;
   final String startTime;
   final String endTime;
@@ -445,7 +451,7 @@ class DuringAppointtmentAcceptedViewCard extends StatelessWidget {
                   SizedBox(
                     width: getProportionateScreenWidth(8),
                   ),
-                  Container(
+                  SizedBox(
                     height: getProportionateScreenHeight(40),
                     width: getProportionateScreenWidth(120),
                     child: ElevatedButton(
@@ -474,15 +480,16 @@ class DuringAppointtmentAcceptedViewCard extends StatelessWidget {
                   SizedBox(
                     width: getProportionateScreenWidth(8),
                   ),
-                  Container(
+                  SizedBox(
                     height: getProportionateScreenHeight(40),
                     width: getProportionateScreenWidth(100),
                     child: ElevatedButton(
                       onPressed: () {
-                        Get.to(CallByDoctor(
+                        Get.to(CallBypatient(
                           conferenceID: "1",
                           userid: patient.userID,
                           username: patient.name,
+                          doctorModel: doctorModel,
                         ));
                       },
                       style: ElevatedButton.styleFrom(
@@ -491,11 +498,11 @@ class DuringAppointtmentAcceptedViewCard extends StatelessWidget {
                         //   width: getProportionateScreenWidth(1).0,
                         //   color: Colors.blueAccent,
                         // ),
-                        shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(20),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
                         ),
                       ),
-                      child: Text(
+                      child: const Text(
                         'call',
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
@@ -504,7 +511,7 @@ class DuringAppointtmentAcceptedViewCard extends StatelessWidget {
                   SizedBox(
                     width: getProportionateScreenWidth(8),
                   ),
-                  Container(
+                  SizedBox(
                     height: getProportionateScreenHeight(40),
                     width: getProportionateScreenWidth(100),
                     child: ElevatedButton(
@@ -520,11 +527,11 @@ class DuringAppointtmentAcceptedViewCard extends StatelessWidget {
                       },
                       style: ElevatedButton.styleFrom(
                         primary: Colors.green,
-                        shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(20),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
                         ),
                       ),
-                      child: Text(
+                      child: const Text(
                         'raing',
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
@@ -566,7 +573,7 @@ class BeforeAppointtmentAcceptedViewCard extends StatelessWidget {
     return Center(
       child: Container(
         padding: const EdgeInsets.all(8.0),
-        height: getProportionateScreenHeight(200),
+        height: getProportionateScreenHeight(220),
         width: getProportionateScreenWidth(350),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
@@ -586,7 +593,7 @@ class BeforeAppointtmentAcceptedViewCard extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Row(
                   children: [
-                    Text(
+                    const Text(
                       "Name:",
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -629,7 +636,7 @@ class BeforeAppointtmentAcceptedViewCard extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: Row(
                     children: [
-                      Text("End Time:"),
+                      const Text("End Time:"),
                       SizedBox(
                         width: getProportionateScreenWidth(10),
                       ),
@@ -646,7 +653,7 @@ class BeforeAppointtmentAcceptedViewCard extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: Row(
                     children: [
-                      Text("Day:"),
+                      const Text("Day:"),
                       SizedBox(
                         width: getProportionateScreenWidth(10),
                       ),
@@ -663,7 +670,7 @@ class BeforeAppointtmentAcceptedViewCard extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: Row(
                     children: [
-                      Text("Fees:"),
+                      const Text("Fees:"),
                       SizedBox(
                         width: getProportionateScreenWidth(10),
                       ),
@@ -674,7 +681,7 @@ class BeforeAppointtmentAcceptedViewCard extends StatelessWidget {
             SizedBox(
               height: getProportionateScreenHeight(20),
             ),
-            Container(
+            SizedBox(
               height: getProportionateScreenHeight(40),
               width: getProportionateScreenWidth(250),
               child: ElevatedButton(
@@ -685,8 +692,8 @@ class BeforeAppointtmentAcceptedViewCard extends StatelessWidget {
                   //   width: getProportionateScreenWidth(1).0,
                   //   color: Colors.blueAccent,
                   // ),
-                  shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
                   ),
                 ),
                 child: Text(
@@ -855,11 +862,11 @@ class AfterAppointtmentAcceptedViewCard extends StatelessWidget {
                         //   width: getProportionateScreenWidth(1).0,
                         //   color: Colors.blueAccent,
                         // ),
-                        shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(20),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
                         ),
                       ),
-                      child: Text(
+                      child: const Text(
                         'Completed',
                         style: TextStyle(color: Colors.white, fontSize: 17),
                       ),
@@ -868,7 +875,7 @@ class AfterAppointtmentAcceptedViewCard extends StatelessWidget {
                   SizedBox(
                     width: getProportionateScreenWidth(25),
                   ),
-                  Container(
+                  SizedBox(
                     height: getProportionateScreenHeight(40),
                     width: getProportionateScreenWidth(120),
                     child: ElevatedButton(

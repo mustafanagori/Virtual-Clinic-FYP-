@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 
 import '../../controller/doctors_controller.dart';
 import '../../models/doctor_model.dart';
-import '../video_Calling/call_by_conference.dart';
 
 class Conference extends StatefulWidget {
   const Conference({Key? key}) : super(key: key);
@@ -76,7 +75,7 @@ class _ConferenceState extends State<Conference> {
                       backgroundColor: Colors.red,
                     ),
                     onPressed: () {
-                      Get.to(CallByConference(
+                      Get.to(CallByDoctor(
                           conferenceID: "1",
                           username:
                               "${doctorController.getDoctorById(FirebaseAuth.instance.currentUser!.uid).firstName} ${doctorController.getDoctorById(FirebaseAuth.instance.currentUser!.uid).lastName}",

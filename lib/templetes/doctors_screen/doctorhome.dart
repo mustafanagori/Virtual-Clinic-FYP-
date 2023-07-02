@@ -26,13 +26,13 @@ class home_doctor extends StatelessWidget {
             },
             icon: const Icon(Icons.logout)),
         backgroundColor: Colors.red,
-        title: const Text('Doctor Panel'),
+        title: const Text('Doctor Panel..'),
       ),
       body: Container(
         decoration: BoxDecoration(
             image: DecorationImage(
                 fit: BoxFit.cover,
-                colorFilter:  ColorFilter.mode(
+                colorFilter: ColorFilter.mode(
                     Colors.black.withOpacity(0.8), BlendMode.dstATop),
                 image: AssetImage("Assets/TELEHEALTH-1.jpeg"))),
         child: Column(

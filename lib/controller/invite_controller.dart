@@ -24,6 +24,7 @@ class InviteController extends GetxController {
             0, InviteModel.fromMap(map: dataMap, userID: documents.id.trim()));
       }
     });
+    print(_list.toList());
     update();
   }
 }

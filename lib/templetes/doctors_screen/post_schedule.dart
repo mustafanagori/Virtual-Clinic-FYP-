@@ -240,9 +240,7 @@ class _PostScheduleState extends State<PostSchedule> {
                         if (value!.isEmpty) {
                           return "Fee cannot be empty";
                         }
-                        if (value.length != 4) {
-                          return "Fee must be a 4-digit number";
-                        }
+
                         if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
                           return "Fee must contain only numbers";
                         }

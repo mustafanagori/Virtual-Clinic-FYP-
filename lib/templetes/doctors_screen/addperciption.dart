@@ -1,7 +1,6 @@
 import 'package:doctorandpatient/controller/presiption_controller.dart';
 import 'package:doctorandpatient/core/size_configuration.dart';
 import 'package:doctorandpatient/core/mytextfield.dart';
-import 'package:doctorandpatient/templetes/patient_screen/appointment_history.dart';
 // import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/rendering.dart';
