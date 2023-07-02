@@ -472,7 +472,7 @@ class DuringAppointtmentAcceptedViewCard extends StatelessWidget {
                       ),
                       child: Text(
                         'Perception',
-                        style: TextStyle(color: Colors.white, fontSize: 20),
+                        style: TextStyle(color: Colors.white, fontSize: 17),
                       ),
                     ),
                   ),
@@ -666,7 +666,7 @@ class AfterAppointmentViewCard extends StatelessWidget {
                   ),
                   child: Text(
                     'Appointment Completed',
-                    style: TextStyle(color: Colors.white, fontSize: 20),
+                    style: TextStyle(color: Colors.white, fontSize: 18),
                   ),
                 ),
               )

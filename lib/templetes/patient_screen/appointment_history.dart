@@ -861,7 +861,7 @@ class AfterAppointtmentAcceptedViewCard extends StatelessWidget {
                       ),
                       child: Text(
                         'Completed',
-                        style: TextStyle(color: Colors.white, fontSize: 20),
+                        style: TextStyle(color: Colors.white, fontSize: 17),
                       ),
                     ),
                   ),

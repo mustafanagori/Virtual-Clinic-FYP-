@@ -1,13 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doctorandpatient/controller/invite_controller.dart';
 import 'package:doctorandpatient/templetes/video_Calling/call_by_doctor.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controller/doctors_controller.dart';
 import '../../models/doctor_model.dart';
+import '../video_Calling/call_by_conference.dart';
 
 class Conference extends StatefulWidget {
   const Conference({Key? key}) : super(key: key);
@@ -54,7 +53,7 @@ class _ConferenceState extends State<Conference> {
         title: const Text("Conference Room"),
       ),
       body: loading
-          ? CircularProgressIndicator()
+          ? const CircularProgressIndicator()
           : ListView.builder(
               itemCount: invitesList.length,
               itemBuilder: (BuildContext context, int index) {
@@ -66,7 +65,7 @@ class _ConferenceState extends State<Conference> {
                       fontSize: 16,
                     ),
                   ),
-                  subtitle: Text(
+                  subtitle: const Text(
                     "has invited you ", // Replace with the doctor's specialty
                     style: TextStyle(
                       fontSize: 14,
@@ -77,14 +76,14 @@ class _ConferenceState extends State<Conference> {
                       backgroundColor: Colors.red,
                     ),
                     onPressed: () {
-                      Get.to(CallByDoctor(
+                      Get.to(CallByConference(
                           conferenceID: "1",
                           username:
                               "${doctorController.getDoctorById(FirebaseAuth.instance.currentUser!.uid).firstName} ${doctorController.getDoctorById(FirebaseAuth.instance.currentUser!.uid).lastName}",
                           userid: FirebaseAuth.instance.currentUser!.uid));
                       // Handle button press
                     },
-                    child: const Text('Call'), // Text content of the button
+                    child: const Text('Join'), // Text content of the button
                   ),
                 );
               },

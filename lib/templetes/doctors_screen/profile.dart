@@ -42,17 +42,19 @@ class _DoctorProfileState extends State<DoctorProfile> {
     final rating = _rating(doctorModel.rating);
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.red,
         centerTitle: true,
-        title: Text(
+        title: const Text(
           "Doctor's Profile",
           style: TextStyle(color: Colors.white, fontSize: 20),
         ),
         elevation: 0,
       ),
       backgroundColor: Colors.white,
+      // ignore: unnecessary_null_comparison
       body: doctorModel == null
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : Stack(
               children: [
                 SizedBox(
@@ -69,14 +71,14 @@ class _DoctorProfileState extends State<DoctorProfile> {
                       minRating: 0,
                       allowHalfRating: true,
                       itemCount: 5,
-                      itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                      itemBuilder: (context, _) => Icon(
+                      itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                      itemBuilder: (context, _) => const Icon(
                         Icons.star,
                         color: Colors.amber,
                       ),
                       ignoreGestures: true,
                       onRatingUpdate: (rating) {
-                        print(rating);
+                        // print(rating);
                       },
                     ),
                     const Padding(

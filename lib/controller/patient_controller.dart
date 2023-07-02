@@ -6,6 +6,7 @@ class PatientController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    fetchCustomerData();
   }
 
   List<PatientModel> _list = [];

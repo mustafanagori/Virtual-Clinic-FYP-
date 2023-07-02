@@ -61,6 +61,7 @@ class CreateAppointmentController extends GetxController {
   }
 
   CreateAppointmentModel getPatientById(String userID) {
+    fetchData();
     return _list
         .firstWhere((element) => element.userID.trim() == userID.trim());
   }

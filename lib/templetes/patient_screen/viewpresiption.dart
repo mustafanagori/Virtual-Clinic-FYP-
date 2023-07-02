@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doctorandpatient/controller/presiption_controller.dart';
 import 'package:doctorandpatient/core/size_configuration.dart';
 import 'package:flutter/material.dart';

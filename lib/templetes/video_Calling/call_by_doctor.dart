@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:doctorandpatient/controller/create_appoint.dart';
 import 'package:doctorandpatient/core/utils.dart';
-import 'package:doctorandpatient/templetes/patient_screen/take_appointment.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

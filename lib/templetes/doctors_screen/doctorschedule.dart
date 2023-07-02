@@ -33,7 +33,7 @@ class _DoctorScheduleHistoryState extends State<DoctorScheduleHistory> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.red,
-          title: Text(
+          title: const Text(
             "Doctor Schedule History",
             // style: TextStyle(: .red),
           ),
@@ -42,9 +42,9 @@ class _DoctorScheduleHistoryState extends State<DoctorScheduleHistory> {
               padding: const EdgeInsets.only(right: 10),
               child: GestureDetector(
                 onTap: () {
-                  Get.to(PostSchedule());
+                  Get.to(const PostSchedule());
                 },
-                child: Row(
+                child: const Row(
                   children: [
                     Icon(Icons.add),
                   ],
@@ -107,7 +107,7 @@ class DoctorCategoryCard extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               color: Colors.white,
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(color: Colors.red, spreadRadius: 2),
               ],
             ),
@@ -117,21 +117,21 @@ class DoctorCategoryCard extends StatelessWidget {
                   height: getProportionateScreenHeight(10),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 20),
+                  padding: const EdgeInsets.only(left: 20),
                   child: Align(
                       alignment: Alignment.centerLeft,
                       child: Column(
                         children: [
                           Row(
                             children: [
-                              Text(
+                              const Text(
                                 "StartTiming:",
                                 style: TextStyle(fontSize: 20),
                               ),
                               SizedBox(
                                 width: getProportionateScreenWidth(2),
                               ),
-                              Text(startTime, style: TextStyle(fontSize: 20)),
+                              Text(startTime, style: const TextStyle(fontSize: 20)),
                               SizedBox(
                                 width: getProportionateScreenWidth(1),
                               ),
@@ -139,12 +139,12 @@ class DoctorCategoryCard extends StatelessWidget {
                           ),
                           Row(
                             children: [
-                              Text("EndTiming:",
+                              const Text("EndTiming:",
                                   style: TextStyle(fontSize: 20)),
                               SizedBox(
                                 width: getProportionateScreenWidth(2),
                               ),
-                              Text(endTime, style: TextStyle(fontSize: 20)),
+                              Text(endTime, style: const TextStyle(fontSize: 20)),
                             ],
                           ),
                         ],
@@ -157,13 +157,13 @@ class DoctorCategoryCard extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 20),
                   child: Row(
                     children: [
-                      Text("Day ", style: TextStyle(fontSize: 20)),
+                      Text("Day ", style: const TextStyle(fontSize: 20)),
                       SizedBox(
                         width: getProportionateScreenWidth(
                           2,
                         ),
                       ),
-                      Text(day.toString(), style: TextStyle(fontSize: 20)),
+                      Text(day.toString(), style: const TextStyle(fontSize: 20)),
                     ],
                   ),
                 ),
@@ -174,7 +174,7 @@ class DoctorCategoryCard extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 20),
                   child: Row(
                     children: [
-                      Text("Fees ", style: TextStyle(fontSize: 20)),
+                      const Text("Fees ", style: TextStyle(fontSize: 20)),
                       SizedBox(
                         width: getProportionateScreenWidth(2),
                       ),
@@ -187,7 +187,7 @@ class DoctorCategoryCard extends StatelessWidget {
           ),
         ),
         Row(children: [
-          Spacer(),
+          const Spacer(),
           Padding(
             padding: const EdgeInsets.all(20),
             child: IconButton(

@@ -1,43 +1,89 @@
-import 'package:doctorandpatient/templetes/patient_screen/rating.dart';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:zego_uikit_prebuilt_video_conference/zego_uikit_prebuilt_video_conference.dart';
-import '../../models/doctor_model.dart';
+import '../../controller/doctors_controller.dart';
 import 'contants.dart';
 
-class callByConference extends StatelessWidget {
-  const callByConference({
-    super.key,
-    required this.doctorModel,
+class CallByConference extends StatelessWidget {
+  final DoctorController doctorController = Get.put(DoctorController());
+
+  CallByConference({
+    Key? key,
     required this.conferenceID,
     required this.username,
     required this.userid,
-  });
-  final DoctorModel doctorModel;
+  }) : super(key: key);
+
   final String conferenceID;
   final String username;
   final String userid;
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        return await showDialog(
-          context: context,
-          builder: (context) =>
-              Rating(doctorID: doctorModel.userID, rating: doctorModel.rating),
-        );
-      },
-      child: SafeArea(
-        child: ZegoUIKitPrebuiltVideoConference(
-          appID: MyConst
-              .appId, // Fill in the appID that you get from ZEGOCLOUD Admin Console.
-          appSign: MyConst
-              .appSign, // Fill in the appSign that you get from ZEGOCLOUD Admin Console.
-          userID: userid,
-          userName: username,
-          conferenceID: conferenceID,
-          config: ZegoUIKitPrebuiltVideoConferenceConfig(),
-        ),
+   // var drlist = doctorController.getList;
+    return SafeArea(
+      child: Column(
+        children: [
+          Expanded(
+            child: ZegoUIKitPrebuiltVideoConference(
+              appID: MyConst.appId,
+              appSign: MyConst.appSign,
+              userID: userid,
+              userName: username,
+              conferenceID: conferenceID,
+              config: ZegoUIKitPrebuiltVideoConferenceConfig(),
+            ),
+          ),
+          // Align(
+          //   alignment: Alignment.bottomCenter,
+          //   child: Padding(
+          //     padding: const EdgeInsets.all(16.0),
+          //     child: ElevatedButton(
+          //       style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
+          //       onPressed: () {
+          //         showModalBottomSheet(
+          //           context: context,
+          //           builder: (BuildContext context) {
+          //             return ListView.separated(
+          //               separatorBuilder: (context, index) => const Divider(
+          //                 thickness: 2,
+          //               ),
+          //               itemCount: drlist.length,
+          //               itemBuilder: (context, index) => ListTile(
+          //                 trailing: ElevatedButton(
+          //                     style: ElevatedButton.styleFrom(
+          //                       backgroundColor: Colors.red,
+          //                     ),
+          //                     onPressed: () async {
+          //                       await FirebaseFirestore.instance
+          //                           .collection("invites")
+          //                           .add({
+          //                         "invitedBy": FirebaseAuth
+          //                             .instance.currentUser!.uid
+          //                             .toString(),
+          //                         "invitedTo": drlist[index].userID,
+          //                       }).then((value) => Utils().toastMessage(
+          //                               "Dr.${drlist[index].firstName} Invited"));
+          //                     },
+          //                     child: const Text("Invite ")),
+          //                 title: Text(
+          //                   "${drlist[index].firstName} ${drlist[index].lastName}",
+          //                 ),
+          //                 subtitle: Text(drlist[index].prno.toString()),
+          //               ),
+          //             );
+          //           },
+          //         );
+          //       },
+          //       child: const Text(
+          //         'Invited',
+          //         style: TextStyle(color: Colors.black),
+          //       ),
+          //     ),
+          //   ),
+          // ),
+        ],
       ),
     );
   }

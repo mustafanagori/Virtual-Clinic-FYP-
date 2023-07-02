@@ -42,6 +42,7 @@ class DoctorSchedulesController extends GetxController {
   //   return temp;
   // }
   List<DoctorScheduleModel> getData(List<CreateAppointmentModel> caList) {
+    fetchData();
     List<DoctorScheduleModel> temp = List.from(_list);
 
     for (CreateAppointmentModel ca in caList) {
@@ -52,6 +53,7 @@ class DoctorSchedulesController extends GetxController {
   }
 
   DoctorScheduleModel getById(String userID) {
+    fetchData();
     return _list
         .firstWhere((element) => element.userID.trim() == userID.trim());
   }

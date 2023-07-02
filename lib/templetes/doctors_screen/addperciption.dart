@@ -1,8 +1,7 @@
 import 'package:doctorandpatient/controller/presiption_controller.dart';
 import 'package:doctorandpatient/core/size_configuration.dart';
 import 'package:doctorandpatient/core/mytextfield.dart';
-import 'package:doctorandpatient/templetes/doctors_screen/appointment_view.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:doctorandpatient/templetes/patient_screen/appointment_history.dart';
 // import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/rendering.dart';
@@ -11,7 +10,8 @@ import 'package:get/get.dart';
 // new one
 // ignore: must_be_immutable
 class Perciption extends StatefulWidget {
-  Perciption({super.key, required this.patientID, required this.doctorID});
+  const Perciption(
+      {super.key, required this.patientID, required this.doctorID});
   final String patientID;
   final String doctorID;
 
@@ -32,7 +32,7 @@ class _PerciptionState extends State<Perciption> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
-        title: Text(
+        title: const Text(
           "Add Presiption",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
@@ -71,7 +71,7 @@ class _PerciptionState extends State<Perciption> {
                       text.text = "";
                     });
                   },
-                  icon: Icon(Icons.send)),
+                  icon: const Icon(Icons.send)),
             ),
           ],
         ),
@@ -80,6 +80,7 @@ class _PerciptionState extends State<Perciption> {
   }
 }
 
+// ignore: camel_case_types
 class msgbox extends StatelessWidget {
   const msgbox({
     super.key,
@@ -94,16 +95,16 @@ class msgbox extends StatelessWidget {
         child: Container(
           // height: getProportionateScreenHeight(150),
           // width: getProportionateScreenWidth(350),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(30)),
-            color: const Color.fromARGB(255, 228, 208, 208),
+            color: Color.fromARGB(255, 228, 208, 208),
           ),
 
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Text(
               message,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 25,
                 fontStyle: FontStyle.italic,
               ),

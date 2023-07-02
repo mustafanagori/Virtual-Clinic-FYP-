@@ -42,7 +42,7 @@ class _InboxState extends State<Inbox> {
           elevation: 0,
           backgroundColor: Colors.red,
           centerTitle: true,
-          title: Text(
+          title: const Text(
             // "${widget.user.name}",
             "Video Call",
             style: const TextStyle(

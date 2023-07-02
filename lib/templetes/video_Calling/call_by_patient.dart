@@ -4,8 +4,8 @@ import 'package:zego_uikit_prebuilt_video_conference/zego_uikit_prebuilt_video_c
 import '../../models/doctor_model.dart';
 import 'contants.dart';
 
-class callBypatient extends StatelessWidget {
-  const callBypatient({
+class CallBypatient extends StatelessWidget {
+  const CallBypatient({
     super.key,
     required this.doctorModel,
     required this.conferenceID,

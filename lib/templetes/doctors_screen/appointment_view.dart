@@ -35,8 +35,10 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
 
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
+          automaticallyImplyLeading: false,
           backgroundColor: Colors.red,
-          title: Text('View Appointment'),
+          title: const Text('View Appointment'),
           // leading: IconButton(
           //   icon: Icon(Icons.arrow_back),
           //   onPressed: () {
