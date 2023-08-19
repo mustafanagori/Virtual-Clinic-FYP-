@@ -38,13 +38,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
           centerTitle: true,
           automaticallyImplyLeading: false,
           backgroundColor: Colors.red,
-          title: const Text('View Appointment'),
-          // leading: IconButton(
-          //   icon: Icon(Icons.arrow_back),
-          //   onPressed: () {
-          //     Get.back();
-          //   },
-          // ),
+          title: const Text('View Appointment Request'),
         ),
         body: SingleChildScrollView(
           child: Column(children: [

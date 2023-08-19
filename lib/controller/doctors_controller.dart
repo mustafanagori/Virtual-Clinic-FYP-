@@ -7,6 +7,7 @@ class DoctorController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    fetchData();
   }
 
   List<DoctorModel> _list = [];
@@ -27,6 +28,7 @@ class DoctorController extends GetxController {
   }
 
   updateRating({required String doctorID, required List rating}) async {
+    
     await FirebaseFirestore.instance
         .collection("doctors")
         .doc(doctorID)
@@ -34,8 +36,6 @@ class DoctorController extends GetxController {
   }
 
   DoctorModel getDoctorById(String userID) {
-    fetchData();
-
     print(userID);
     return _list
         .firstWhere((element) => element.userID.trim() == userID.trim());

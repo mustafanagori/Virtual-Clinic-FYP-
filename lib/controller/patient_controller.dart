@@ -34,6 +34,7 @@ class PatientController extends GetxController {
   }
 
   PatientModel getPatientByName(String firstName) {
+    fetchCustomerData();
     return _list
         .where((element) => element.name.trim() == firstName.trim())
         .first;

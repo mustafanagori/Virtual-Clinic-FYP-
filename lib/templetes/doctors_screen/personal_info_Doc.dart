@@ -119,16 +119,10 @@ class _PersonalInfoState extends State<PersonalInfo> {
                           labelText: "First Name"),
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "cannot be empty";
-                        }
-                        if (value.length < 3) {
-                          return "minimum length of 3";
-                        }
-                        if (value.contains(RegExp(r'[0-9]'))) {
-                          return "cannot contain numbers";
+                          return "Cannot be empty";
                         }
                         if (!RegExp(r'^[a-zA-Z]+$').hasMatch(value)) {
-                          return "contain alphabetic";
+                          return "Can only contain alphabetic characters";
                         }
                         return null;
                       },
@@ -149,16 +143,10 @@ class _PersonalInfoState extends State<PersonalInfo> {
                             labelText: "Last Name"),
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return "cannot be empty";
-                          }
-                          if (value.length < 3) {
-                            return "minimum length of 3";
-                          }
-                          if (value.contains(RegExp(r'[0-9]'))) {
-                            return "cannot contain numbers";
+                            return "Cannot be empty";
                           }
                           if (!RegExp(r'^[a-zA-Z]+$').hasMatch(value)) {
-                            return "contain alphabetic";
+                            return "Can only contain alphabetic characters";
                           }
                           return null;
                         },

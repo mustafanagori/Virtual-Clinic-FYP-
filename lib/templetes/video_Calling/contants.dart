@@ -1,5 +1,5 @@
 class MyConst {
-  static const int appId = 1587913259;
+  static const int appId = 450428291;
   static const String appSign =
-      "4be8e0fd9b18804ead696e339f217b6b20356b2ac4314e4890bb65f44d473227";
+      "3a2d469f259b2b4eb395fb3b80faf76624cf2be7db425a8598bce6cf9303a604";
 }

@@ -64,6 +64,7 @@ class DoctorSchedulesController extends GetxController {
       required String day,
       required String docID,
       required String fees}) async {
+    fetchData();
     final doc =
         await FirebaseFirestore.instance.collection("doctorSchedule").add({
       "startTime": startTime,
@@ -88,6 +89,7 @@ class DoctorSchedulesController extends GetxController {
   }
 
   deleteData({required String userID}) async {
+    fetchData();
     await FirebaseFirestore.instance
         .collection("doctorSchedule")
         .doc(userID)

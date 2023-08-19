@@ -10,7 +10,7 @@ import 'package:doctorandpatient/controller/presiption_controller.dart';
 import 'package:doctorandpatient/templetes/doctors_screen/doctor_dashboard.dart';
 import 'package:doctorandpatient/templetes/doctors_screen/personal_info_Doc.dart';
 import 'package:doctorandpatient/templetes/doctors_screen/rejected.dart';
-import 'package:doctorandpatient/templetes/doctors_screen/verification.dart';
+import 'package:doctorandpatient/templetes/patient_screen/verification.dart';
 import 'package:doctorandpatient/templetes/patient_screen/patient_dashboard.dart';
 import 'package:doctorandpatient/templetes/patient_screen/patient_form.dart';
 import 'package:firebase_auth/firebase_auth.dart';

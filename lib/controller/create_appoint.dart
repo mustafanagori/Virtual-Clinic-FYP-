@@ -46,6 +46,7 @@ class CreateAppointmentController extends GetxController {
     String id,
     String status,
   ) async {
+    fetchData();
     await FirebaseFirestore.instance
         .collection("createAppointment")
         .doc(id)
