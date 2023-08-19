@@ -112,18 +112,21 @@ class _TakeAppointmentState extends State<TakeAppointment> {
           child: Column(
             children: [
               Image(
-                image: AssetImage(
+                image: const AssetImage(
                     'Assets/sl-telehealth-smartphone-doctor-1200x600.jpeg'),
                 height: getProportionateScreenHeight(180),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
                 child: Align(
                     alignment: Alignment.topCenter,
-                    child: Text(
-                      'Doctor Appointment +',
-                      style:
-                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        "Doctor's Appointments",
+                        style: TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.bold),
+                      ),
                     )),
               ),
               Padding(
@@ -134,12 +137,16 @@ class _TakeAppointmentState extends State<TakeAppointment> {
                   },
                   controller: searchController,
                   decoration: InputDecoration(
+                      suffixIcon: const Icon(
+                        Icons.search,
+                        size: 34,
+                      ),
                       border: OutlineInputBorder(
                           borderSide: BorderSide(
                               width: getProportionateScreenWidth(3),
                               color: Colors.red),
                           borderRadius: BorderRadius.circular(20)),
-                      labelText: "Search....."),
+                      labelText: "Search"),
                 ),
               ),
               SizedBox(
@@ -179,7 +186,7 @@ class _TakeAppointmentState extends State<TakeAppointment> {
                         //     sheduleID: doctorsSchedule.elementAt(index).userID);
 
                         await appointmentController.fetchData();
-                        Utils().toastMessage("wait for reponse");
+                        Utils().toastMessage("waiting for response");
                         setState(() {});
                       },
                       day: doctorsSchedule[index].day,

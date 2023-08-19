@@ -66,6 +66,9 @@ class _DoctorProfileState extends State<DoctorProfile> {
                 ),
                 Column(
                   children: [
+                    SizedBox(
+                      height: getProportionateScreenHeight(20),
+                    ),
                     RatingBar.builder(
                       initialRating: rating,
                       minRating: 0,
@@ -265,7 +268,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                   Container(
                     color: Colors.red,
                     child: Center(
-                      child: Text("Add Speacialzation",
+                      child: const Text("Add Specialization",
                           style: TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
@@ -278,55 +281,85 @@ class _DoctorProfileState extends State<DoctorProfile> {
                   ),
                   MyTextField(
                     width: getProportionateScreenWidth(600),
-                    hintText: " Add Spealization ",
+                    hintText: " Add Specialization ",
                     controller: speacialization,
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(
                         vertical: getProportionateScreenHeight(5),
                         horizontal: getProportionateScreenWidth(20)),
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.red,
-                          // side: BorderSide(
-                          //   width: getProportionateScreenWidth(1).0,
-                          //   color: Colors.blueAccent,
-                          // ),
-                          shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(20),
-                          ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.red,
+                              // side: BorderSide(
+                              //   width: getProportionateScreenWidth(1).0,
+                              //   color: Colors.blueAccent,
+                              // ),
+                              shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(20),
+                              ),
+                            ),
+                            onPressed: () async {
+                              final temp = doctorModel.spealization.substring(
+                                      0, doctorModel.spealization.length - 1) +
+                                  ", " +
+                                  speacialization.text +
+                                  "]";
+                              await FirebaseFirestore.instance
+                                  .collection("doctors")
+                                  .doc(currentUser!.uid)
+                                  .update({"spealization": temp}).then((value) {
+                                doctorController.fetchData();
+                                Utils().toastMessage("Specialization Added");
+                                speacialization.text = "";
+                                Navigator.pop(context);
+                              }).onError((error, stackTrace) {
+                                Utils().toastMessage(error.toString());
+                              });
+                            },
+                            child: Text(
+                              " Add ",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20),
+                            )),
+                        // close
+                        SizedBox(
+                          width: getProportionateScreenWidth(40),
                         ),
-                        onPressed: () async {
-                          final temp = doctorModel.spealization.substring(
-                                  0, doctorModel.spealization.length - 1) +
-                              ", " +
-                              speacialization.text +
-                              "]";
-                          await FirebaseFirestore.instance
-                              .collection("doctors")
-                              .doc(currentUser!.uid)
-                              .update({"spealization": temp}).then((value) {
-                            doctorController.fetchData();
-                            Utils().toastMessage("Speacialization Added");
-                            speacialization.text = "";
-                            Navigator.pop(context);
-                          }).onError((error, stackTrace) {
-                            Utils().toastMessage(error.toString());
-                          });
-                        },
-                        child: Text(
-                          " Add ",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20),
-                        )),
-                  )
+                        ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.red,
+                              // side: BorderSide(
+                              //   width: getProportionateScreenWidth(1).0,
+                              //   color: Colors.blueAccent,
+                              // ),
+                              shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(20),
+                              ),
+                            ),
+                            onPressed: () {
+                              navigator?.pop(context);
+                            },
+                            child: Text(
+                              " Close ",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20),
+                            )),
+                      ],
+                    ),
+                  ),
                 ],
               )),
         );
       },
-      icon: Icon(
+      icon: const Icon(
         Icons.add_circle,
       ),
     );

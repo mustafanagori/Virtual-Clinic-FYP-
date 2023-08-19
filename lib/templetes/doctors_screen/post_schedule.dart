@@ -39,6 +39,7 @@ class _PostScheduleState extends State<PostSchedule> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+            centerTitle: true,
             // leading: GestureDetector(
             //     onTap: () {
             //       Get.off(DoctorScheduleHistory());
@@ -47,6 +48,7 @@ class _PostScheduleState extends State<PostSchedule> {
             backgroundColor: Colors.red,
             title: Text(
               "Post Schedule",
+              style: TextStyle(fontSize: 22),
             )),
         body: SingleChildScrollView(
           child: Form(
@@ -57,10 +59,10 @@ class _PostScheduleState extends State<PostSchedule> {
                 SizedBox(
                   height: getProportionateScreenHeight(20),
                 ),
-                Center(
+                const Center(
                     child: Text(
-                  "Days:",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                  "Select Day:",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
                 )),
                 //   add dropdown list
                 SizedBox(
@@ -80,7 +82,10 @@ class _PostScheduleState extends State<PostSchedule> {
                           .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
-                          child: Text(value),
+                          child: Text(
+                            value,
+                            style: TextStyle(fontSize: 25),
+                          ),
                         );
                       }).toList(),
                     ),
@@ -159,9 +164,9 @@ class _PostScheduleState extends State<PostSchedule> {
                     style: ElevatedButton.styleFrom(
                         primary: Colors.red,
                         padding:
-                            EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                            EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                         textStyle: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.bold)),
+                            fontSize: 20, fontWeight: FontWeight.bold)),
                     onPressed: (() async {
                       TimeOfDay? newTime = await showQuarterTimePicker(
                         context: context,
@@ -174,7 +179,7 @@ class _PostScheduleState extends State<PostSchedule> {
                         //print(startTime);
                       });
                     }),
-                    child: Text("Select Time")),
+                    child: Text("Select Start Time")),
                 SizedBox(
                   height: getProportionateScreenHeight(20),
                 ),
@@ -198,9 +203,9 @@ class _PostScheduleState extends State<PostSchedule> {
                     style: ElevatedButton.styleFrom(
                         primary: Colors.red,
                         padding:
-                            EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                            EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                         textStyle: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.bold)),
+                            fontSize: 20, fontWeight: FontWeight.bold)),
                     onPressed: (() async {
                       TimeOfDay? newTime2 = await showQuarterTimePicker(
                         context: context,
@@ -211,16 +216,16 @@ class _PostScheduleState extends State<PostSchedule> {
                         endTime = newTime2;
                       });
                     }),
-                    child: Text("Select Time")),
+                    child: Text("Select End Time")),
                 SizedBox(
                   height: getProportionateScreenHeight(20),
                 ),
                 const Text(
-                  "Fees",
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                  "Appointment Fee",
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
-                  height: getProportionateScreenHeight(10),
+                  height: getProportionateScreenHeight(20),
                 ),
                 Center(
                   child: SizedBox(
@@ -229,11 +234,16 @@ class _PostScheduleState extends State<PostSchedule> {
                       keyboardType: TextInputType.number,
                       controller: feeController,
                       decoration: InputDecoration(
-                        hintText: "Fees Structure",
+                        hintText: "Appointment Fee",
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: getProportionateScreenWidth(1),
+                              color: AppColors.btnloginRed),
+                        ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                              width: getProportionateScreenWidth(3),
-                              color: AppColors.btnlogingreyGreen),
+                              width: getProportionateScreenWidth(1),
+                              color: AppColors.btnloginRed),
                         ),
                       ),
                       validator: (value) {
@@ -253,7 +263,7 @@ class _PostScheduleState extends State<PostSchedule> {
                   height: getProportionateScreenHeight(80),
                 ),
                 SizedBox(
-                  height: getProportionateScreenHeight(40),
+                  height: getProportionateScreenHeight(50),
                   width: getProportionateScreenWidth(250),
                   //   width: getProportionateScreenWidth(1)50,
                   child: ElevatedButton(
@@ -274,7 +284,7 @@ class _PostScheduleState extends State<PostSchedule> {
                         });
 
                         // change time
-                        int intervalMinutes = 30;
+                        int intervalMinutes = 15;
 
                         List<TimeOfDay> slots = generateTimeSlots(
                             startTime, endTime, intervalMinutes);
@@ -283,14 +293,14 @@ class _PostScheduleState extends State<PostSchedule> {
                           scheduleController.uploadData(
                               startTime: slot.toString().split("y")[1],
                               // change time slot
-                              endTime: slot.minute + 30 == 60
+                              endTime: slot.minute + 15 == 60
                                   ? TimeOfDay(hour: slot.hour + 1, minute: 0)
                                       .toString()
                                       .split("y")[1]
                                   : TimeOfDay(
                                           // chamge the time
                                           hour: slot.hour,
-                                          minute: slot.minute + 30)
+                                          minute: slot.minute + 15)
                                       .toString()
                                       .split("y")[1],
                               day: selectedDay,
@@ -309,7 +319,7 @@ class _PostScheduleState extends State<PostSchedule> {
                     },
                     child: const Text(
                       'submit',
-                      style: TextStyle(color: Colors.white, fontSize: 20),
+                      style: TextStyle(color: Colors.white, fontSize: 25),
                     ),
                   ),
                 ),

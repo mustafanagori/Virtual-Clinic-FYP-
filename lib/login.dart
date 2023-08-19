@@ -4,6 +4,7 @@ import 'package:doctorandpatient/signup.dart';
 import 'package:doctorandpatient/splashscreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 //
 import 'core/utils.dart';
@@ -31,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
             automaticallyImplyLeading: false,
             backgroundColor: Colors.red,
             title: const Text(
-              "Login",
+              "Login Panel",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
             ),
             centerTitle: true,
@@ -59,10 +60,10 @@ class _LoginPageState extends State<LoginPage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             SizedBox(
-                              height: getProportionateScreenHeight(30),
+                              height: getProportionateScreenHeight(10),
                             ),
-                            Text(
-                              "Login",
+                            const Text(
+                              "Login Now !",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
@@ -70,12 +71,16 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
                             SizedBox(
-                              height: getProportionateScreenHeight(20),
+                              height: getProportionateScreenHeight(80),
                             ),
                             TextFormField(
                               controller: emailController,
                               decoration: InputDecoration(
                                 filled: true,
+                                suffixIcon: Icon(
+                                  Icons.email,
+                                  color: Colors.black38,
+                                ),
                                 fillColor: Colors.white,
                                 hintText: 'Email',
                                 enabled: true,
@@ -161,32 +166,64 @@ class _LoginPageState extends State<LoginPage> {
                               keyboardType: TextInputType.emailAddress,
                             ),
                             SizedBox(
-                              height: getProportionateScreenHeight(20),
+                              height: getProportionateScreenHeight(80),
                             ),
-                            MaterialButton(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20.0))),
-                              elevation: 5.0,
-                              height: getProportionateScreenHeight(40),
-                              onPressed: emailController.text.isNotEmpty &&
-                                      passwordController.text.isNotEmpty
-                                  ? () {
-                                      setState(() {
-                                        visible = true;
-                                      });
-                                      signIn(emailController.text,
-                                          passwordController.text);
-                                    }
-                                  : null,
+                            // MaterialButton(
+                            //   shape: RoundedRectangleBorder(
+                            //       borderRadius:
+                            //           BorderRadius.all(Radius.circular(20.0))),
+                            //   elevation: 5.0,
+                            //   height: getProportionateScreenHeight(40),
+                            //   onPressed: emailController.text.isNotEmpty &&
+                            //           passwordController.text.isNotEmpty
+                            //       ? () {
+                            //           setState(() {
+                            //             visible = true;
+                            //           });
+                            //           signIn(emailController.text,
+                            //               passwordController.text);
+                            //         }
+                            //       : null,
+                            //   child: Text(
+                            //     "Login",
+                            //     style: TextStyle(
+                            //         fontSize: 20,
+                            //         color: Colors.white,
+                            //         fontWeight: FontWeight.bold),
+                            //   ),
+                            //   color: Colors.red,
+                            // ),
+                            // new buttton
+                            ElevatedButton(
+                              onPressed:
+                                  //  emailController.text.isNotEmpty &&
+                                  //         passwordController.text.isNotEmpty
+                                  // ?
+                                  () {
+                                setState(() {
+                                  visible = true;
+                                });
+                                signIn(emailController.text,
+                                    passwordController.text);
+                              },
+                              // : null,
+                              style: ElevatedButton.styleFrom(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 13,
+                                    horizontal:
+                                        50), // Increase padding to increase width
+                                primary: Colors.red, // Background color
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      18), // Rounded corners
+                                  side: BorderSide(
+                                      color: Colors.red), // Red border
+                                ),
+                              ),
                               child: Text(
                                 "Login",
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
+                                style: TextStyle(fontSize: 22),
                               ),
-                              color: Colors.red,
                             ),
                             SizedBox(
                               height: getProportionateScreenHeight(20),
@@ -200,31 +237,53 @@ class _LoginPageState extends State<LoginPage> {
                                     child: CircularProgressIndicator(
                                   color: Colors.white,
                                 ))),
-                            MaterialButton(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(20.0),
-                                ),
-                              ),
-                              elevation: 5.0,
-                              height: getProportionateScreenHeight(40),
-                              onPressed: () {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => Register(),
-                                  ),
-                                );
-                              },
-                              color: Colors.red,
-                              child: Text(
-                                "Register Now",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold),
-                              ),
+                            SizedBox(
+                              height: getProportionateScreenHeight(5),
                             ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("Didn't have an account!  ",
+                                    style: TextStyle(fontSize: 20)),
+                                InkWell(
+                                  onTap: () {
+                                    Get.to(Register());
+                                  },
+                                  child: Text(
+                                    "Register",
+                                    style: TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            // MaterialButton(
+                            //   shape: RoundedRectangleBorder(
+                            //     borderRadius: BorderRadius.all(
+                            //       Radius.circular(20.0),
+                            //     ),
+                            //   ),
+                            //   elevation: 5.0,
+                            //   height: getProportionateScreenHeight(50),
+                            //   onPressed: () {
+                            //     Navigator.pushReplacement(
+                            //       context,
+                            //       MaterialPageRoute(
+                            //         builder: (context) => Register(),
+                            //       ),
+                            //     );
+                            //   },
+                            //   color: Colors.red,
+                            //   child: Text(
+                            //     "Register Now",
+                            //     style: TextStyle(
+                            //         color: Colors.white,
+                            //         fontSize: 20,
+                            //         fontWeight: FontWeight.bold),
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
@@ -333,19 +392,6 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // // ignore_for_file: unnecessary_new
 

@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doctorandpatient/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'core/utils.dart';
 import 'core/size_configuration.dart';
@@ -45,11 +46,12 @@ class _RegisterState extends State<Register> {
       child: SafeArea(
         child: Scaffold(
           appBar: AppBar(
+            automaticallyImplyLeading: false,
+            centerTitle: true,
             title: const Text(
-              "Registeration",
+              "Registration Panel",
               style: TextStyle(fontSize: 30),
             ),
-            centerTitle: true,
             backgroundColor: Colors.red,
           ),
           // backgroundColor: Colors.red,
@@ -82,7 +84,7 @@ class _RegisterState extends State<Register> {
                                 height: getProportionateScreenHeight(80),
                               ),
                               const Text(
-                                "Register Now",
+                                "Register Now !",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,
@@ -95,6 +97,10 @@ class _RegisterState extends State<Register> {
                               TextFormField(
                                 controller: emailController,
                                 decoration: InputDecoration(
+                                  suffixIcon: Icon(
+                                    Icons.mail,
+                                    color: Colors.black38,
+                                  ),
                                   filled: true,
                                   fillColor: Colors.white,
                                   hintText: 'Email',
@@ -262,68 +268,60 @@ class _RegisterState extends State<Register> {
                                 ],
                               ),
                               SizedBox(
-                                height: getProportionateScreenHeight(60),
+                                height: getProportionateScreenHeight(80),
                               ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  MaterialButton(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(20.0))),
-                                    elevation: 5.0,
-                                    height: getProportionateScreenHeight(40),
-                                    onPressed: () {
-                                      CircularProgressIndicator();
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => LoginPage(),
-                                        ),
-                                      );
-                                    },
-                                    child: Text(
-                                      "Login",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20,
-                                          color: Colors.white),
-                                    ),
-                                    color: Colors.red,
+                              ElevatedButton(
+                                onPressed: () {
+                                  setState(() {
+                                    showProgress = true;
+                                  });
+                                  try {
+                                    signUp(emailController.text,
+                                        passwordController.text, rool);
+                                  } catch (e) {
+                                    Utils().toastMessage(e.toString());
+                                  }
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 13,
+                                      horizontal:
+                                          50), // Increase padding to increase width
+                                  primary: Colors.red, // Background color
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        18), // Rounded corners
+                                    side: BorderSide(
+                                        color: Colors.red), // Red border
                                   ),
-                                  MaterialButton(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(20.0))),
-                                    elevation: 5.0,
-                                    height: getProportionateScreenHeight(40),
-                                    onPressed: () {
-                                      setState(() {
-                                        showProgress = true;
-                                      });
-                                      try {
-                                        signUp(emailController.text,
-                                            passwordController.text, rool);
-                                      } catch (e) {
-                                        Utils().toastMessage(e.toString());
-                                      }
-                                    },
-                                    child: Text(
-                                      "Register",
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    color: Colors.red,
-                                  ),
-                                ],
+                                ),
+                                child: Text(
+                                  "Register",
+                                  style: TextStyle(fontSize: 22),
+                                ),
                               ),
                               SizedBox(
-                                height: getProportionateScreenHeight(20),
+                                height: getProportionateScreenHeight(30),
                               ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("have an account!  ",
+                                      style: TextStyle(fontSize: 22)),
+                                  InkWell(
+                                    onTap: () {
+                                      Get.to(LoginPage());
+                                    },
+                                    child: Text(
+                                      "Login Now ",
+                                      style: TextStyle(
+                                          color: Colors.red,
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ],
+                              )
                             ],
                           ),
                         ),
@@ -366,16 +364,6 @@ class _RegisterState extends State<Register> {
         context, MaterialPageRoute(builder: (context) => LoginPage()));
   }
 }
-
-
-
-
-
-
-
-
-
-
 
 // import 'package:doctorandpatient/adminlogin.dart';
 // import 'package:doctorandpatient/core/colors.dart';

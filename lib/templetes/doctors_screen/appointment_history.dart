@@ -32,12 +32,16 @@ class _PatientHistoryState extends State<PatientHistory> {
         element.doctorID == FirebaseAuth.instance.currentUser!.uid);
     return Scaffold(
         appBar: AppBar(
+            centerTitle: true,
             // leading: IconButton(
             //   icon: Icon(Icons.arrow_back),
             //   onPressed: () => Get.off(DoctorDashboard()),
             // ),
             backgroundColor: Colors.red,
-            title: Text('Appointment History')),
+            title: const Text(
+              'Appointment History',
+              style: TextStyle(fontSize: 22),
+            )),
         body: GetBuilder<CreateAppointmentController>(builder: (controller) {
           return ListView.builder(
               itemCount: dataList.length,
@@ -493,8 +497,8 @@ class DuringAppointtmentAcceptedViewCard extends StatelessWidget {
                         //   width: getProportionateScreenWidth(1).0,
                         //   color: Colors.blueAccent,
                         // ),
-                        shape:  RoundedRectangleBorder(
-                          borderRadius:  BorderRadius.circular(20),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
                         ),
                       ),
                       child: const Text(

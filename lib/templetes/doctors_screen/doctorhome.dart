@@ -16,17 +16,23 @@ class home_doctor extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-            onPressed: () {
-              FirebaseAuth.instance.signOut().then((value) {
-                Get.off(LoginPage());
-              }).onError((error, stackTrace) {
-                Utils().toastMessage(error.toString());
-              });
-            },
-            icon: const Icon(Icons.logout)),
+        centerTitle: true,
+        actions: [
+          IconButton(
+              onPressed: () {
+                FirebaseAuth.instance.signOut().then((value) {
+                  Get.off(LoginPage());
+                }).onError((error, stackTrace) {
+                  Utils().toastMessage(error.toString());
+                });
+              },
+              icon: const Icon(Icons.logout)),
+        ],
         backgroundColor: Colors.red,
-        title: const Text('Doctor Panel..'),
+        title: const Text(
+          'Doctor Panel',
+          style: TextStyle(fontSize: 20),
+        ),
       ),
       body: Container(
         decoration: BoxDecoration(

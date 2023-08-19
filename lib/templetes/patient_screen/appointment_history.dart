@@ -42,7 +42,11 @@ class _AppointmentHistoryState extends State<AppointmentHistory> {
             //   onPressed: () => Get.off(DoctorDashboard()),
             // ),
             backgroundColor: Colors.red,
-            title: Text('Appointment History')),
+            centerTitle: true,
+            title: const Text(
+              'Appointment History',
+              style: TextStyle(fontSize: 22),
+            )),
         body: SingleChildScrollView(
           child: Column(children: [
             SizedBox(

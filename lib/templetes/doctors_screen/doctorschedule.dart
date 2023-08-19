@@ -32,10 +32,12 @@ class _DoctorScheduleHistoryState extends State<DoctorScheduleHistory> {
     scheduleController.fetchData();
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
+        
           backgroundColor: Colors.red,
           title: const Text(
-            "Doctor Schedule History",
-            // style: TextStyle(: .red),
+            "Doctor's Schedule History",
+            style: TextStyle(fontSize: 22),
           ),
           actions: [
             Padding(
@@ -131,7 +133,8 @@ class DoctorCategoryCard extends StatelessWidget {
                               SizedBox(
                                 width: getProportionateScreenWidth(2),
                               ),
-                              Text(startTime, style: const TextStyle(fontSize: 20)),
+                              Text(startTime,
+                                  style: const TextStyle(fontSize: 20)),
                               SizedBox(
                                 width: getProportionateScreenWidth(1),
                               ),
@@ -144,7 +147,8 @@ class DoctorCategoryCard extends StatelessWidget {
                               SizedBox(
                                 width: getProportionateScreenWidth(2),
                               ),
-                              Text(endTime, style: const TextStyle(fontSize: 20)),
+                              Text(endTime,
+                                  style: const TextStyle(fontSize: 20)),
                             ],
                           ),
                         ],
@@ -163,7 +167,8 @@ class DoctorCategoryCard extends StatelessWidget {
                           2,
                         ),
                       ),
-                      Text(day.toString(), style: const TextStyle(fontSize: 20)),
+                      Text(day.toString(),
+                          style: const TextStyle(fontSize: 20)),
                     ],
                   ),
                 ),
@@ -189,13 +194,13 @@ class DoctorCategoryCard extends StatelessWidget {
         Row(children: [
           const Spacer(),
           Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 30),
             child: IconButton(
                 onPressed: onPressedDelete,
-                icon: Icon(
+                icon: const Icon(
                   Icons.delete,
                   color: Colors.red,
-                  size: 50,
+                  size: 40,
                 )),
           )
         ]),

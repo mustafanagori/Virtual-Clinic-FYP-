@@ -50,9 +50,11 @@ class _mypProfileState extends State<mypProfile> {
           //     ),
           //   ),
           // ),
-          title: Text(
-            'Profile',
-            style: TextStyle(color: Colors.white, fontSize: 20),
+          centerTitle: true,
+          automaticallyImplyLeading: false,
+          title: const Text(
+            'Patient Profile',
+            style: TextStyle(color: Colors.white, fontSize: 22),
           ),
           actions: [
             Padding(

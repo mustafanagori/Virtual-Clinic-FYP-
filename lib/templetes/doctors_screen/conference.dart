@@ -48,8 +48,12 @@ class _ConferenceState extends State<Conference> {
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Colors.red,
-        title: const Text("Conference Room"),
+        title: const Text(
+          "Conference Room",
+          style: TextStyle(fontSize: 22),
+        ),
       ),
       body: loading
           ? const CircularProgressIndicator()
