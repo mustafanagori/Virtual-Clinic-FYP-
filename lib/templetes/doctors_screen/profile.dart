@@ -261,7 +261,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
         showModalBottomSheet(
           context: context,
           builder: (context) => SizedBox(
-              height: getProportionateScreenHeight(400),
+              height: getProportionateScreenHeight(450),
               width: getProportionateScreenWidth(500),
               child: Column(
                 children: [
@@ -329,7 +329,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                             )),
                         // close
                         SizedBox(
-                          width: getProportionateScreenWidth(40),
+                          width: getProportionateScreenWidth(50),
                         ),
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
