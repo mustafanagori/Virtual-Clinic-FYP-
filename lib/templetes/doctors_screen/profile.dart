@@ -35,25 +35,26 @@ class _DoctorProfileState extends State<DoctorProfile> {
 
   final currentUser = FirebaseAuth.instance.currentUser;
   TextEditingController speacialization = TextEditingController();
-  final doctorController = Get.find<DoctorController>();
-
+  DoctorController doctorController = Get.put(DoctorController());
   @override
   Widget build(BuildContext context) {
     final doctorModel = doctorController.getDoctorById(currentUser!.uid);
     final rating = _rating(doctorModel.rating);
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.red,
         centerTitle: true,
-        title: Text(
+        title: const Text(
           "Doctor's Profile",
           style: TextStyle(color: Colors.white, fontSize: 20),
         ),
         elevation: 0,
       ),
       backgroundColor: Colors.white,
+      // ignore: unnecessary_null_comparison
       body: doctorModel == null
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : Stack(
               children: [
                 SizedBox(
@@ -65,19 +66,22 @@ class _DoctorProfileState extends State<DoctorProfile> {
                 ),
                 Column(
                   children: [
+                    SizedBox(
+                      height: getProportionateScreenHeight(20),
+                    ),
                     RatingBar.builder(
                       initialRating: rating,
                       minRating: 0,
                       allowHalfRating: true,
                       itemCount: 5,
-                      itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                      itemBuilder: (context, _) => Icon(
+                      itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                      itemBuilder: (context, _) => const Icon(
                         Icons.star,
                         color: Colors.amber,
                       ),
                       ignoreGestures: true,
                       onRatingUpdate: (rating) {
-                        print(rating);
+                        // print(rating);
                       },
                     ),
                     const Padding(
@@ -210,7 +214,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                     ),
                     Divider(),
                     SizedBox(
-                      height: getProportionateScreenHeight(70),
+                      height: getProportionateScreenHeight(40),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 40),
@@ -257,14 +261,14 @@ class _DoctorProfileState extends State<DoctorProfile> {
         showModalBottomSheet(
           context: context,
           builder: (context) => SizedBox(
-              height: getProportionateScreenHeight(400),
+              height: getProportionateScreenHeight(450),
               width: getProportionateScreenWidth(500),
               child: Column(
                 children: [
                   Container(
                     color: Colors.red,
                     child: Center(
-                      child: Text("Add Speacialzation",
+                      child: const Text("Add Specialization",
                           style: TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
@@ -277,55 +281,85 @@ class _DoctorProfileState extends State<DoctorProfile> {
                   ),
                   MyTextField(
                     width: getProportionateScreenWidth(600),
-                    hintText: " Add Spealization ",
+                    hintText: " Add Specialization ",
                     controller: speacialization,
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(
                         vertical: getProportionateScreenHeight(5),
                         horizontal: getProportionateScreenWidth(20)),
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.red,
-                          // side: BorderSide(
-                          //   width: getProportionateScreenWidth(1).0,
-                          //   color: Colors.blueAccent,
-                          // ),
-                          shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(20),
-                          ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.red,
+                              // side: BorderSide(
+                              //   width: getProportionateScreenWidth(1).0,
+                              //   color: Colors.blueAccent,
+                              // ),
+                              shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(20),
+                              ),
+                            ),
+                            onPressed: () async {
+                              final temp = doctorModel.spealization.substring(
+                                      0, doctorModel.spealization.length - 1) +
+                                  ", " +
+                                  speacialization.text +
+                                  "]";
+                              await FirebaseFirestore.instance
+                                  .collection("doctors")
+                                  .doc(currentUser!.uid)
+                                  .update({"spealization": temp}).then((value) {
+                                doctorController.fetchData();
+                                Utils().toastMessage("Specialization Added");
+                                speacialization.text = "";
+                                Navigator.pop(context);
+                              }).onError((error, stackTrace) {
+                                Utils().toastMessage(error.toString());
+                              });
+                            },
+                            child: Text(
+                              " Add ",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20),
+                            )),
+                        // close
+                        SizedBox(
+                          width: getProportionateScreenWidth(50),
                         ),
-                        onPressed: () async {
-                          final temp = doctorModel.spealization.substring(
-                                  0, doctorModel.spealization.length - 1) +
-                              ", " +
-                              speacialization.text +
-                              "]";
-                          await FirebaseFirestore.instance
-                              .collection("doctors")
-                              .doc(currentUser!.uid)
-                              .update({"spealization": temp}).then((value) {
-                            doctorController.fetchData();
-                            Utils().toastMessage("Speacialization Added");
-                            speacialization.text = "";
-                            Navigator.pop(context);
-                          }).onError((error, stackTrace) {
-                            Utils().toastMessage(error.toString());
-                          });
-                        },
-                        child: Text(
-                          " Add ",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20),
-                        )),
-                  )
+                        ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.red,
+                              // side: BorderSide(
+                              //   width: getProportionateScreenWidth(1).0,
+                              //   color: Colors.blueAccent,
+                              // ),
+                              shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(20),
+                              ),
+                            ),
+                            onPressed: () {
+                              navigator?.pop(context);
+                            },
+                            child: Text(
+                              " Close ",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20),
+                            )),
+                      ],
+                    ),
+                  ),
                 ],
               )),
         );
       },
-      icon: Icon(
+      icon: const Icon(
         Icons.add_circle,
       ),
     );

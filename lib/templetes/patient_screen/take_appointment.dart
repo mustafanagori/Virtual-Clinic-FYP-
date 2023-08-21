@@ -10,6 +10,7 @@ import '../../controller/doctor_schedule_controlller.dart';
 import '../../controller/doctors_controller.dart';
 import '../../controller/patient_controller.dart';
 import '../../core/size_configuration.dart';
+import '../../core/utils.dart';
 
 class TakeAppointment extends StatefulWidget {
   const TakeAppointment({Key? key}) : super(key: key);
@@ -19,11 +20,11 @@ class TakeAppointment extends StatefulWidget {
 }
 
 TextEditingController search = TextEditingController();
-final scheduleController = Get.find<DoctorSchedulesController>();
-final appointmentController = Get.find<CreateAppointmentController>();
-final docController = Get.find<DoctorController>();
+final scheduleController = Get.put(DoctorSchedulesController());
+final appointmentController = Get.put(CreateAppointmentController());
+final docController = Get.put(DoctorController());
 
-final patientController = Get.find<PatientController>();
+final patientController = Get.put(PatientController());
 
 // fun for rating
 double _rating(List<dynamic>? rating) {
@@ -111,18 +112,21 @@ class _TakeAppointmentState extends State<TakeAppointment> {
           child: Column(
             children: [
               Image(
-                image: AssetImage(
+                image: const AssetImage(
                     'Assets/sl-telehealth-smartphone-doctor-1200x600.jpeg'),
                 height: getProportionateScreenHeight(180),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
                 child: Align(
                     alignment: Alignment.topCenter,
-                    child: Text(
-                      'Doctor Appointment +',
-                      style:
-                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        "Doctor's Appointments",
+                        style: TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.bold),
+                      ),
                     )),
               ),
               Padding(
@@ -133,12 +137,16 @@ class _TakeAppointmentState extends State<TakeAppointment> {
                   },
                   controller: searchController,
                   decoration: InputDecoration(
+                      suffixIcon: const Icon(
+                        Icons.search,
+                        size: 34,
+                      ),
                       border: OutlineInputBorder(
                           borderSide: BorderSide(
                               width: getProportionateScreenWidth(3),
                               color: Colors.red),
                           borderRadius: BorderRadius.circular(20)),
-                      labelText: "Search....."),
+                      labelText: "Search"),
                 ),
               ),
               SizedBox(
@@ -168,6 +176,7 @@ class _TakeAppointmentState extends State<TakeAppointment> {
                           patientModel: patientController.getPatientById(
                               FirebaseAuth.instance.currentUser!.uid),
                         ));
+                        //------------------
                         // await appointmentController.uploadData(
                         //     status: "book",
                         //     patientID: FirebaseAuth.instance.currentUser!.uid,
@@ -176,9 +185,9 @@ class _TakeAppointmentState extends State<TakeAppointment> {
                         //         .userID,
                         //     sheduleID: doctorsSchedule.elementAt(index).userID);
 
-                        // await appointmentController.fetchData();
-                        // Utils().toastMessage("Request Sent");
-                        // setState(() {});
+                        await appointmentController.fetchData();
+                        Utils().toastMessage("waiting for response");
+                        setState(() {});
                       },
                       day: doctorsSchedule[index].day,
                       endTime: doctorsSchedule[index].endTime.toString(),

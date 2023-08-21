@@ -50,9 +50,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   zego_uikit_prebuilt_video_conference: ^2.2.8
   jazzcash_flutter: ^1.0.5
-  # zego_uikit_prebuilt_call: ^3.3.10
-  # zego_uikit: ^2.5.3
-  # zego_uikit_prebuilt_live_streaming: ^2.5.5
+
   
 
  

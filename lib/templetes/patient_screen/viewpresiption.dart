@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doctorandpatient/controller/presiption_controller.dart';
 import 'package:doctorandpatient/core/size_configuration.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +10,7 @@ class ViewPerciption extends StatelessWidget {
   final String patientID;
   final String doctorID;
   TextEditingController text = TextEditingController();
-  final presiptionController = Get.find<PresiptionController>();
+  final presiptionController = Get.put(PresiptionController());
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +19,7 @@ class ViewPerciption extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
-        title: Text(
+        title: const Text(
           "View Presiption",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),

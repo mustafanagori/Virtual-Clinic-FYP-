@@ -40,12 +40,12 @@ class AgreementMsg extends StatelessWidget {
             bottomSheet: Container(
               height: getProportionateScreenHeight(50),
               color: const Color.fromARGB(255, 123, 178, 214),
-              child: Center(
+              child: const Center(
                   child: Text(
                 // !agreementStatus ? "View" : "Accepted",
                 "",
                 style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               )),
             ),
           ),

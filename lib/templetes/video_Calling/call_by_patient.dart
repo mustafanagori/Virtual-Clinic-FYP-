@@ -4,8 +4,8 @@ import 'package:zego_uikit_prebuilt_video_conference/zego_uikit_prebuilt_video_c
 import '../../models/doctor_model.dart';
 import 'contants.dart';
 
-class callBypatient extends StatelessWidget {
-  const callBypatient({
+class CallBypatient extends StatelessWidget {
+  const CallBypatient({
     super.key,
     required this.doctorModel,
     required this.conferenceID,
@@ -18,7 +18,7 @@ class callBypatient extends StatelessWidget {
   final String userid;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {                 
     return WillPopScope(
       onWillPop: () async {
         return await showDialog(
@@ -30,9 +30,9 @@ class callBypatient extends StatelessWidget {
       child: SafeArea(
         child: ZegoUIKitPrebuiltVideoConference(
           appID: MyConst
-              .appId, // Fill in the appID that you get from ZEGOCLOUD Admin Console.
+              .appId,               // Fill in the appID that you get from ZEGOCLOUD Admin Console.
           appSign: MyConst
-              .appSign, // Fill in the appSign that you get from ZEGOCLOUD Admin Console.
+              .appSign,             // Fill in the appSign that you get from ZEGOCLOUD Admin Console.
           userID: userid,
           userName: username,
           conferenceID: conferenceID,

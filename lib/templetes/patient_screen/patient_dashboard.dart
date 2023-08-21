@@ -1,17 +1,19 @@
-import 'package:doctorandpatient/controller/bottom_bar_controller.dart';
 import 'package:doctorandpatient/core/colors.dart';
 // ignore: unused_import
-import 'package:doctorandpatient/templetes/patient_screen/pateint_myprofile.dart';
+import 'package:doctorandpatient/templetes/patient_screen/pateint_profile.dart';
 import 'package:doctorandpatient/templetes/patient_screen/patient_home.dart';
 import 'package:doctorandpatient/templetes/patient_screen/take_appointment.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../controller/bottom_bar_controllerPatient.dart';
+
 // ignore: must_be_immutable
 class PatientDashboard extends StatelessWidget {
   PatientDashboard({Key? key}) : super(key: key);
 
-  BottomNavBarController barController = Get.put(BottomNavBarController());
+  BottomNavBarPatientController barPatientController =
+      Get.put(BottomNavBarPatientController());
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +27,8 @@ class PatientDashboard extends StatelessWidget {
             return false;
           },
           child: IndexedStack(
-            index: barController.selectedIndex.value,
-            children: [
-              PatientHome(), 
-              TakeAppointment(),
-               mypProfile()],
+            index: barPatientController.selectedIndex.value,
+            children: [PatientHome(), TakeAppointment(), mypProfile()],
           ),
         ),
         bottomNavigationBar: BottomNavigationBar(
@@ -37,10 +36,10 @@ class PatientDashboard extends StatelessWidget {
           backgroundColor: Colors.white,
           unselectedItemColor: AppColors.btnlogingreyGreen,
           selectedItemColor: Colors.red,
-          currentIndex: barController.selectedIndex.value > 0
-              ? barController.selectedIndex.value
+          currentIndex: barPatientController.selectedIndex.value > 0
+              ? barPatientController.selectedIndex.value
               : 0,
-          onTap: barController.changeTabIndex,
+          onTap: barPatientController.changeTabIndex,
           items: [
             BottomNavigationBarItem(
               icon: Image.asset(

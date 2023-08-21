@@ -1,8 +1,11 @@
+import 'package:doctorandpatient/login.dart';
 import 'package:doctorandpatient/templetes/patient_screen/appointment_history.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../core/size_configuration.dart';
+import '../../core/utils.dart';
 import 'health_suggestion.dart';
 
 class PatientHome extends StatelessWidget {
@@ -12,8 +15,24 @@ class PatientHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+              onPressed: () {
+                FirebaseAuth.instance.signOut().then((value) {
+                  Get.off(LoginPage());
+                }).onError((error, stackTrace) {
+                  Utils().toastMessage(error.toString());
+                });
+              },
+              icon: Icon(Icons.logout)),
+        ],
         backgroundColor: Colors.red,
-        title: Text('Patient Panel'),
+        title: Text(
+          'Patient Panel',
+          style: TextStyle(fontSize: 22),
+        ),
       ),
       body: Container(
         decoration: BoxDecoration(
