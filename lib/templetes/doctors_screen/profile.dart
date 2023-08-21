@@ -267,8 +267,8 @@ class _DoctorProfileState extends State<DoctorProfile> {
                 children: [
                   Container(
                     color: Colors.red,
-                    child: Center(
-                      child: const Text("Add Specialization",
+                    child: const Center(
+                      child:  Text("Add Specialization",
                           style: TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
@@ -337,15 +337,15 @@ class _DoctorProfileState extends State<DoctorProfile> {
                               // side: BorderSide(
                               //   width: getProportionateScreenWidth(1).0,
                               //   color: Colors.blueAccent,
-                              // ),
-                              shape: new RoundedRectangleBorder(
+                              // )
+                              shape:  RoundedRectangleBorder(
                                 borderRadius: new BorderRadius.circular(20),
                               ),
                             ),
                             onPressed: () {
                               navigator?.pop(context);
                             },
-                            child: Text(
+                            child: const Text(
                               " Close ",
                               style: TextStyle(
                                   color: Colors.white,
