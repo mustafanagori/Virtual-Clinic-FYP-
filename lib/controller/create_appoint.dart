@@ -46,6 +46,7 @@ class CreateAppointmentController extends GetxController {
     String id,
     String status,
   ) async {
+    fetchData();
     await FirebaseFirestore.instance
         .collection("createAppointment")
         .doc(id)
@@ -61,6 +62,7 @@ class CreateAppointmentController extends GetxController {
   }
 
   CreateAppointmentModel getPatientById(String userID) {
+    fetchData();
     return _list
         .firstWhere((element) => element.userID.trim() == userID.trim());
   }

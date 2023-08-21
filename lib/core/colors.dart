@@ -25,7 +25,6 @@ class AppColors {
   static const Color btnloginRed = Color.fromRGBO(239, 28, 27, 1);
   static const Color btnloginBlack = Color.fromRGBO(0, 0, 0, 1);
   static const Color btnlogingreyGreen = Color.fromRGBO(180, 174, 40, 1);
-
   static const Color black1 = Color.fromRGBO(0, 0, 0, 1);
   static const Color lightgrayphone = Color.fromRGBO(227, 233, 237, 1);
   static const Color redLogin = Color.fromRGBO(239, 28, 27, 1);

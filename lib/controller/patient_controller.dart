@@ -27,11 +27,14 @@ class PatientController extends GetxController {
   }
 
   PatientModel getPatientById(String userID) {
+    fetchCustomerData();
+
     return _list
         .firstWhere((element) => element.userID.trim() == userID.trim());
   }
 
   PatientModel getPatientByName(String firstName) {
+    fetchCustomerData();
     return _list
         .where((element) => element.name.trim() == firstName.trim())
         .first;

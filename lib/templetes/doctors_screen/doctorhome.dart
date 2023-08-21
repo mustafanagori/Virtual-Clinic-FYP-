@@ -1,9 +1,13 @@
+import 'package:doctorandpatient/templetes/doctors_screen/conference.dart';
+import 'package:doctorandpatient/login.dart';
 import 'package:doctorandpatient/templetes/doctors_screen/doctorschedule.dart';
 import 'package:doctorandpatient/templetes/doctors_screen/appointment_history.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../core/size_configuration.dart';
+import '../../core/utils.dart';
 
 class home_doctor extends StatelessWidget {
   const home_doctor({super.key});
@@ -12,14 +16,30 @@ class home_doctor extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        actions: [
+          IconButton(
+              onPressed: () {
+                FirebaseAuth.instance.signOut().then((value) {
+                  Get.off(LoginPage());
+                }).onError((error, stackTrace) {
+                  Utils().toastMessage(error.toString());
+                });
+              },
+              icon: const Icon(Icons.logout)),
+        ],
         backgroundColor: Colors.red,
-        title: Text('Doctor Panel'),
+        title: const Text(
+          'Doctor Panel',
+          style: TextStyle(fontSize: 20),
+        ),
       ),
       body: Container(
         decoration: BoxDecoration(
             image: DecorationImage(
                 fit: BoxFit.cover,
-                colorFilter: new ColorFilter.mode(
+                colorFilter: ColorFilter.mode(
                     Colors.black.withOpacity(0.8), BlendMode.dstATop),
                 image: AssetImage("Assets/TELEHEALTH-1.jpeg"))),
         child: Column(
@@ -30,8 +50,11 @@ class home_doctor extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 GestureDetector(
-                  child: doctor_homeCard(
-                    text: 'Appointment',
+                  onTap: () {
+                    Get.to(Conference());
+                  },
+                  child: const doctor_homeCard(
+                    text: 'Conference',
                     image: "Assets/AdmissHis_card.png",
                   ),
                 ),

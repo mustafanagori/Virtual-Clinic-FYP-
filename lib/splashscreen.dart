@@ -10,12 +10,14 @@ import 'package:doctorandpatient/controller/presiption_controller.dart';
 import 'package:doctorandpatient/templetes/doctors_screen/doctor_dashboard.dart';
 import 'package:doctorandpatient/templetes/doctors_screen/personal_info_Doc.dart';
 import 'package:doctorandpatient/templetes/doctors_screen/rejected.dart';
-import 'package:doctorandpatient/templetes/doctors_screen/verification.dart';
+import 'package:doctorandpatient/templetes/patient_screen/verification.dart';
 import 'package:doctorandpatient/templetes/patient_screen/patient_dashboard.dart';
-import 'package:doctorandpatient/templetes/patient_screen/patient_info.dart';
+import 'package:doctorandpatient/templetes/patient_screen/patient_form.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'controller/invite_controller.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -29,6 +31,7 @@ class SplashScreen extends StatelessWidget {
     Get.put(CreateAppointmentController());
     Get.put(DoctorSchedulesController());
     Get.put(PresiptionController());
+    Get.put(InviteController());
     if (user != null) {
       User? user = FirebaseAuth.instance.currentUser;
 
@@ -42,12 +45,12 @@ class SplashScreen extends StatelessWidget {
           if (data["rool"] == "Patient") {
             if (data["isVerified"] == "needData") {
               Timer(
-                  Duration(seconds: 3),
+                  const Duration(seconds: 3),
                   () => Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (BuildContext context) => (PatientInfo()))));
+                      builder: (BuildContext context) => (const PatientInfo()))));
             } else {
               Timer(
-                  Duration(seconds: 3),
+                  const Duration(seconds: 3),
                   () => Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (BuildContext context) =>
                           (PatientDashboard()))));
@@ -55,32 +58,32 @@ class SplashScreen extends StatelessWidget {
           } else if (data["rool"] == "Doctor") {
             if (data["isVerified"] == "verified") {
               Timer(
-                  Duration(seconds: 3),
+                  const Duration(seconds: 3),
                   () => Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (BuildContext context) => (DoctorDashboard()))));
             } else if (data["isVerified"] == "inProcess") {
               Timer(
-                  Duration(seconds: 3),
+                  const Duration(seconds: 3),
                   () => Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (BuildContext context) =>
-                          (DoctorVerification()))));
+                          (const DoctorVerification()))));
             } else if (data["isVerified"] == "rejected") {
               Timer(
-                  Duration(seconds: 3),
+                  const Duration(seconds: 3),
                   () => Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (BuildContext context) => (Rejected()))));
+                      builder: (BuildContext context) => (const Rejected()))));
             } else if (data["isVerified"] == "needData") {
               Timer(
-                  Duration(seconds: 3),
+                  const Duration(seconds: 3),
                   () => Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (BuildContext context) => (PersonalInfo()))));
+                      builder: (BuildContext context) => (const PersonalInfo()))));
             }
           }
         }
       });
     } else {
       Timer(
-          Duration(seconds: 3),
+         const Duration(seconds: 3),
           () => Navigator.of(context).pushReplacement(MaterialPageRoute(
               builder: (BuildContext context) => (LoginPage()))));
     }

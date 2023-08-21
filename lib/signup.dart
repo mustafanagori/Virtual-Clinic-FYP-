@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doctorandpatient/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'core/utils.dart';
 import 'core/size_configuration.dart';
@@ -24,12 +25,11 @@ class _RegisterState extends State<Register> {
   final _formkey = GlobalKey<FormState>();
   final _auth = FirebaseAuth.instance;
 
-  final TextEditingController passwordController = new TextEditingController();
-  final TextEditingController confirmpassController =
-      new TextEditingController();
-  final TextEditingController name = new TextEditingController();
-  final TextEditingController emailController = new TextEditingController();
-  final TextEditingController mobile = new TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmpassController = TextEditingController();
+  final TextEditingController name = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController mobile = TextEditingController();
   bool _isObscure = true;
   File? file;
   var options = [
@@ -46,8 +46,10 @@ class _RegisterState extends State<Register> {
       child: SafeArea(
         child: Scaffold(
           appBar: AppBar(
-            title: Text(
-              "Registeration",
+            automaticallyImplyLeading: false,
+            centerTitle: true,
+            title: const Text(
+              "Registration Panel",
               style: TextStyle(fontSize: 30),
             ),
             backgroundColor: Colors.red,
@@ -61,16 +63,17 @@ class _RegisterState extends State<Register> {
                     decoration: BoxDecoration(
                         image: DecorationImage(
                             fit: BoxFit.cover,
-                            colorFilter: new ColorFilter.mode(
+                            colorFilter: ColorFilter.mode(
                                 Colors.black.withOpacity(0.8),
                                 BlendMode.dstATop),
-                            image: AssetImage("Assets/TELEHEALTH-1.jpeg"))),
+                            image:
+                                const AssetImage("Assets/TELEHEALTH-1.jpeg"))),
                     //    color: Colors.orangeAccent[700],
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height,
                     child: SingleChildScrollView(
                       child: Container(
-                        margin: EdgeInsets.all(12),
+                        margin: const EdgeInsets.all(12),
                         child: Form(
                           key: _formkey,
                           child: Column(
@@ -80,8 +83,8 @@ class _RegisterState extends State<Register> {
                               SizedBox(
                                 height: getProportionateScreenHeight(80),
                               ),
-                              Text(
-                                "Register Now",
+                              const Text(
+                                "Register Now !",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,
@@ -94,6 +97,10 @@ class _RegisterState extends State<Register> {
                               TextFormField(
                                 controller: emailController,
                                 decoration: InputDecoration(
+                                  suffixIcon: Icon(
+                                    Icons.mail,
+                                    color: Colors.black38,
+                                  ),
                                   filled: true,
                                   fillColor: Colors.white,
                                   hintText: 'Email',
@@ -102,17 +109,17 @@ class _RegisterState extends State<Register> {
                                       left: 14.0, bottom: 8.0, top: 8.0),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide:
-                                        new BorderSide(color: Colors.white),
+                                        const BorderSide(color: Colors.white),
                                     borderRadius: new BorderRadius.circular(20),
                                   ),
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide:
-                                        new BorderSide(color: Colors.white),
+                                        const BorderSide(color: Colors.white),
                                     borderRadius: new BorderRadius.circular(20),
                                   ),
                                 ),
                                 validator: (value) {
-                                  if (value!.length == 0) {
+                                  if (value!.isEmpty) {
                                     return "Email cannot be empty";
                                   }
                                   if (!RegExp(
@@ -230,7 +237,7 @@ class _RegisterState extends State<Register> {
                                     ),
                                   ),
                                   DropdownButton<String>(
-                                    dropdownColor: Colors.red,
+                                    dropdownColor: Colors.white,
                                     isDense: true,
                                     isExpanded: false,
                                     iconEnabledColor: Colors.black,
@@ -241,7 +248,7 @@ class _RegisterState extends State<Register> {
                                         value: dropDownStringItem,
                                         child: Text(
                                           dropDownStringItem,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             color: Colors.black,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 20,
@@ -261,68 +268,60 @@ class _RegisterState extends State<Register> {
                                 ],
                               ),
                               SizedBox(
-                                height: getProportionateScreenHeight(60),
+                                height: getProportionateScreenHeight(80),
                               ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  MaterialButton(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(20.0))),
-                                    elevation: 5.0,
-                                    height: getProportionateScreenHeight(40),
-                                    onPressed: () {
-                                      CircularProgressIndicator();
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => LoginPage(),
-                                        ),
-                                      );
-                                    },
-                                    child: Text(
-                                      "Login",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20,
-                                          color: Colors.white),
-                                    ),
-                                    color: Colors.red,
+                              ElevatedButton(
+                                onPressed: () {
+                                  setState(() {
+                                    showProgress = true;
+                                  });
+                                  try {
+                                    signUp(emailController.text,
+                                        passwordController.text, rool);
+                                  } catch (e) {
+                                    Utils().toastMessage(e.toString());
+                                  }
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 13,
+                                      horizontal:
+                                          50), // Increase padding to increase width
+                                  primary: Colors.red, // Background color
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        18), // Rounded corners
+                                    side: BorderSide(
+                                        color: Colors.red), // Red border
                                   ),
-                                  MaterialButton(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(20.0))),
-                                    elevation: 5.0,
-                                    height: getProportionateScreenHeight(40),
-                                    onPressed: () {
-                                      setState(() {
-                                        showProgress = true;
-                                      });
-                                      try {
-                                        signUp(emailController.text,
-                                            passwordController.text, rool);
-                                      } catch (e) {
-                                        Utils().toastMessage(e.toString());
-                                      }
-                                    },
-                                    child: Text(
-                                      "Register",
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    color: Colors.red,
-                                  ),
-                                ],
+                                ),
+                                child: Text(
+                                  "Register",
+                                  style: TextStyle(fontSize: 22),
+                                ),
                               ),
                               SizedBox(
-                                height: getProportionateScreenHeight(20),
+                                height: getProportionateScreenHeight(30),
                               ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("have an account!  ",
+                                      style: TextStyle(fontSize: 22)),
+                                  InkWell(
+                                    onTap: () {
+                                      Get.to(LoginPage());
+                                    },
+                                    child: Text(
+                                      "Login Now ",
+                                      style: TextStyle(
+                                          color: Colors.red,
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ],
+                              )
                             ],
                           ),
                         ),
@@ -339,7 +338,7 @@ class _RegisterState extends State<Register> {
   }
 
   void signUp(String email, String password, String rool) async {
-    CircularProgressIndicator();
+    const CircularProgressIndicator();
     if (_formkey.currentState!.validate()) {
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
@@ -359,22 +358,12 @@ class _RegisterState extends State<Register> {
       'rool': rool,
       'isVerified': "needData"
     });
-    
+
     Utils().toastMessage("Registered Sucessfully");
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => LoginPage()));
   }
 }
-
-
-
-
-
-
-
-
-
-
 
 // import 'package:doctorandpatient/adminlogin.dart';
 // import 'package:doctorandpatient/core/colors.dart';

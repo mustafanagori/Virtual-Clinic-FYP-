@@ -26,9 +26,9 @@ class PaymentMethodScreen extends StatefulWidget {
 }
 
 class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
-  final appointmentController = Get.find<CreateAppointmentController>();
-  final doctorController = Get.find<DoctorController>();
-  final doctorscheduleController = Get.find<DoctorSchedulesController>();
+  final appointmentController = Get.put(CreateAppointmentController());
+  final doctorController = Get.put(DoctorController());
+  final doctorscheduleController = Get.put(DoctorSchedulesController());
   String paymentStatus = "pending";
   // ProductModel productModel =
   String integritySalt = "17vt285ytb";
@@ -42,7 +42,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Payment Jazz Cash"),
+        title: const Text("Payment Jazz Cash"),
         backgroundColor: Colors.red,
       ),
       body: Center(
@@ -53,31 +53,31 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
               "Doctor Name : ${widget.doctorModel.firstName} ${widget.doctorModel.lastName}",
               style: TextStyle(fontSize: 20),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Text(
               "Doctor Account : ${widget.doctorModel.contact}",
               style: TextStyle(fontSize: 20),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Text(
               "Patient Name : ${widget.patientModel.name}",
               style: TextStyle(fontSize: 20),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Text(
               "Doctor Fee : ${widget.doctorScheduleModel.fees}",
               style: TextStyle(fontSize: 20),
             ),
-            SizedBox(
+            const SizedBox(
               height: 230,
             ),
-            Container(
+            SizedBox(
               height: getProportionateScreenHeight(50),
               width: getProportionateScreenWidth(160),
               child: ElevatedButton(
@@ -93,7 +93,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                   },
                   child: const Text(
                     "Pay Dr Fee Now !",
-                    style: TextStyle(fontSize: 18),
+                    style: TextStyle(fontSize: 16),
                   )),
             )
           ],

@@ -1,15 +1,12 @@
 import 'package:doctorandpatient/controller/doctors_controller.dart';
 import 'package:doctorandpatient/controller/patient_controller.dart';
 import 'package:doctorandpatient/core/colors.dart';
-import 'package:doctorandpatient/templetes/patient_screen/rating.dart';
-import 'package:doctorandpatient/templetes/patient_screen/viewpresiption.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controller/create_appoint.dart';
 import '../../controller/doctor_schedule_controlller.dart';
 import '../../core/size_configuration.dart';
-import '../../Chat/chat_inbox.dart';
 
 import '../video_Calling/call_by_doctor.dart';
 import 'addperciption.dart';
@@ -21,9 +18,9 @@ class PatientHistory extends StatefulWidget {
   State<PatientHistory> createState() => _PatientHistoryState();
 }
 
-final caController = Get.find<CreateAppointmentController>();
-final dsController = Get.find<DoctorSchedulesController>();
-final patientController = Get.find<PatientController>();
+final caController = Get.put(CreateAppointmentController());
+final dsController = Get.put(DoctorSchedulesController());
+final patientController = Get.put(PatientController());
 
 class _PatientHistoryState extends State<PatientHistory> {
   @override
@@ -35,38 +32,34 @@ class _PatientHistoryState extends State<PatientHistory> {
         element.doctorID == FirebaseAuth.instance.currentUser!.uid);
     return Scaffold(
         appBar: AppBar(
+            centerTitle: true,
             // leading: IconButton(
             //   icon: Icon(Icons.arrow_back),
             //   onPressed: () => Get.off(DoctorDashboard()),
             // ),
             backgroundColor: Colors.red,
-            title: Text('Appointment History')),
+            title: const Text(
+              'Appointment History',
+              style: TextStyle(fontSize: 22),
+            )),
         body: GetBuilder<CreateAppointmentController>(builder: (controller) {
           return ListView.builder(
               itemCount: dataList.length,
               itemBuilder: (context, index) {
                 final data =
                     dsController.getById(dataList.elementAt(index).sheduleID);
-
-                return dataList.elementAt(index).status == "book"
-                    ? AppointtmentViewCard(
-                        fees: data.fees,
-                        onPressedReject: () async {
-                          await caController.updateStatus(
-                              dataList.elementAt(index).sheduleID, "Rejected");
-                        },
-                        onPressedAccept: () async {
-                          await caController.updateStatus(
-                              dataList.elementAt(index).sheduleID, "Accepted");
-                        },
-                        day: data.day,
-                        endTime: data.endTime,
-                        patientName: patientController
-                            .getPatientById(dataList.elementAt(index).patientID)
-                            .name,
-                        startTime: data.startTime,
-                      )
-                    : DuringAppointtmentAcceptedViewCard(
+                String checkTimetemp = checkTime(
+                    day: data.day,
+                    startHour:
+                        int.parse(data.startTime.split("(")[1].split(":")[0]),
+                    endHour:
+                        int.parse(data.endTime.split("(")[1].split(":")[0]),
+                    startMinute:
+                        int.parse(data.startTime.split(":")[1].split(")")[0]),
+                    endMinute:
+                        int.parse(data.endTime.split(":")[1].split(")")[0]));
+                return checkTimetemp == "during"
+                    ? DuringAppointtmentAcceptedViewCard(
                         patientID: dataList.elementAt(index).patientID,
                         doctorID: data.doctorID,
                         fees: data.fees,
@@ -76,7 +69,32 @@ class _PatientHistoryState extends State<PatientHistory> {
                             .getPatientById(dataList.elementAt(index).patientID)
                             .name,
                         startTime: data.startTime,
-                      );
+                      )
+                    : checkTimetemp == "after"
+                        ? AfterAppointmentViewCard(
+                            patientID: dataList.elementAt(index).patientID,
+                            doctorID: data.doctorID,
+                            fees: data.fees,
+                            day: data.day,
+                            endTime: data.endTime,
+                            patientName: patientController
+                                .getPatientById(
+                                    dataList.elementAt(index).patientID)
+                                .name,
+                            startTime: data.startTime,
+                          )
+                        : BeforeAppointmentViewCard(
+                            patientID: dataList.elementAt(index).patientID,
+                            doctorID: data.doctorID,
+                            fees: data.fees,
+                            day: data.day,
+                            endTime: data.endTime,
+                            patientName: patientController
+                                .getPatientById(
+                                    dataList.elementAt(index).patientID)
+                                .name,
+                            startTime: data.startTime,
+                          );
               });
         }));
   }
@@ -295,7 +313,8 @@ class DuringAppointtmentAcceptedViewCard extends StatelessWidget {
   final String day;
   @override
   Widget build(BuildContext context) {
-    final doctorController = Get.find<DoctorController>();
+    final doctorController = Get.put(DoctorController());
+
     final doctor =
         doctorController.getDoctorById(FirebaseAuth.instance.currentUser!.uid);
     return Padding(
@@ -457,7 +476,7 @@ class DuringAppointtmentAcceptedViewCard extends StatelessWidget {
                       ),
                       child: Text(
                         'Perception',
-                        style: TextStyle(color: Colors.white, fontSize: 20),
+                        style: TextStyle(color: Colors.white, fontSize: 17),
                       ),
                     ),
                   ),
@@ -466,7 +485,7 @@ class DuringAppointtmentAcceptedViewCard extends StatelessWidget {
                     width: getProportionateScreenWidth(100),
                     child: ElevatedButton(
                       onPressed: () {
-                        Get.to(callByDoctor(
+                        Get.to(CallByDoctor(
                           conferenceID: "1",
                           userid: doctor.userID,
                           username: doctor.firstName + " " + doctor.lastName,
@@ -478,11 +497,11 @@ class DuringAppointtmentAcceptedViewCard extends StatelessWidget {
                         //   width: getProportionateScreenWidth(1).0,
                         //   color: Colors.blueAccent,
                         // ),
-                        shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(20),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
                         ),
                       ),
-                      child: Text(
+                      child: const Text(
                         'Call',
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
@@ -519,14 +538,14 @@ class AfterAppointmentViewCard extends StatelessWidget {
   final String day;
   @override
   Widget build(BuildContext context) {
-    final doctorController = Get.find<DoctorController>();
+    final doctorController = Get.put(DoctorController());
 
     doctorController.getDoctorById(FirebaseAuth.instance.currentUser!.uid);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Center(
         child: Container(
-          height: getProportionateScreenHeight(160),
+          height: getProportionateScreenHeight(180),
           width: getProportionateScreenWidth(350),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
@@ -636,7 +655,7 @@ class AfterAppointmentViewCard extends StatelessWidget {
               ),
               Container(
                 height: getProportionateScreenHeight(40),
-                width: getProportionateScreenWidth(200),
+                width: getProportionateScreenWidth(250),
                 child: ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
@@ -651,7 +670,7 @@ class AfterAppointmentViewCard extends StatelessWidget {
                   ),
                   child: Text(
                     'Appointment Completed',
-                    style: TextStyle(color: Colors.white, fontSize: 20),
+                    style: TextStyle(color: Colors.white, fontSize: 18),
                   ),
                 ),
               )
@@ -684,14 +703,14 @@ class BeforeAppointmentViewCard extends StatelessWidget {
   final String day;
   @override
   Widget build(BuildContext context) {
-    final doctorController = Get.find<DoctorController>();
+    final doctorController = Get.put(DoctorController());
 
     doctorController.getDoctorById(FirebaseAuth.instance.currentUser!.uid);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Center(
         child: Container(
-          height: getProportionateScreenHeight(160),
+          height: getProportionateScreenHeight(190),
           width: getProportionateScreenWidth(350),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
@@ -801,7 +820,7 @@ class BeforeAppointmentViewCard extends StatelessWidget {
               ),
               Container(
                 height: getProportionateScreenHeight(40),
-                width: getProportionateScreenWidth(200),
+                width: getProportionateScreenWidth(250),
                 child: ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
@@ -826,4 +845,50 @@ class BeforeAppointmentViewCard extends StatelessWidget {
       ),
     );
   }
+}
+
+String checkTime(
+    {required String day,
+    required int startHour,
+    required int endHour,
+    required int startMinute,
+    required int endMinute}) {
+  DateTime now = DateTime.now();
+  String temp = "before";
+  final List<String> daysOfWeek = [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday',
+  ];
+  print(daysOfWeek[now.weekday - 1]);
+  print(now.hour);
+  print(now.minute);
+  if (endMinute == 0) {
+    endMinute = 59;
+    endHour -= 1;
+  }
+  if (daysOfWeek[now.weekday - 1] == day) {
+    if (now.hour >= startHour && now.hour <= endHour) {
+      if (now.hour >= startHour &&
+          now.minute >= startMinute &&
+          now.hour <= endHour &&
+          now.minute <= endMinute) {
+        temp = "during";
+      }
+    }
+    // if (now.hour >= endHour && now.minute >= endMinute) {
+    //   temp = "after";
+    //   print("after");
+    // }
+    if (now.hour == endHour && now.minute >= endMinute || now.hour > endHour) {
+      temp = "after";
+      print("after");
+    }
+  }
+
+  return temp;
 }

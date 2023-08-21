@@ -21,10 +21,10 @@ class AppointmentScreen extends StatefulWidget {
 final caController = Get.put(CreateAppointmentController());
 final dsController = Get.put(DoctorSchedulesController());
 final patientController = Get.put(PatientController());
-// final caController = Get.find<CreateAppointmentController>();
+// final caController = Get.put(CreateAppointmentController());
 
-// final dsController = Get.find<DoctorSchedulesController>();
-// final patientController = Get.find<PatientController>();
+// final dsController = Get.put(DoctorSchedulesController());
+// final patientController = Get.put(PatientController());
 
 class _AppointmentScreenState extends State<AppointmentScreen> {
   @override
@@ -35,73 +35,70 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
 
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
+          automaticallyImplyLeading: false,
           backgroundColor: Colors.red,
-          title: Text('View Appointment'),
-          // leading: IconButton(
-          //   icon: Icon(Icons.arrow_back),
-          //   onPressed: () {
-          //     Get.back();
-          //   },
-          // ),
+          title: const Text('View Appointment Request'),
         ),
-        body: Column(children: [
-          SizedBox(
-            height: getProportionateScreenHeight(670),
-            width: getProportionateScreenWidth(400),
-            child:
-                GetBuilder<CreateAppointmentController>(builder: (controller) {
-              return ListView.separated(
-                  itemCount: dataList.length,
-                  separatorBuilder: (context, index) => SizedBox(
-                        height: getProportionateScreenHeight(5),
-                      ),
-                  itemBuilder: (context, index) {
-                    final DoctorScheduleModel data = dsController
-                        .getById(dataList.elementAt(index).sheduleID);
+        body: SingleChildScrollView(
+          child: Column(children: [
+            SizedBox(
+              height: getProportionateScreenHeight(670),
+              width: getProportionateScreenWidth(400),
+              child: GetBuilder<CreateAppointmentController>(
+                  builder: (controller) {
+                return ListView.separated(
+                    itemCount: dataList.length,
+                    separatorBuilder: (context, index) => SizedBox(
+                          height: getProportionateScreenHeight(5),
+                        ),
+                    itemBuilder: (context, index) {
+                      final DoctorScheduleModel data = dsController
+                          .getById(dataList.elementAt(index).sheduleID);
 
-                    return
-                        //  dataList.elementAt(index).status == "book"
-                        //     ?
-                        AppointtmentViewCard(
+                      return
+                          //  dataList.elementAt(index).status == "book"
+                          //     ?
+                          AppointtmentViewCard(
+                        fees: data.fees,
+                        onPressedReject: () async {
+                          await caController.deleteData(
+                              userID: dataList.elementAt(index).userID);
+                          Utils().toastMessage("Rejected");
+                        },
+                        onPressedAccept: () async {
+                          await caController.updateStatus(
+                              dataList.elementAt(index).userID, "Accepted");
 
-                      fees: data.fees,
-                      onPressedReject: () async {
-                        await caController.deleteData(
-                            userID: dataList.elementAt(index).userID);
-                        Utils().toastMessage("Rejected");
-                      },
-                      onPressedAccept: () async {
-                        await caController.updateStatus(
-                            dataList.elementAt(index).userID, "Accepted");
-
-                        Utils().toastMessage("Accepted");
-                      },
-                      day : data.day,
-                      endTime: data.endTime,
-                      patientName: patientController
-                          .getPatientById(dataList.elementAt(index).patientID)
-                          .name,
-                      startTime: data.startTime,
-                    );
-                    // : AppointtmentAcceptedViewCard(
-                    //     fees: data.fees,
-                    //     date: data.date,
-                    //     endTime: data.endTime,
-                    //     patientName: patientController
-                    //         .getPatientById(
-                    //             dataList.elementAt(index).patientID)
-                    //         .name,
-                    //     startTime: data.startTime,
-                    //     doctorID: data.doctorID,
-                    //     patientID: patientController
-                    //         .getPatientById(
-                    //             dataList.elementAt(index).patientID)
-                    //         .userID,
-                    //   );
-                  });
-            }),
-          )
-        ]));
+                          Utils().toastMessage("Accepted");
+                        },
+                        day: data.day,
+                        endTime: data.endTime,
+                        patientName: patientController
+                            .getPatientById(dataList.elementAt(index).patientID)
+                            .name,
+                        startTime: data.startTime,
+                      );
+                      // : AppointtmentAcceptedViewCard(
+                      //     fees: data.fees,
+                      //     date: data.date,
+                      //     endTime: data.endTime,
+                      //     patientName: patientController
+                      //         .getPatientById(
+                      //             dataList.elementAt(index).patientID)
+                      //         .name,
+                      //     startTime: data.startTime,
+                      //     doctorID: data.doctorID,
+                      //     patientID: patientController
+                      //         .getPatientById(
+                      //             dataList.elementAt(index).patientID)
+                      //         .userID,
+                      //   );
+                    });
+              }),
+            )
+          ]),
+        ));
   }
 }
 

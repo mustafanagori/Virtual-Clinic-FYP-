@@ -15,6 +15,7 @@ class PostSchedule extends StatefulWidget {
 }
 
 class _PostScheduleState extends State<PostSchedule> {
+  final _formKey = GlobalKey<FormState>();
   final databaseRef = FirebaseDatabase.instance.ref("Doctor Schedule");
   TimeOfDay startTime = TimeOfDay(hour: 09, minute: 00);
   TimeOfDay endTime = TimeOfDay(hour: 09, minute: 00);
@@ -38,6 +39,7 @@ class _PostScheduleState extends State<PostSchedule> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+            centerTitle: true,
             // leading: GestureDetector(
             //     onTap: () {
             //       Get.off(DoctorScheduleHistory());
@@ -46,256 +48,283 @@ class _PostScheduleState extends State<PostSchedule> {
             backgroundColor: Colors.red,
             title: Text(
               "Post Schedule",
+              style: TextStyle(fontSize: 22),
             )),
         body: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: getProportionateScreenHeight(20),
-              ),
-              Center(
-                  child: Text(
-                "Days:",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-              )),
-              //   add dropdown list
-              SizedBox(
-                height: getProportionateScreenHeight(100),
-                width: getProportionateScreenWidth(300),
-                child: Center(
-                  child: DropdownButton<String>(
-                    focusColor: Colors.red,
-                    value: selectedDay,
-                    hint: Text('Select a day'),
-                    onChanged: (value) {
-                      setState(() {
-                        selectedDay = value!;
-                      });
-                    },
-                    items: daysOfWeek
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: getProportionateScreenHeight(20),
+                ),
+                const Center(
+                    child: Text(
+                  "Select Day:",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                )),
+                //   add dropdown list
+                SizedBox(
+                  height: getProportionateScreenHeight(100),
+                  width: getProportionateScreenWidth(300),
+                  child: Center(
+                    child: DropdownButton<String>(
+                      focusColor: Colors.red,
+                      value: selectedDay,
+                      hint: Text('Select a day'),
+                      onChanged: (value) {
+                        setState(() {
+                          selectedDay = value!;
+                        });
+                      },
+                      items: daysOfWeek
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(
+                            value,
+                            style: TextStyle(fontSize: 25),
+                          ),
+                        );
+                      }).toList(),
+                    ),
                   ),
                 ),
-              ),
-              // Text(
-              //   'Sel
-              //ected Day:',
-              //   style: TextStyle(fontSize: 20),
-              // ),
-              // SizedBox(height: 10),
-              // Text(
-              //   selectedDay ?? 'No day selected',
-              //   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              // ),
-              // SizedBox(height: 20),
-              // DropdownButton<String>(
-              //   value: selectedDay,
-              //   hint: Text('Select a day'), // Placeholder text
-              //   onChanged: (newValue) {
-              //     setState(() {
-              //       selectedDay = newValue;
-              //     });
-              //   },
-              //   items: days.map((String day) {
-              //     return DropdownMenuItem<String>(
-              //       value: day,
-              //       child: Text(day),
-              //     );
-              //   }).toList(),
-              // ),
+                // Text(
+                //   'Sel
+                //ected Day:',
+                //   style: TextStyle(fontSize: 20),
+                // ),
+                // SizedBox(height: 10),
+                // Text(
+                //   selectedDay ?? 'No day selected',
+                //   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                // ),
+                // SizedBox(height: 20),
+                // DropdownButton<String>(
+                //   value: selectedDay,
+                //   hint: Text('Select a day'), // Placeholder text
+                //   onChanged: (newValue) {
+                //     setState(() {
+                //       selectedDay = newValue;
+                //     });
+                //   },
+                //   items: days.map((String day) {
+                //     return DropdownMenuItem<String>(
+                //       value: day,
+                //       child: Text(day),
+                //     );
+                //   }).toList(),
+                // ),
 
-              //     changed
-              // TextButton(
-              //     onPressed: () async {
-              //       final DateTime? pickedDate = await showDatePicker(
-              //         context: context,
-              //         initialDate: DateTime
-              //             .now(), // Set the initial date to display in the picker
-              //         firstDate:
-              //             DateTime.now(), // Set the minimum date selectable
-              //         lastDate: DateTime(
-              //             2025, 04, 29), // Set the maximum date selectable
-              //       );
+                //     changed
+                // TextButton(
+                //     onPressed: () async {
+                //       final DateTime? pickedDate = await showDatePicker(
+                //         context: context,
+                //         initialDate: DateTime
+                //             .now(), // Set the initial date to display in the picker
+                //         firstDate:
+                //             DateTime.now(), // Set the minimum date selectable
+                //         lastDate: DateTime(
+                //             2025, 04, 29), // Set the maximum date selectable
+                //       );
 
-              //       if (pickedDate != null) {
-              //         setState(() {
-              //           scheduleDate = pickedDate;
-              //         });
-              //       }
-              //     },
-              //     child: Text(
-              //       scheduleDate.year == 22
-              //           ? 'Select'
-              //           : "${scheduleDate.day}/${scheduleDate.month}/${scheduleDate.year}",
-              //       style: const TextStyle(color: Colors.blue, fontSize: 24),
-              //     )),
-              Center(
-                  child: Text(
-                "Start Time:",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-              )),
-              SizedBox(
-                height: getProportionateScreenHeight(10),
-              ),
-              Text(
-                startTime.minute == 0
-                    ? "${startTime.hour}:${startTime.minute}0"
-                    : "${startTime.hour}:${startTime.minute}",
-                style: TextStyle(fontSize: 32),
-              ),
-              SizedBox(
-                height: getProportionateScreenHeight(20),
-              ),
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(
+                //       if (pickedDate != null) {
+                //         setState(() {
+                //           scheduleDate = pickedDate;
+                //         });
+                //       }
+                //     },
+                //     child: Text(
+                //       scheduleDate.year == 22
+                //           ? 'Select'
+                //           : "${scheduleDate.day}/${scheduleDate.month}/${scheduleDate.year}",
+                //       style: const TextStyle(color: Colors.blue, fontSize: 24),
+                //     )),
+                Center(
+                    child: Text(
+                  "Start Time:",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                )),
+                SizedBox(
+                  height: getProportionateScreenHeight(10),
+                ),
+                Text(
+                  startTime.minute == 0
+                      ? "${startTime.hour}:${startTime.minute}0"
+                      : "${startTime.hour}:${startTime.minute}",
+                  style: TextStyle(fontSize: 32),
+                ),
+                SizedBox(
+                  height: getProportionateScreenHeight(20),
+                ),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.red,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                        textStyle: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold)),
+                    onPressed: (() async {
+                      TimeOfDay? newTime = await showQuarterTimePicker(
+                        context: context,
+                        initialTime: startTime,
+                      );
+
+                      if (newTime == null) return;
+                      setState(() {
+                        startTime = newTime;
+                        //print(startTime);
+                      });
+                    }),
+                    child: Text("Select Start Time")),
+                SizedBox(
+                  height: getProportionateScreenHeight(20),
+                ),
+                const Text(
+                  "End Time",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                ),
+                SizedBox(
+                  height: getProportionateScreenHeight(4),
+                ),
+                Text(
+                  endTime.minute == 0
+                      ? "${endTime.hour}:${endTime.minute}0"
+                      : "${endTime.hour}:${endTime.minute}",
+                  style: TextStyle(fontSize: 32),
+                ),
+                SizedBox(
+                  height: getProportionateScreenHeight(20),
+                ),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.red,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                        textStyle: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold)),
+                    onPressed: (() async {
+                      TimeOfDay? newTime2 = await showQuarterTimePicker(
+                        context: context,
+                        initialTime: endTime,
+                      );
+                      if (newTime2 == null) return;
+                      setState(() {
+                        endTime = newTime2;
+                      });
+                    }),
+                    child: Text("Select End Time")),
+                SizedBox(
+                  height: getProportionateScreenHeight(20),
+                ),
+                const Text(
+                  "Appointment Fee",
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: getProportionateScreenHeight(20),
+                ),
+                Center(
+                  child: SizedBox(
+                    width: getProportionateScreenWidth(200),
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      controller: feeController,
+                      decoration: InputDecoration(
+                        hintText: "Appointment Fee",
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: getProportionateScreenWidth(1),
+                              color: AppColors.btnloginRed),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: getProportionateScreenWidth(1),
+                              color: AppColors.btnloginRed),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Fee cannot be empty";
+                        }
+
+                        if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+                          return "Fee must contain only numbers";
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: getProportionateScreenHeight(80),
+                ),
+                SizedBox(
+                  height: getProportionateScreenHeight(50),
+                  width: getProportionateScreenWidth(250),
+                  //   width: getProportionateScreenWidth(1)50,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
                       primary: Colors.red,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                      textStyle:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-                  onPressed: (() async {
-                    TimeOfDay? newTime = await showQuarterTimePicker(
-                      context: context,
-                      initialTime: startTime,
-                    );
-
-                    if (newTime == null) return;
-                    setState(() {
-                      startTime = newTime;
-                      print(startTime);
-                    });
-                  }),
-                  child: Text("Select Time")),
-              SizedBox(
-                height: getProportionateScreenHeight(20),
-              ),
-              Text(
-                "End Time",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-              ),
-              SizedBox(
-                height: getProportionateScreenHeight(4),
-              ),
-              Text(
-                endTime.minute == 0
-                    ? "${endTime.hour}:${endTime.minute}0"
-                    : "${endTime.hour}:${endTime.minute}",
-                style: TextStyle(fontSize: 32),
-              ),
-              SizedBox(
-                height: getProportionateScreenHeight(20),
-              ),
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      primary: Colors.red,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                      textStyle:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-                  onPressed: (() async {
-                    TimeOfDay? newTime2 = await showQuarterTimePicker(
-                      context: context,
-                      initialTime: endTime,
-                    );
-                    if (newTime2 == null) return;
-                    setState(() {
-                      endTime = newTime2;
-                    });
-                  }),
-                  child: Text("Select Time")),
-              SizedBox(
-                height: getProportionateScreenHeight(20),
-              ),
-              Text(
-                "Fees",
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: getProportionateScreenHeight(10),
-              ),
-              Center(
-                child: Container(
-                  width: getProportionateScreenWidth(200),
-                  child: TextField(
-                    keyboardType: TextInputType.number,
-                    controller: feeController,
-                    decoration: InputDecoration(
-                      hintText: "Fees Structure",
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            width: getProportionateScreenWidth(3),
-                            color: AppColors.btnlogingreyGreen),
+                      // side: BorderSide(
+                      //   width: getProportionateScreenWidth(1).0,
+                      //   color: Colors.blueAccent,
+                      // ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(20),
                       ),
                     ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: getProportionateScreenHeight(80),
-              ),
-              SizedBox(
-                height: getProportionateScreenHeight(40),
-                width: getProportionateScreenWidth(250),
-                //   width: getProportionateScreenWidth(1)50,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.red,
-                    // side: BorderSide(
-                    //   width: getProportionateScreenWidth(1).0,
-                    //   color: Colors.blueAccent,
-                    // ),
-                    shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(20),
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        setState(() {
+                          loading = true;
+                        });
+
+                        // change time
+                        int intervalMinutes = 15;
+
+                        List<TimeOfDay> slots = generateTimeSlots(
+                            startTime, endTime, intervalMinutes);
+
+                        for (TimeOfDay slot in slots) {
+                          scheduleController.uploadData(
+                              startTime: slot.toString().split("y")[1],
+                              // change time slot
+                              endTime: slot.minute + 15 == 60
+                                  ? TimeOfDay(hour: slot.hour + 1, minute: 0)
+                                      .toString()
+                                      .split("y")[1]
+                                  : TimeOfDay(
+                                          // chamge the time
+                                          hour: slot.hour,
+                                          minute: slot.minute + 15)
+                                      .toString()
+                                      .split("y")[1],
+                              day: selectedDay,
+                              docID: FirebaseAuth.instance.currentUser!.uid,
+                              fees: feeController.text);
+
+                          scheduleController.fetchData();
+
+                          //print(slot.format(context));
+                        }
+
+                        Get.back();
+                        Utils().toastMessage("Post Added");
+                      }
+                      //  Get.off(DoctorScheduleHistory());
+                    },
+                    child: const Text(
+                      'submit',
+                      style: TextStyle(color: Colors.white, fontSize: 25),
                     ),
                   ),
-                  onPressed: () {
-                    setState(() {
-                      loading = true;
-                    });
-                    // TimeOfDay startTime = TimeOfDay(hour: 8, minute: 0);
-                    // TimeOfDay endTime = TimeOfDay(hour: 17, minute: 0);
-                    int intervalMinutes = 15;
-
-                    List<TimeOfDay> slots =
-                        generateTimeSlots(startTime, endTime, intervalMinutes);
-
-                    for (TimeOfDay slot in slots) {
-                      scheduleController.uploadData(
-                          startTime: slot.toString().split("y")[1],
-                          endTime: slot.minute + 15 == 60
-                              ? TimeOfDay(hour: slot.hour + 1, minute: 0)
-                                  .toString()
-                                  .split("y")[1]
-                              : TimeOfDay(
-                                      hour: slot.hour, minute: slot.minute + 15)
-                                  .toString()
-                                  .split("y")[1],
-                          day: selectedDay,
-                          docID: FirebaseAuth.instance.currentUser!.uid,
-                          fees: feeController.text);
-                      scheduleController.fetchData();
-
-                      print(slot.format(context));
-                    }
-
-                    Get.back();
-                    Utils().toastMessage("Post Added");
-
-                    //  Get.off(DoctorScheduleHistory());
-                  },
-                  child: Text(
-                    'submit',
-                    style: TextStyle(color: Colors.white, fontSize: 20),
-                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -313,7 +342,7 @@ Future<TimeOfDay?> showQuarterTimePicker({
       TimeOfDay? selectedTime = initialTime;
 
       return AlertDialog(
-        title: Text('Select Time'),
+        title: const Text('Select Time'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -327,7 +356,7 @@ Future<TimeOfDay?> showQuarterTimePicker({
         ),
         actions: [
           ElevatedButton(
-            child: Text('OK'),
+            child: const Text('OK'),
             onPressed: () {
               Navigator.of(context).pop(selectedTime);
             },
@@ -383,7 +412,7 @@ class _QuarterTimePickerState extends State<QuarterTimePicker> {
             ),
             Text(
               _getTimeOfDay().format(context),
-              style: TextStyle(fontSize: 20),
+              style: const TextStyle(fontSize: 20),
             ),
             IconButton(
               icon: Icon(Icons.add),
@@ -409,46 +438,7 @@ class _QuarterTimePickerState extends State<QuarterTimePicker> {
     return TimeOfDay(hour: hour, minute: minute);
   }
 }
-// Padding(
-//                 padding: const EdgeInsets.all(15.0),
-//                 child: ListView(
-//                     shrinkWrap: true,
-//                     physics: NeverScrollableScrollPhysics(),
-//                     children: [
-//                       InputDecorator(
-//                         decoration: InputDecoration(
-//                             border: OutlineInputBorder(
-//                                 borderRadius: BorderRadius.circular(15)),
-//                             contentPadding: EdgeInsets.all(10)),
-//                         child: DropdownButtonHideUnderline(
-//                           child: DropdownButton(
-//                             isDense: true,
-//                             isExpanded: true,
-//                             value: defaultValue,
-//                             items: [
-//                               DropdownMenuItem(
-//                                 child: Text('Select Categry'),
-//                                 value: "",
-//                               ),
-//                               ...DropDownListData.map<DropdownMenuItem<String>>(
-//                                   (data) {
-//                                 return DropdownMenuItem(
-//                                     child: Text(data['title']),
-//                                     value: data['value']);
-//                               }).toList(),
-//                             ],
-//                             onChanged: (value) {
-//                               print("selected Value $value");
 
-//                               setState(() {
-//                                 defaultValue = value!;
-//                               });
-//                             },
-//                           ),
-//                         ),
-//                       )
-//                     ]),
-//               ),
 List<TimeOfDay> generateTimeSlots(
     TimeOfDay startTime, TimeOfDay endTime, int intervalMinutes) {
   List<TimeOfDay> slots = [];
