@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doctorandpatient/core/utils.dart';
+import 'package:doctorandpatient/login.dart';
 import 'package:doctorandpatient/models/doctor_model.dart';
 import 'package:doctorandpatient/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -250,7 +251,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                                       FirebaseAuth.instance
                                           .signOut()
                                           .then((value) {
-                                        Get.off(Register());
+                                        Get.off(LoginPage());
                                       }).onError((error, stackTrace) {
                                         Utils().toastMessage(error.toString());
                                       });

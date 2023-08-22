@@ -1,4 +1,5 @@
 import 'package:doctorandpatient/core/size_configuration.dart';
+import 'package:doctorandpatient/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -30,11 +31,11 @@ class DoctorVerification extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(20)),
                 ),
                 height: getProportionateScreenHeight(100),
-                width: getProportionateScreenWidth(360),
+                width: getProportionateScreenWidth(320),
                 child: const Center(
                   child: Text(
                     'Your Account Verification \n         Is in Processing',
-                    style: TextStyle(fontSize: 30, color: Colors.white),
+                    style: TextStyle(fontSize: 22, color: Colors.white),
                   ),
                 ),
               ),
@@ -58,7 +59,7 @@ class DoctorVerification extends StatelessWidget {
                   ),
                   onPressed: () async {
                     FirebaseAuth.instance.signOut().then((value) {
-                      Get.off(Register());
+                      Get.off(LoginPage());
                     }).onError((error, stackTrace) {
                       Utils().toastMessage(error.toString());
                     });

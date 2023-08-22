@@ -26,6 +26,7 @@ class CreateAppointmentController extends GetxController {
       }
     });
     update();
+    fetchData();
   }
 
   uploadData(
@@ -40,6 +41,7 @@ class CreateAppointmentController extends GetxController {
       "status": status,
     });
     update();
+    fetchData();
   }
 
   updateStatus(
@@ -59,6 +61,7 @@ class CreateAppointmentController extends GetxController {
         .status = status;
 
     update();
+    fetchData();
   }
 
   CreateAppointmentModel getPatientById(String userID) {
@@ -76,5 +79,6 @@ class CreateAppointmentController extends GetxController {
       (element) => element.userID == userID,
     );
     update();
+    fetchData();
   }
 }

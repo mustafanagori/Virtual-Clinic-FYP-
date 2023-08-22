@@ -1,3 +1,4 @@
+import 'package:doctorandpatient/login.dart';
 import 'package:doctorandpatient/signup.dart';
 import 'package:doctorandpatient/core/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -198,7 +199,7 @@ class _mypProfileState extends State<mypProfile> {
                   ),
                   onPressed: () {
                     FirebaseAuth.instance.signOut().then((value) {
-                      Get.off(Register());
+                      Get.off(LoginPage());
                     }).onError((error, stackTrace) {
                       Utils().toastMessage(error.toString());
                     });

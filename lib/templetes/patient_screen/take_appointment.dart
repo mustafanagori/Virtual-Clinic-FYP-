@@ -156,53 +156,57 @@ class _TakeAppointmentState extends State<TakeAppointment> {
                 height: getProportionateScreenHeight(430),
                 width: getProportionateScreenWidth(350),
                 child: GetBuilder<DoctorSchedulesController>(
+                    init: DoctorSchedulesController(),
                     builder: (controller) {
-                  return ListView.separated(
-                    separatorBuilder: (context, index) =>
-                        SizedBox(height: getProportionateScreenHeight(0)),
-                    itemCount: doctorsSchedule.length,
-                    itemBuilder: (context, index) => DoctorScheduleCard(
-                      rat: _rating(docController
-                          .getDoctorById(doctorsSchedule[index].doctorID)
-                          .rating),
-                      speacialization: docController
-                          .getDoctorById(doctorsSchedule[index].doctorID)
-                          .spealization,
-                      onPressed: () async {
-                        Get.to(PaymentMethodScreen(
-                          doctorScheduleModel: doctorsSchedule[index],
-                          doctorModel: docController
-                              .getDoctorById(doctorsSchedule[index].doctorID),
-                          patientModel: patientController.getPatientById(
-                              FirebaseAuth.instance.currentUser!.uid),
-                        ));
-                        //------------------
-                        // await appointmentController.uploadData(
-                        //     status: "book",
-                        //     patientID: FirebaseAuth.instance.currentUser!.uid,
-                        //     doctorID: docController
-                        //         .getDoctorById(doctorsSchedule[index].doctorID)
-                        //         .userID,
-                        //     sheduleID: doctorsSchedule.elementAt(index).userID);
+                      return ListView.separated(
+                        separatorBuilder: (context, index) =>
+                            SizedBox(height: getProportionateScreenHeight(0)),
+                        itemCount: doctorsSchedule.length,
+                        itemBuilder: (context, index) => DoctorScheduleCard(
+                          rat: _rating(docController
+                              .getDoctorById(doctorsSchedule[index].doctorID)
+                              .rating),
+                          speacialization: docController
+                              .getDoctorById(doctorsSchedule[index].doctorID)
+                              .spealization,
+                          onPressed: () async {
+                            Get.to(PaymentMethodScreen(
+                              doctorScheduleModel: doctorsSchedule[index],
+                              doctorModel: docController.getDoctorById(
+                                  doctorsSchedule[index].doctorID),
+                              patientModel: patientController.getPatientById(
+                                  FirebaseAuth.instance.currentUser!.uid),
+                            ));
+                            //------------------
+                            // await appointmentController.uploadData(
+                            //     status: "book",
+                            //     patientID: FirebaseAuth.instance.currentUser!.uid,
+                            //     doctorID: docController
+                            //         .getDoctorById(doctorsSchedule[index].doctorID)
+                            //         .userID,
+                            //     sheduleID: doctorsSchedule.elementAt(index).userID);
 
-                        await appointmentController.fetchData();
-                        Utils().toastMessage("waiting for response");
-                        setState(() {});
-                      },
-                      day: doctorsSchedule[index].day,
-                      endTime: doctorsSchedule[index].endTime.toString(),
-                      fees: doctorsSchedule[index].fees,
-                      name: docController
-                              .getDoctorById(doctorsSchedule[index].doctorID)
-                              .firstName +
-                          " " +
-                          docController
-                              .getDoctorById(doctorsSchedule[index].doctorID)
-                              .lastName,
-                      startTime: doctorsSchedule[index].startTime.toString(),
-                    ),
-                  );
-                }),
+                            await appointmentController.fetchData();
+                            Utils().toastMessage("waiting for response");
+                            setState(() {});
+                          },
+                          day: doctorsSchedule[index].day,
+                          endTime: doctorsSchedule[index].endTime.toString(),
+                          fees: doctorsSchedule[index].fees,
+                          name: docController
+                                  .getDoctorById(
+                                      doctorsSchedule[index].doctorID)
+                                  .firstName +
+                              " " +
+                              docController
+                                  .getDoctorById(
+                                      doctorsSchedule[index].doctorID)
+                                  .lastName,
+                          startTime:
+                              doctorsSchedule[index].startTime.toString(),
+                        ),
+                      );
+                    }),
               ),
             ],
           ),

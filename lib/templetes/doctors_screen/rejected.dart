@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../login.dart';
 import '../../signup.dart';
 import '../../core/utils.dart';
 import '../../core/size_configuration.dart';
@@ -28,7 +29,7 @@ class Rejected extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Color.fromARGB(255, 255, 106, 96),
                   borderRadius: BorderRadius.all(Radius.circular(20)),
                 ),
@@ -38,7 +39,7 @@ class Rejected extends StatelessWidget {
                   child: Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
-                      'Your account verification is rejected by admin kindly \n resubmit the form with correct information',
+                      'Your account verification is rejected by admin kindly \nresubmit the form with correct information',
                       style: TextStyle(fontSize: 20, color: Colors.white),
                     ),
                   ),
@@ -67,7 +68,7 @@ class Rejected extends StatelessWidget {
                             builder: (BuildContext context) =>
                                 (PersonalInfo()))));
                   },
-                  child: Text(
+                  child: const Text(
                     'Resubmit Form',
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
@@ -88,7 +89,7 @@ class Rejected extends StatelessWidget {
                   ),
                   onPressed: () async {
                     FirebaseAuth.instance.signOut().then((value) {
-                      Get.off(Register());
+                      Get.off(LoginPage());
                     }).onError((error, stackTrace) {
                       Utils().toastMessage(error.toString());
                     });
@@ -104,58 +105,58 @@ class Rejected extends StatelessWidget {
         )
       ],
     )));
-    SafeArea(
-      child: Scaffold(
-        body: Column(
-          children: [
-            const Center(
-              child: Text(
-                  "You are rejected by admin kindly re submit the form with correct information"),
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  Timer(
-                      Duration(seconds: 3),
-                      () => Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  (PersonalInfo()))));
-                },
-                child: Text("Resubmit Form")),
-            SizedBox(
-              height: getProportionateScreenHeight(300),
-            ),
-            SizedBox(
-              height: getProportionateScreenHeight(50),
-              width: getProportionateScreenWidth(300),
-              //   width: getProportionateScreenWidth(15)0,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.red,
-                  // side: BorderSide(
-                  //   width: getProportionateScreenWidth(1).0,
-                  //   color: Colors.blueAccent,
-                  // ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(20),
-                  ),
-                ),
-                onPressed: () async {
-                  FirebaseAuth.instance.signOut().then((value) {
-                    Get.off(Register());
-                  }).onError((error, stackTrace) {
-                    Utils().toastMessage(error.toString());
-                  });
-                },
-                child: Text(
-                  'Logout',
-                  style: TextStyle(color: Colors.white, fontSize: 20),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+    // SafeArea(
+    //   child: Scaffold(
+    //     body: Column(
+    //       children: [
+    //         const Center(
+    //           child: Text(
+    //               "You are rejected by admin kindly re submit the form with correct information"),
+    //         ),
+    //         ElevatedButton(
+    //             onPressed: () {
+    //               Timer(
+    //                   Duration(seconds: 3),
+    //                   () => Navigator.of(context).pushReplacement(
+    //                       MaterialPageRoute(
+    //                           builder: (BuildContext context) =>
+    //                               (PersonalInfo()))));
+    //             },
+    //             child: Text("Resubmit Form")),
+    //         SizedBox(
+    //           height: getProportionateScreenHeight(300),
+    //         ),
+    //         SizedBox(
+    //           height: getProportionateScreenHeight(50),
+    //           width: getProportionateScreenWidth(300),
+    //           //   width: getProportionateScreenWidth(15)0,
+    //           child: ElevatedButton(
+    //             style: ElevatedButton.styleFrom(
+    //               primary: Colors.red,
+    //               // side: BorderSide(
+    //               //   width: getProportionateScreenWidth(1).0,
+    //               //   color: Colors.blueAccent,
+    //               // ),
+    //               shape: RoundedRectangleBorder(
+    //                 borderRadius: new BorderRadius.circular(20),
+    //               ),
+    //             ),
+    //             onPressed: () async {
+    //               FirebaseAuth.instance.signOut().then((value) {
+    //                 Get.off(Register());
+    //               }).onError((error, stackTrace) {
+    //                 Utils().toastMessage(error.toString());
+    //               });
+    //             },
+    //             child: Text(
+    //               'Logout',
+    //               style: TextStyle(color: Colors.white, fontSize: 20),
+    //             ),
+    //           ),
+    //         ),
+    //       ],
+    //     ),
+    //   ),
+    // );
   }
 }

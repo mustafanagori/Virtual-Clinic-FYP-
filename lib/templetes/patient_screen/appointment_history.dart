@@ -32,9 +32,6 @@ class _AppointmentHistoryState extends State<AppointmentHistory> {
     // video calling
     // final patientController = Get.put(PatientController());
 
-    final dataList = caController.getList.where((element) =>
-        (element.status == "Accepted" || element.status == "book") &&
-        element.patientID == FirebaseAuth.instance.currentUser!.uid);
     return Scaffold(
         appBar: AppBar(
             // leading: IconButton(
@@ -53,58 +50,54 @@ class _AppointmentHistoryState extends State<AppointmentHistory> {
               height: getProportionateScreenHeight(719),
               width: getProportionateScreenWidth(400),
               child: GetBuilder<CreateAppointmentController>(
+                  init: CreateAppointmentController(),
                   builder: (controller) {
-                return ListView.separated(
-                    itemCount: dataList.length,
-                    separatorBuilder: (context, index) => SizedBox(
-                          height: getProportionateScreenHeight(20),
-                        ),
-                    itemBuilder: (context, index) {
-                      final data = dsController
-                          .getById(dataList.elementAt(index).sheduleID);
-                      String checkTimetemp = checkTime(
-                          day: data.day,
-                          startHour: int.parse(
-                              data.startTime.split("(")[1].split(":")[0]),
-                          endHour: int.parse(
-                              data.endTime.split("(")[1].split(":")[0]),
-                          startMinute: int.parse(
-                              data.startTime.split(":")[1].split(")")[0]),
-                          endMinute: int.parse(
-                              data.endTime.split(":")[1].split(")")[0]));
-                      return dataList.elementAt(index).status == "book"
-                          ? AppointtmentViewCard(
+                    final dataList = caController.getList.where((element) =>
+                        (element.status == "Accepted" ||
+                            element.status == "book") &&
+                        element.patientID ==
+                            FirebaseAuth.instance.currentUser!.uid);
+
+                    return ListView.separated(
+                        itemCount: dataList.length,
+                        separatorBuilder: (context, index) => SizedBox(
+                              height: getProportionateScreenHeight(20),
+                            ),
+                        itemBuilder: (context, index) {
+                          final data = dsController
+                              .getById(dataList.elementAt(index).sheduleID);
+                          String checkTimetemp = checkTime(
                               day: data.day,
-                              endTime: data.endTime,
-                              doctorName: docController
-                                      .getDoctorById(
-                                          dataList.elementAt(index).doctorID)
-                                      .firstName +
-                                  " " +
-                                  docController
-                                      .getDoctorById(
-                                          dataList.elementAt(index).doctorID)
-                                      .lastName,
-                              fees: data.fees,
-                              startTime: data.startTime,
-                            )
-                          : checkTimetemp == "during"
-                              ? DuringAppointtmentAcceptedViewCard(
-                                  doctorModel: docController.getDoctorById(
-                                      dataList.elementAt(index).doctorID),
-                                  doctorName: docController
-                                      .getDoctorById(
-                                          dataList.elementAt(index).doctorID)
-                                      .firstName,
-                                  patienID: dataList.elementAt(index).patientID,
-                                  doctorID: data.doctorID,
-                                  fees: data.fees,
+                              startHour: int.parse(
+                                  data.startTime.split("(")[1].split(":")[0]),
+                              endHour: int.parse(
+                                  data.endTime.split("(")[1].split(":")[0]),
+                              startMinute: int.parse(
+                                  data.startTime.split(":")[1].split(")")[0]),
+                              endMinute: int.parse(
+                                  data.endTime.split(":")[1].split(")")[0]));
+                          return dataList.elementAt(index).status == "book"
+                              ? AppointtmentViewCard(
                                   day: data.day,
                                   endTime: data.endTime,
+                                  doctorName: docController
+                                          .getDoctorById(dataList
+                                              .elementAt(index)
+                                              .doctorID)
+                                          .firstName +
+                                      " " +
+                                      docController
+                                          .getDoctorById(dataList
+                                              .elementAt(index)
+                                              .doctorID)
+                                          .lastName,
+                                  fees: data.fees,
                                   startTime: data.startTime,
                                 )
-                              : checkTimetemp == "after"
-                                  ? AfterAppointtmentAcceptedViewCard(
+                              : checkTimetemp == "during"
+                                  ? DuringAppointtmentAcceptedViewCard(
+                                      doctorModel: docController.getDoctorById(
+                                          dataList.elementAt(index).doctorID),
                                       doctorName: docController
                                           .getDoctorById(dataList
                                               .elementAt(index)
@@ -118,22 +111,39 @@ class _AppointmentHistoryState extends State<AppointmentHistory> {
                                       endTime: data.endTime,
                                       startTime: data.startTime,
                                     )
-                                  : BeforeAppointtmentAcceptedViewCard(
-                                      doctorName: docController
-                                          .getDoctorById(dataList
+                                  : checkTimetemp == "after"
+                                      ? AfterAppointtmentAcceptedViewCard(
+                                          doctorName: docController
+                                              .getDoctorById(dataList
+                                                  .elementAt(index)
+                                                  .doctorID)
+                                              .firstName,
+                                          patienID: dataList
                                               .elementAt(index)
-                                              .doctorID)
-                                          .firstName,
-                                      patienID:
-                                          dataList.elementAt(index).patientID,
-                                      doctorID: data.doctorID,
-                                      fees: data.fees,
-                                      day: data.day,
-                                      endTime: data.endTime,
-                                      startTime: data.startTime,
-                                    );
-                    });
-              }),
+                                              .patientID,
+                                          doctorID: data.doctorID,
+                                          fees: data.fees,
+                                          day: data.day,
+                                          endTime: data.endTime,
+                                          startTime: data.startTime,
+                                        )
+                                      : BeforeAppointtmentAcceptedViewCard(
+                                          doctorName: docController
+                                              .getDoctorById(dataList
+                                                  .elementAt(index)
+                                                  .doctorID)
+                                              .firstName,
+                                          patienID: dataList
+                                              .elementAt(index)
+                                              .patientID,
+                                          doctorID: data.doctorID,
+                                          fees: data.fees,
+                                          day: data.day,
+                                          endTime: data.endTime,
+                                          startTime: data.startTime,
+                                        );
+                        });
+                  }),
             )
           ]),
         ));
