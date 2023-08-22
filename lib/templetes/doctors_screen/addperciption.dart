@@ -20,14 +20,9 @@ class Perciption extends StatefulWidget {
 
 class _PerciptionState extends State<Perciption> {
   TextEditingController text = TextEditingController();
-
   final presiptionController = Get.put(PresiptionController());
-
   @override
   Widget build(BuildContext context) {
-    final presiptionList = presiptionController.getList.where((element) =>
-        element.doctorID == widget.doctorID &&
-        element.patientID == widget.patientID);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
@@ -40,13 +35,19 @@ class _PerciptionState extends State<Perciption> {
           height: getProportionateScreenHeight(680),
           width: getProportionateScreenWidth(390),
           color: Colors.white,
-          child: GetBuilder<PresiptionController>(builder: (controller) {
-            return ListView.builder(
-                itemBuilder: (context, index) => msgbox(
-                      message: presiptionList.elementAt(index).text,
-                    ),
-                itemCount: presiptionList.length);
-          })),
+          child: GetBuilder<PresiptionController>(
+              init: PresiptionController(),
+              builder: (controller) {
+                final presiptionList = presiptionController.getList.where(
+                    (element) =>
+                        element.doctorID == widget.doctorID &&
+                        element.patientID == widget.patientID);
+                return ListView.builder(
+                    itemBuilder: (context, index) => msgbox(
+                          message: presiptionList.elementAt(index).text,
+                        ),
+                    itemCount: presiptionList.length);
+              })),
       bottomSheet: Container(
         height: getProportionateScreenHeight(60),
         width: getProportionateScreenWidth(375),

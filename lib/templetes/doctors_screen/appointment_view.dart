@@ -29,10 +29,7 @@ final patientController = Get.put(PatientController());
 class _AppointmentScreenState extends State<AppointmentScreen> {
   @override
   Widget build(BuildContext context) {
-    final dataList = caController.getList.where((element) =>
-        (element.status == "book") &&
-        element.doctorID == FirebaseAuth.instance.currentUser!.uid);
-
+ 
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -46,7 +43,13 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
               height: getProportionateScreenHeight(670),
               width: getProportionateScreenWidth(400),
               child: GetBuilder<CreateAppointmentController>(
+                init: CreateAppointmentController(),
                   builder: (controller) {
+                       final dataList = caController.getList.where((element) =>
+        (element.status == "book") &&
+        element.doctorID == FirebaseAuth.instance.currentUser!.uid);
+
+
                 return ListView.separated(
                     itemCount: dataList.length,
                     separatorBuilder: (context, index) => SizedBox(

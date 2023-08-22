@@ -39,7 +39,7 @@ class Rejected extends StatelessWidget {
                     padding: EdgeInsets.all(8.0),
                     child: Text(
                       'Your account verification is rejected by admin kindly \n resubmit the form with correct information',
-                      style: TextStyle(fontSize: 25, color: Colors.white),
+                      style: TextStyle(fontSize: 20, color: Colors.white),
                     ),
                   ),
                 ),
