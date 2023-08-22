@@ -9,7 +9,7 @@ class CreateAppointmentController extends GetxController {
     fetchData();
   }
 
-  List<CreateAppointmentModel> _list = [];
+  List<CreateAppointmentModel> _list = <CreateAppointmentModel>[].obs;
   List<CreateAppointmentModel> get getList => _list;
   fetchData() async {
     await FirebaseFirestore.instance
@@ -24,6 +24,7 @@ class CreateAppointmentController extends GetxController {
             CreateAppointmentModel.fromMap(
                 map: dataMap, userID: documents.id.trim()));
       }
+      update();
     });
     update();
     fetchData();
